@@ -6,3 +6,4 @@ enum States {
 var state : States = States.START
 
 var menu_manager: PixelMenuManager
+#var multiplayer_manager: MultiplayerManager

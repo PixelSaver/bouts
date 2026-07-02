@@ -3,6 +3,7 @@ extends Control
 class_name PixelMenuManager
 
 @export var first_scene : PackedScene
+@export var debug_first_scene : PackedScene
 
 enum MenuManagerState {
 	## There is a single menu existing
@@ -30,5 +31,8 @@ func transition_to_scene(new_scene:PackedScene):
 
 func _ready() -> void:
 	Global.menu_manager = self
+	if OS.is_debug_build() and debug_first_scene:
+		transition_to_scene(debug_first_scene)
+		return
 	if first_scene:
 		transition_to_scene(first_scene)
