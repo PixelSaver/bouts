@@ -8,6 +8,7 @@ func _enter_tree() -> void:
 	if not Engine.is_editor_hint():
 		return
 	call_deferred("_ensure_label")
+
 func _ensure_label():
 	self.custom_minimum_size = Vector2(150, 80)
 	

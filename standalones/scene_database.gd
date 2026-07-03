@@ -3,12 +3,14 @@ extends Node
 const DEFAULT_SCENE = Scene.GAME
 enum Scene {
 	START,
+	MULTIPLAYER,
 	GAME,
 }
 
 var scenes = {
 	Scene.START: preload("res://scenes/menus/start_screen.tscn"),
 	Scene.GAME: preload("res://scenes/game/game_menu.tscn"),
+	Scene.MULTIPLAYER: preload("res://scenes/menus/lobby/multiplayer_menu.tscn")
 }
 func get_scene(scene:Scene) -> PackedScene:
 	if scenes.has(scene):

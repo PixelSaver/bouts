@@ -1,0 +1,185 @@
+[gd_scene format=3 uid="uid://bq17fmc2pxh2f"]
+
+[ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/lobby/multiplayer_menu.gd" id="1_elvy3"]
+[ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/lobby/loading_screen.gd" id="2_ftwoh"]
+[ext_resource type="Script" uid="uid://crut4r5gwigu0" path="res://utilities/ui/menus/default_button.gd" id="3_7mco4"]
+[ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/lobby/host_waiting_screen.gd" id="4_ftwoh"]
+[ext_resource type="Script" uid="uid://duhbv3vcdm55q" path="res://scenes/menus/lobby/client_waiting_screen.gd" id="5_ftwoh"]
+
+[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "loading_ip", "loading_host_button", "loading_join_button", "host_waiting_screen", "client_waiting_screen")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_elvy3")
+loading_screen = NodePath("LoadingScreen")
+loading_ip = NodePath("LoadingScreen/VBoxContainer/IPInput")
+loading_host_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton")
+loading_join_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton")
+host_waiting_screen = NodePath("HostWaitingScreen")
+client_waiting_screen = NodePath("ClientWaitingScreen")
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
+
+[node name="LoadingScreen" type="Control" parent="." unique_id=1846798797]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ftwoh")
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoadingScreen" unique_id=861428574]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.8
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="LoadingScreen/VBoxContainer" unique_id=1286963850]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=100]Bouts"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IPInput" type="LineEdit" parent="LoadingScreen/VBoxContainer" unique_id=227558515]
+layout_mode = 2
+placeholder_text = "ip address"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=558283635]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/ButtonContainer" unique_id=1680235105]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HostButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer" unique_id=809439393]
+custom_minimum_size = Vector2(150, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_7mco4")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=19866599]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="@RichTextLabel@66287" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=1451495987]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "Host"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="LoadingScreen/VBoxContainer/ButtonContainer" unique_id=1852426843]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2" unique_id=1345880807]
+custom_minimum_size = Vector2(150, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_7mco4")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1016080236]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="_RichTextLabel_66287" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1933289814]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "Join"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostWaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_list_text")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_ftwoh")
+player_list_text = NodePath("VBoxContainer/PlayerList")
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HostWaitingScreen" unique_id=80448522]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_right = 0.9
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Text" type="RichTextLabel" parent="HostWaitingScreen/VBoxContainer" unique_id=589459741]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=70]Waiting on other players"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerList" type="RichTextLabel" parent="HostWaitingScreen/VBoxContainer" unique_id=1153567928]
+layout_mode = 2
+bbcode_enabled = true
+text = "player1
+player2"
+fit_content = true
+scroll_active = false
+
+[node name="ClientWaitingScreen" type="Control" parent="." unique_id=820696497]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_ftwoh")
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
