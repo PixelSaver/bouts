@@ -44,12 +44,9 @@ func _peer_disconnected(_id: int) -> void:
 		pass
 
 
-## Host connected
+## client connected to host
 func _server_connected() -> void:
-	var peer_id: int = multiplayer.get_unique_id()
-	self.player_info.is_host = true
-	players[peer_id] = player_info
-	player_connected.emit(peer_id, player_info)
+	_register_player.rpc_id(1, player_info.to_dict())
 
 
 ## Host connection failed
@@ -93,6 +90,12 @@ func init_server() -> void:
 		return
 	multiplayer.multiplayer_peer = peer
 	print("Server initiated")
+	
+	player_info.is_host = true
+	var id := multiplayer.get_unique_id() # Should be 1
+	players[id] = player_info
+	player_connected.emit(id, player_info)
+	
 	SignalBus.hosted.emit()
 
 func free_networking() -> void:
