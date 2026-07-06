@@ -52,7 +52,8 @@ func sync_bullet(angle:float, pos:Vector2):
 	#if multiplayer.is_server(): return
 	var bullet = Bullet.spawn_bullet(Attack.spawn_attack(_damage), angle, self.global_position)
 	bullet.top_level = true
-	add_child(bullet)
+	SignalBus.bullet_spawned.emit(bullet)
+	#add_child(bullet)
 @rpc("any_peer", "unreliable")
 ## Sending input from client to server
 func submit_input(dir:float, jump:bool) -> void:

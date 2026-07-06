@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://yqflg2inlut8" path="res://scenes/game/game_menu.gd" id="1_r32m2"]
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_m4cfo"]
+[ext_resource type="Script" uid="uid://by7nvda11u1a" path="res://scenes/game/bullet_manager.gd" id="3_dehnt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
 size = Vector2(1126, 20)
@@ -27,3 +28,6 @@ shape = SubResource("RectangleShape2D_gkedh")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=735638639]
 scale = Vector2(8.796875, 0.171875)
 texture = ExtResource("2_m4cfo")
+
+[node name="BulletManager" type="Node2D" parent="." unique_id=494906724]
+script = ExtResource("3_dehnt")

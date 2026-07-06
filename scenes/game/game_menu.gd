@@ -3,6 +3,7 @@ class_name GameMenu
 
 const PLAYER = preload("res://scenes/game/player.tscn")
 @onready var players: Node2D = $Players
+@onready var bullet_manager: Node2D = $BulletManager
 
 
 func start_anim() -> void: 
