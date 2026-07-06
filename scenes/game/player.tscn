@@ -3,11 +3,24 @@
 [ext_resource type="Script" uid="uid://s5gfltvo62hp" path="res://scenes/game/player.gd" id="1_6w7gq"]
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_dd427"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dd427"]
+friction = 0.2
+rough = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
 size = Vector2(76, 76)
 
-[node name="Player" type="CharacterBody2D" unique_id=269745281]
+[node name="Player" type="RigidBody2D" unique_id=84880262]
+physics_material_override = SubResource("PhysicsMaterial_dd427")
+gravity_scale = 6.0
+can_sleep = false
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 10
+linear_damp = 10.0
 script = ExtResource("1_6w7gq")
+acceleration = 10000
+jump_strength = 2000
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=155895577]
 shape = SubResource("RectangleShape2D_gkedh")
