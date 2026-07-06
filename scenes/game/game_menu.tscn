@@ -6,8 +6,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
 size = Vector2(1126, 20)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_m4cfo"]
-
 [node name="GameMenu" type="Control" unique_id=298745656]
 layout_mode = 3
 anchors_preset = 15
@@ -29,6 +27,3 @@ shape = SubResource("RectangleShape2D_gkedh")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=735638639]
 scale = Vector2(8.796875, 0.171875)
 texture = ExtResource("2_m4cfo")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1134644919]
-replication_config = SubResource("SceneReplicationConfig_m4cfo")

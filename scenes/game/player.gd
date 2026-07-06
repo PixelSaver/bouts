@@ -4,7 +4,6 @@ class_name Player
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -23,3 +22,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+	if is_multiplayer_authority():
+		_update_position.rpc(self.position, self.velocity)
+
+@rpc("any_peer", "unreliable")
+func _update_position(pos: Vector2, vel: Vector2):
+	self.position = pos 
+	self.velocity = vel
+	
