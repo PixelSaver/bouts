@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cncogfemaxsib"]
+
+[ext_resource type="Script" uid="uid://dhx68cypk06u8" path="res://scenes/bullet.gd" id="1_mkf8s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
+radius = 30.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1aey"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Bullet" type="Area2D" unique_id=27237560]
+script = ExtResource("1_mkf8s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2139503532]
+shape = SubResource("CircleShape2D_gkedh")
+
+[node name="Panel" type="Panel" parent="." unique_id=1360424278]
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
+offset_transform_scale = Vector2(1.5, 1.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_h1aey")
