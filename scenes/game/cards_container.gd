@@ -44,7 +44,7 @@ func _disconnect_child(child:Control):
 func _on_child_mouse_entered(child: Control):
 	var t = get_tree().create_tween().bind_node(child)
 	t.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT).set_parallel(true)
-	t.tween_property(child, "offset_transform_position", Vector2.UP * 100., 0.7)
+	t.tween_property(child, "offset_transform_position", Vector2.UP.rotated(child.offset_transform_rotation) * 100., 0.7)
 func _on_child_mouse_exited(child: Control):
 	var t = get_tree().create_tween().bind_node(child)
 	t.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT).set_parallel(true)
@@ -67,6 +67,7 @@ func _update_children():
 			#current_angle = PI - current_angle
 		var pos = _center + Vector2.UP.rotated(current_angle) * radius
 		child.pivot_offset_ratio = Vector2.ONE * 0.5
+		#child.rotation = current_angle
+		child.offset_transform_rotation = current_angle
 		var child_size = child.get_combined_minimum_size()
 		fit_child_in_rect(child, Rect2(pos - (child_size / 2.0), child_size))
-		child.rotation = current_angle
