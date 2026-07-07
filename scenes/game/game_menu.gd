@@ -17,7 +17,6 @@ func start_anim() -> void:
 			printerr("Player info not readable as PlayerInfo")
 			continue
 		spawn_player.rpc(key, Vector2(i * 100, 0))
-
 @rpc("authority", "reliable", "call_local")
 func spawn_player(id: int, pos: Vector2):
 	var inst = PLAYER.instantiate()
@@ -25,6 +24,10 @@ func spawn_player(id: int, pos: Vector2):
 	await get_tree().process_frame
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
+
+@rpc("authority", "call_local")
+func player_won(id:int) -> void:
+	pass
 
 func end_anim() -> void: 
 	pass

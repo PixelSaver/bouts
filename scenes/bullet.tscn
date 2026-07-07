@@ -17,6 +17,8 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [node name="Bullet" type="Area2D" unique_id=27237560]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_mkf8s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2139503532]
@@ -28,3 +30,5 @@ offset_bottom = 40.0
 offset_transform_enabled = true
 offset_transform_position_ratio = Vector2(-0.5, -0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_h1aey")
+
+[connection signal="body_entered" from="." to="." method="_body_entered"]
