@@ -1,5 +1,7 @@
 extends RigidBody2D
 class_name Player
+
+signal died
 @export_subgroup("Nodes", "_")
 @export var _health_component: HealthComponent
 @export var acceleration := 400
@@ -12,6 +14,9 @@ var _shoot_buffer := 0.2
 var _shoot_buffer_max := 0.2
 var input_dir : float
 var input_jump : bool
+
+func _ready() -> void:
+	_health_component.death.connect(_on_death)
 
 func _physics_process(delta: float) -> void:
 	_shoot_buffer -= delta
@@ -87,6 +92,8 @@ func _process_movement(dir:float, jump:bool, _delta:float) -> void:
 		sync_state.rpc(global_position, linear_velocity)
 
 	
-
+func _on_death() -> void:
+	died.emit()
+	queue_free()
 func damage(atk:Attack):
 	_health_component.damage(atk)

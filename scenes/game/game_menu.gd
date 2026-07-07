@@ -4,7 +4,12 @@ class_name GameMenu
 const PLAYER = preload("res://scenes/game/player.tscn")
 @onready var players: Node2D = $Players
 @onready var bullet_manager: Node2D = $BulletManager
+@onready var player_manager: PlayerManager = $Players
 
+func _ready() -> void:
+	if multiplayer.is_server():
+		player_manager.player_won.connect(player_won)
+		player_manager.tie.connect(player_won.bind(-1))
 
 func start_anim() -> void: 
 	if not multiplayer.is_server(): return
@@ -27,7 +32,11 @@ func spawn_player(id: int, pos: Vector2):
 
 @rpc("authority", "call_local")
 func player_won(id:int) -> void:
-	pass
+	if id == -1: 
+		# tie
+		pass
+	else:
+		pass
 
 func end_anim() -> void: 
 	pass

@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://814emajlnimt"]
+
+[ext_resource type="Script" uid="uid://dw4stnpjc2caf" path="res://scenes/game/cards_screen.gd" id="1_atlvx"]
+[ext_resource type="Script" uid="uid://bpe4raejwx8qa" path="res://scenes/game/cards_container.gd" id="2_kr4lb"]
+
+[node name="CardsScreen" type="Control" unique_id=2142003154]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_atlvx")
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
+
+[node name="Container" type="Container" parent="." unique_id=492193373]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_kr4lb")
+spread = -0.385
+radius = 1000.0
+center = Vector2(0, 750.11)
+
+[node name="ColorRect" type="ColorRect" parent="Container" unique_id=457594821]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="ColorRect2" type="ColorRect" parent="Container" unique_id=2084163864]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="ColorRect3" type="ColorRect" parent="Container" unique_id=482405448]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="ColorRect4" type="ColorRect" parent="Container" unique_id=1479868026]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="ColorRect5" type="ColorRect" parent="Container" unique_id=1792349978]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+offset_transform_enabled = true
