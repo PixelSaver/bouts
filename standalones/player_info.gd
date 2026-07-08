@@ -4,6 +4,7 @@ class_name PlayerInfo
 @export var player_name = ""
 @export var id = 0
 @export var color = Color.WHITE
+@export var upgrades: Array[int] = []
 @export var is_host := false
 
 func _init(_name: String="") -> void:

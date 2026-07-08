@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dw4stnpjc2caf" path="res://scenes/game/cards_screen.gd" id="1_atlvx"]
 [ext_resource type="Script" uid="uid://bpe4raejwx8qa" path="res://scenes/game/cards_container.gd" id="2_kr4lb"]
+[ext_resource type="PackedScene" uid="uid://b2glg5yg5t3kh" path="res://scenes/game/card_display.tscn" id="3_y1cc4"]
 
-[node name="CardsScreen" type="Control" unique_id=2142003154]
+[node name="CardsScreen" type="Control" unique_id=2142003154 node_paths=PackedStringArray("cards_cont")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,41 +12,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_atlvx")
+cards_cont = NodePath("Container")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
-[node name="Container" type="Container" parent="." unique_id=492193373]
+[node name="Container" type="Container" parent="." unique_id=128767197]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("2_kr4lb")
-spread = -0.385
-radius = 1000.0
+spread = 0.4
+radius = 900.0
 center = Vector2(0, 750.11)
+metadata/_custom_type_script = "uid://bpe4raejwx8qa"
 
-[node name="ColorRect" type="ColorRect" parent="Container" unique_id=457594821]
-custom_minimum_size = Vector2(100, 100)
+[node name="CardDisplay" parent="Container" unique_id=1236587295 instance=ExtResource("3_y1cc4")]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_rotation = -0.4
+
+[node name="CardDisplay2" parent="Container" unique_id=911955981 instance=ExtResource("3_y1cc4")]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_rotation = -0.2
+
+[node name="CardDisplay3" parent="Container" unique_id=4701761 instance=ExtResource("3_y1cc4")]
 layout_mode = 2
 offset_transform_enabled = true
 
-[node name="ColorRect2" type="ColorRect" parent="Container" unique_id=2084163864]
-custom_minimum_size = Vector2(100, 100)
+[node name="CardDisplay4" parent="Container" unique_id=1836094268 instance=ExtResource("3_y1cc4")]
 layout_mode = 2
 offset_transform_enabled = true
+offset_transform_rotation = 0.2
 
-[node name="ColorRect3" type="ColorRect" parent="Container" unique_id=482405448]
-custom_minimum_size = Vector2(100, 100)
+[node name="CardDisplay5" parent="Container" unique_id=2026682509 instance=ExtResource("3_y1cc4")]
 layout_mode = 2
 offset_transform_enabled = true
-
-[node name="ColorRect4" type="ColorRect" parent="Container" unique_id=1479868026]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-offset_transform_enabled = true
-
-[node name="ColorRect5" type="ColorRect" parent="Container" unique_id=1792349978]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-offset_transform_enabled = true
+offset_transform_rotation = 0.4

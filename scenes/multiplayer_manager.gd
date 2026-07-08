@@ -5,7 +5,7 @@ const PORT = 7000
 const DEFAULT_SERVER_IP = "127.0.0.1"
 const MAX_CONNECTIONS = 6
 
-var players = {}
+var players : Dictionary[int, PlayerInfo]= {}
 var player_info := PlayerInfo.new("Name")
 
 signal player_connected(_peerID : int, _player_info : PlayerInfo)

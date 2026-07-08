@@ -94,6 +94,6 @@ func _process_movement(dir:float, jump:bool, _delta:float) -> void:
 	
 func _on_death() -> void:
 	died.emit()
-	queue_free()
+	#queue_free()
 func damage(atk:Attack):
 	_health_component.damage(atk)

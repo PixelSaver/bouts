@@ -45,10 +45,14 @@ func _on_child_mouse_entered(child: Control):
 	var t = get_tree().create_tween().bind_node(child)
 	t.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT).set_parallel(true)
 	t.tween_property(child, "offset_transform_position", Vector2.UP.rotated(child.offset_transform_rotation) * 100., 0.7)
+	t.tween_property(child, "offset_transform_scale", Vector2.ONE * 1.15, 0.7)
+	child.z_index = 10
 func _on_child_mouse_exited(child: Control):
 	var t = get_tree().create_tween().bind_node(child)
 	t.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT).set_parallel(true)
 	t.tween_property(child, "offset_transform_position", Vector2.ZERO, 0.7)
+	t.tween_property(child, "offset_transform_scale", Vector2.ONE, 0.7)
+	child.z_index = 0
 #endregion
 
 func _notification(what):

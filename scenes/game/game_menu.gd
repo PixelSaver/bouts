@@ -8,8 +8,13 @@ const PLAYER = preload("res://scenes/game/player.tscn")
 
 func _ready() -> void:
 	if multiplayer.is_server():
-		player_manager.player_won.connect(player_won)
-		player_manager.tie.connect(player_won.bind(-1))
+		
+		player_manager.player_won.connect(func(id:int):
+			player_won.rpc(id)
+		)
+		player_manager.tie.connect(func():
+			player_won.rpc(-1)
+		)
 
 func start_anim() -> void: 
 	if not multiplayer.is_server(): return
@@ -29,14 +34,22 @@ func spawn_player(id: int, pos: Vector2):
 	await get_tree().process_frame
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
+	player_manager.register_player_in_game(id, inst)
 
-@rpc("authority", "call_local")
+@rpc("authority", "call_local", "reliable")
 func player_won(id:int) -> void:
+	player_manager.stop_player_sync()
+	await get_tree().process_frame
+	await get_tree().process_frame
 	if id == -1: 
 		# tie
 		pass
 	else:
-		pass
+		Global.player_won_id = id
+		var ids : Array[int] = Global.menu_manager.players.keys().duplicate(true)
+		ids.erase(id)
+		Global.players_lost = ids
+		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.CARDS))
 
 func end_anim() -> void: 
-	pass
+	queue_free()
