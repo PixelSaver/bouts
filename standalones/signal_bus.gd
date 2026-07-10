@@ -10,4 +10,4 @@ signal host
 ## Called after server is initialized
 signal hosted
 @warning_ignore("unused_signal")
-signal bullet_spawned(bullet:Bullet)
+signal bullet_spawned(atk:Attack, rot:float, pos:Vector2, owned_id:int)

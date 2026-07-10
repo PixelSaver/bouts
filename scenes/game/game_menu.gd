@@ -8,7 +8,6 @@ const PLAYER = preload("res://scenes/game/player.tscn")
 
 func _ready() -> void:
 	if multiplayer.is_server():
-		
 		player_manager.player_won.connect(func(id:int):
 			player_won.rpc(id)
 		)
