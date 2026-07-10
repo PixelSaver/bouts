@@ -30,7 +30,6 @@ func sync_location(pos:Vector2):
 	self.offset_transform_position = pos
 
 func display_card_info(_card_info: CardInfo):
-	card_info = _card_info
 	self.display_name.text = _card_info.name
 	self.display_icon.texture = _card_info.icon
 	self.display_desc.text = _card_info.description

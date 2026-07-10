@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CardInfo" format=3 uid="uid://8gui8gp1gqf7"]
+
+[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="1_xpnjv"]
+[ext_resource type="Script" uid="uid://dpq46x6orgdle" path="res://standalones/card_info.gd" id="2_k2c6a"]
+
+[resource]
+script = ExtResource("2_k2c6a")
+metadata/_custom_type_script = "uid://dpq46x6orgdle"

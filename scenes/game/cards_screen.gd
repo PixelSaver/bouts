@@ -26,9 +26,11 @@ func start_anim() -> void:
 	set_multiplayer_authority(lost_id)
 	for child in cards_cont.get_children():
 		child.queue_free()
-	for i in range(init_cards_amount):
+	var upgrades = UpgradeManager.get_random_upgrades(init_cards_amount)
+	for upgrade in upgrades:
 		var inst = CARD_DISPLAY.instantiate() as CardDisplay
 		cards_cont.add_child(inst)
+		inst.card_info = UpgradeManager.get_card_info(upgrade)
 	for card in _get_cards():
 		card.set_multiplayer_authority(lost_id)
 		card.mouse_filter = Control.MOUSE_FILTER_PASS if is_multiplayer_authority() else Control.MOUSE_FILTER_IGNORE

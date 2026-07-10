@@ -20,6 +20,7 @@ shadow_offset = Vector2(-3, 3)
 custom_minimum_size = Vector2(200, 280)
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_nw52k")
 script = ExtResource("1_e2t1a")
 display_name = NodePath("MarginContainer/VBoxContainer/NameDisplay")
@@ -43,6 +44,7 @@ layout_mode = 2
 
 [node name="NameDisplay" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=2080865405]
 layout_mode = 2
+mouse_filter = 1
 theme_override_font_sizes/normal_font_size = 30
 text = "Title"
 fit_content = true
@@ -66,4 +68,5 @@ expand_mode = 5
 [node name="DescDisplay" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=17975659]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 scroll_active = false
