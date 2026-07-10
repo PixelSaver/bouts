@@ -45,9 +45,6 @@ func player_won(id:int) -> void:
 		pass
 	else:
 		Global.player_won_id = id
-		var ids : Array[int] = Global.menu_manager.players.keys().duplicate(true)
-		ids.erase(id)
-		Global.players_lost = ids
 		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.CARDS))
 
 func end_anim() -> void: 

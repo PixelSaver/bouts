@@ -38,12 +38,14 @@ func _ready() -> void:
 		push_error("Health component couldn't find target.")
 
 func damage(atk: Attack):
+	if not multiplayer.is_server(): return
 	_pending_atks.append(atk)
 	if not _processing:
 		_processing = true
 		call_deferred("_process_pending_damage")
 
 func _process_pending_damage() -> void:
+	if not multiplayer.is_server(): return
 	var tot_damage := 0.0
 	for atk in _pending_atks:
 		tot_damage += atk.damage
@@ -51,8 +53,14 @@ func _process_pending_damage() -> void:
 	_pending_atks.clear()
 	_processing = false
 	health -= tot_damage
+	sync_health.rpc(health, max_health)
 	if health <= 0 or is_equal_approx(health, 0.0):
 		death.emit()
+
+@rpc("any_peer", "call_remote", "reliable")
+func sync_health(h:float, mh:float):
+	health = h
+	max_health = mh
 
 ## Applies knockback unless target has the 'get_knockback_resistance' function
 func apply_knockback(atk:Attack):
@@ -63,4 +71,5 @@ func apply_knockback(atk:Attack):
 
 func heal(delta:float) -> float:
 	health += delta
+	sync_health.rpc(health, max_health)
 	return health

@@ -18,7 +18,9 @@ func server_update(delta: float) -> void: pass
 
 
 func _body_entered(body:Node2D) -> void:
+	if not multiplayer.is_server(): return
 	if body is not Player: return
+	## Check that the bullet isnt hitting it's own parent
 	if body.get_multiplayer_authority() == owner_id: return
 	var player = body as Player
 	player.damage(attack)

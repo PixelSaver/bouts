@@ -24,7 +24,7 @@ func spawn_bullet(atk:Attack, rot:float, pos:Vector2, owned_id:int) -> void:
 	
 	self.add_child(inst)
 	bullets.set(id, inst)
-	inst.tree_exiting.connect(func(): bullets.erase(inst))
+	#inst.tree_exiting.connect(func(): bullets.erase(inst))
 	spawn_bullet_remote.rpc(id, pos, rot, owned_id)
 
 @rpc("authority", "call_remote")
