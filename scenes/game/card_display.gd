@@ -1,4 +1,4 @@
-extends Panel
+extends Button
 class_name CardDisplay
 
 @export_group("Display", "display_")

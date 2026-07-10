@@ -96,7 +96,6 @@ func init_server() -> void:
 	multiplayer.multiplayer_peer = peer
 	print("Server initiated")
 	
-	player_info.is_host = true
 	var id := multiplayer.get_unique_id() # Should be 1
 	player_info.id = id
 	_register_player(player_info.to_dict())

@@ -11,19 +11,15 @@ func _ready() -> void:
 		player_manager.player_won.connect(func(id:int):
 			var ups = UpgradeManager.get_random_upgrades(5)
 			Global.round_state = RoundState.new()
-			Global.round_state.upgrades = ups
+			Global.player_won_id = id
+			#TODO Upgrade to 4 player
+			Global.round_state.set_player_upgrades(Global.get_losers().front(), ups)
 			for _id in Global.menu_manager.players.keys():
 				if _id == 1: continue
-				receive_upgrades.rpc_id(_id, ups)
+				receive_upgrades.rpc_id(_id, id, ups)
 			player_won.rpc(id)
 		)
 		player_manager.tie.connect(func():
-			var ups = UpgradeManager.get_random_upgrades(5)
-			Global.round_state = RoundState.new()
-			Global.round_state.upgrades = ups
-			for _id in Global.menu_manager.players.keys():
-				if _id == 1: continue
-				receive_upgrades.rpc_id(_id, ups)
 			player_won.rpc(-1)
 		)
 
@@ -48,9 +44,12 @@ func spawn_player(id: int, pos: Vector2):
 	player_manager.register_player_in_game(id, inst)
 
 @rpc("any_peer", "reliable", "call_remote")
-func receive_upgrades(upgrades:Array[UpgradeManager.Upgrades]):
+func receive_upgrades(win_id:int, upgrades:Array[UpgradeManager.Upgrades]):
+	#HACK Update winners and losers better, clean up al the Global.player_won_id = id and stuff
+	Global.player_won_id = win_id
 	Global.round_state = RoundState.new()
-	Global.round_state.upgrades = upgrades
+	#TODO Upgrade to 4 player
+	Global.round_state.set_player_upgrades(Global.get_losers().front(), upgrades)
 
 @rpc("authority", "call_local", "reliable")
 func player_won(id:int) -> void:

@@ -5,7 +5,6 @@ class_name PlayerInfo
 @export var id = 0
 @export var color = Color.WHITE
 @export var upgrades: Array[int] = []
-@export var is_host := false
 
 func _init(_name: String="") -> void:
 	player_name = _name if _name.length() > 0 else "PlayerName"
@@ -14,16 +13,16 @@ func to_dict() -> Dictionary:
 	return {
 		"player_name": player_name,
 		"color": color,
-		"is_host": is_host,
+		"upgrades": upgrades,
 		"id": id,
 	}
 static func from_dict(d: Dictionary) -> PlayerInfo:
 	var p = PlayerInfo.new()
 	p.player_name = d.get("player_name", "PlayerName")
 	p.color = d.get("color", Color.WHITE)
-	p.is_host = d.get("is_host", false)
+	p.upgrades = d.get("upgrades", [])
 	p.id = d.get("id", 0)
 	return p
 
 func _to_string() -> String:
-	return "PlayerInfo Res (ID: %s, Name: %s, Color: %s, is host? %s)" % [self.id, self.player_name, self.color, self.is_host]
+	return "PlayerInfo Res (ID: %s, Name: %s, Color: %s)" % [self.id, self.player_name, self.color]
