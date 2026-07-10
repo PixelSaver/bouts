@@ -23,7 +23,12 @@ func _notification(what: int) -> void:
 			pass
 
 func _process(_delta: float) -> void:
-	if is_multiplayer_authority() and syncing: sync_location.rpc(self.offset_transform_position)
+	if is_multiplayer_authority():
+		if syncing: sync_location.rpc(self.offset_transform_position)
+	update_mouse_filter()
+
+func update_mouse_filter():
+	self.mouse_filter = Control.MOUSE_FILTER_PASS if is_multiplayer_authority() else Control.MOUSE_FILTER_IGNORE
 
 @rpc("authority", "call_remote", "unreliable")
 func sync_location(pos:Vector2):

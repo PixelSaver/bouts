@@ -26,8 +26,10 @@ func _ready() -> void:
 #region Network callbacks from SceneTree
 # Callback from SceneTree.
 
-## WHen one player connects and sends data to everyone
+## WHen one player connects, send data over as server
 func _peer_connected(_id: int) -> void: 
+	if not multiplayer.is_server(): return
+	# Sending server data to peer
 	_register_player.rpc_id(_id, player_info.to_dict())
 	print("Player Connected: ", _id)
 
@@ -46,6 +48,8 @@ func _peer_disconnected(_id: int) -> void:
 
 ## client connected to host
 func _server_connected() -> void:
+	print("_server_connected")
+	player_info.id = multiplayer.get_unique_id()
 	_register_player.rpc_id(1, player_info.to_dict())
 
 
@@ -65,10 +69,9 @@ func _server_disconnected() -> void:
 @rpc("any_peer", "reliable")
 func _register_player(_player_info_dict: Dictionary):
 	var _player_info := PlayerInfo.from_dict(_player_info_dict)
-	var new_player_id: int = multiplayer.get_remote_sender_id()
-	players[new_player_id] = _player_info
-	player_connected.emit(new_player_id, _player_info)
-	print("Player Registered: ", _player_info)
+	player_connected.emit(_player_info.id, _player_info)
+	players.set(_player_info.id, _player_info)
+	print("Player Registered on client %s: %s" % [multiplayer.get_unique_id(), _player_info])
 
 func join_server(_address:String):
 	if _address.is_empty():
@@ -80,6 +83,8 @@ func join_server(_address:String):
 		push_error("JOIN GAME FAILED: ", error)
 		return
 	multiplayer.multiplayer_peer = peer
+	player_info.id = multiplayer.get_unique_id()
+	_register_player(player_info.to_dict())
 	print("Connected!")
 
 func init_server() -> void:
@@ -93,7 +98,8 @@ func init_server() -> void:
 	
 	player_info.is_host = true
 	var id := multiplayer.get_unique_id() # Should be 1
-	players[id] = player_info
+	player_info.id = id
+	_register_player(player_info.to_dict())
 	player_connected.emit(id, player_info)
 	
 	SignalBus.hosted.emit()

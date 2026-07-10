@@ -26,4 +26,4 @@ static func from_dict(d: Dictionary) -> PlayerInfo:
 	return p
 
 func _to_string() -> String:
-	return "PlayerInfo Res (Name: %s, Color: %s, is host? %s)" % [self.player_name, self.color, self.is_host]
+	return "PlayerInfo Res (ID: %s, Name: %s, Color: %s, is host? %s)" % [self.id, self.player_name, self.color, self.is_host]

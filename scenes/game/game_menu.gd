@@ -38,13 +38,14 @@ func spawn_player(id: int, pos: Vector2):
 @rpc("authority", "call_local", "reliable")
 func player_won(id:int) -> void:
 	player_manager.stop_player_sync()
+	Global.player_won_id = id
+	print("Client %s sees %s won" % [self.multiplayer.get_unique_id(), id])
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if id == -1: 
 		# tie
 		pass
 	else:
-		Global.player_won_id = id
 		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.CARDS))
 
 func end_anim() -> void: 

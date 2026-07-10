@@ -10,7 +10,6 @@ func _process(_delta: float):
 	player_list_text.clear()
 	#player_list_text.append_text("[font_size=70]")
 	var keys = Global.menu_manager.players.keys()
-	#print(keys.size())
 	for i in range(keys.size()):
 		var key = keys[i]
 		var player_info: PlayerInfo = Global.menu_manager.players.get(key)

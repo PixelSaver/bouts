@@ -15,4 +15,5 @@ func get_losers() -> Array[int]:
 	var out: Array[int] = []
 	for p in (menu_manager.players.values() as Array[PlayerInfo]):
 		if p.id != player_won_id: out.append(p.id)
+	print("Losers on client %s are %s" % [multiplayer.get_unique_id(), out])
 	return out

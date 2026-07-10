@@ -32,7 +32,7 @@ func start_anim() -> void:
 		cards_cont.add_child(inst)
 		inst.card_info = UpgradeManager.get_card_info(upgrade)
 		inst.set_multiplayer_authority(lost_id)
-		inst.mouse_filter = Control.MOUSE_FILTER_PASS if is_multiplayer_authority() else Control.MOUSE_FILTER_IGNORE
+		inst.update_mouse_filter()
 	
 func end_anim() -> void: 
 	pass
