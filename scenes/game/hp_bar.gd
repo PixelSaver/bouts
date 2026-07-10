@@ -4,6 +4,9 @@ class_name HPBar
 @export var fade_delay := 3.0
 var t : Tween
 
+func _ready() -> void:
+	self.modulate.a = 0.0
+
 func _on_health_component_health_changed(health: Variant, max_health: Variant) -> void:
 	self.value = health
 	if max_health != max_value: self.max_value = max_health

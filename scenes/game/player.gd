@@ -40,7 +40,7 @@ func _handle_input():
 	var _shoot = Vector2.ZERO
 	if Input.is_action_just_pressed("l_click"):
 		_shoot = (get_global_mouse_position() - self.global_position).normalized()
-		submit_shot.rpc(_shoot.angle())
+		submit_shot.rpc(_shoot.angle(), multiplayer.get_unique_id())
 	if multiplayer.is_server():
 		input_dir = dir
 		input_jump = jump
@@ -48,14 +48,14 @@ func _handle_input():
 		submit_input.rpc(dir, jump)
 
 @rpc("any_peer", "reliable")
-func submit_shot(angle:float):
+func submit_shot(angle:float, id:int):
 	if not _shoot_buffer < 0.: return
 	_shoot_buffer = _shoot_buffer_max
-	sync_bullet.rpc(angle, self.global_position)
+	sync_bullet.rpc(angle, id)
 @rpc("any_peer", "reliable", "call_local")
-func sync_bullet(angle:float, pos:Vector2):
+func sync_bullet(angle:float, id:int):
 	#if multiplayer.is_server(): return
-	var bullet = Bullet.spawn_bullet(Attack.spawn_attack(_damage), angle, self.global_position)
+	var bullet = Bullet.spawn_bullet(Attack.spawn_attack(_damage), angle, self.global_position, id)
 	bullet.top_level = true
 	SignalBus.bullet_spawned.emit(bullet)
 	#add_child(bullet)

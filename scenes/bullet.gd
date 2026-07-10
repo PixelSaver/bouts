@@ -3,12 +3,14 @@ class_name Bullet
 
 @export var attack: Attack
 @export var speed := 100
+var owner_id : int
 
 const BULLET = preload("res://scenes/bullet.tscn")
 
 @rpc("authority", "call_local")
-static func spawn_bullet(atk:Attack, rot:float, pos:Vector2) -> Bullet:
+static func spawn_bullet(atk:Attack, rot:float, pos:Vector2, id:int) -> Bullet:
 	var inst = BULLET.instantiate() as Bullet
+	inst.owner_id = id
 	inst.attack = atk
 	inst.global_position = pos
 	inst.global_rotation = rot
@@ -25,5 +27,6 @@ func _physics_process(delta: float) -> void:
 
 func _body_entered(body:Node2D) -> void:
 	if body is not Player: return
+	if body.get_multiplayer_authority() == owner_id: return
 	var player = body as Player
 	player.damage(attack)
