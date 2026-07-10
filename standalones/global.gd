@@ -6,7 +6,7 @@ enum States {
 var state : States = States.START
 
 var menu_manager: MultiplayerManager
-
+var round_state: RoundState
 #var multiplayer_manager: MultiplayerManager
 
 var player_won_id := -1

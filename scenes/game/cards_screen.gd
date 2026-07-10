@@ -26,8 +26,7 @@ func start_anim() -> void:
 	set_multiplayer_authority(lost_id)
 	for child in cards_cont.get_children():
 		child.queue_free()
-	var upgrades = UpgradeManager.get_random_upgrades(init_cards_amount)
-	for upgrade in upgrades:
+	for upgrade in Global.round_state.upgrades:
 		var inst = CARD_DISPLAY.instantiate() as CardDisplay
 		cards_cont.add_child(inst)
 		inst.card_info = UpgradeManager.get_card_info(upgrade)

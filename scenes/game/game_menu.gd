@@ -9,9 +9,21 @@ const PLAYER = preload("res://scenes/game/player.tscn")
 func _ready() -> void:
 	if multiplayer.is_server():
 		player_manager.player_won.connect(func(id:int):
+			var ups = UpgradeManager.get_random_upgrades(5)
+			Global.round_state = RoundState.new()
+			Global.round_state.upgrades = ups
+			for _id in Global.menu_manager.players.keys():
+				if _id == 1: continue
+				receive_upgrades.rpc_id(_id, ups)
 			player_won.rpc(id)
 		)
 		player_manager.tie.connect(func():
+			var ups = UpgradeManager.get_random_upgrades(5)
+			Global.round_state = RoundState.new()
+			Global.round_state.upgrades = ups
+			for _id in Global.menu_manager.players.keys():
+				if _id == 1: continue
+				receive_upgrades.rpc_id(_id, ups)
 			player_won.rpc(-1)
 		)
 
@@ -34,6 +46,11 @@ func spawn_player(id: int, pos: Vector2):
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
 	player_manager.register_player_in_game(id, inst)
+
+@rpc("any_peer", "reliable", "call_remote")
+func receive_upgrades(upgrades:Array[UpgradeManager.Upgrades]):
+	Global.round_state = RoundState.new()
+	Global.round_state.upgrades = upgrades
 
 @rpc("authority", "call_local", "reliable")
 func player_won(id:int) -> void:
