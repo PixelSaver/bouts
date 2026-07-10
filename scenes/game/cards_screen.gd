@@ -36,15 +36,20 @@ func start_anim() -> void:
 
 func _on_card_pressed(upgrade:UpgradeManager.Upgrades):
 	submit_upgrade_pick.rpc_id(1, upgrade)
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "reliable")
 func submit_upgrade_pick(upgrade:UpgradeManager.Upgrades):
 	if not multiplayer.is_server(): return
-	if not Global.round_state.upgrades.has(upgrade): 
-		print("Server doesn't have client picked upgrade in possible upgrades")
+	var sender := multiplayer.get_remote_sender_id()
+	if not Global.round_state.player_states.keys().has(sender) or not Global.round_state.player_states.get(sender, []).has(upgrade): 
+		push_warning("Server doesn't have client picked upgrade in possible upgrades")
 		return
+	receive_upgrade.rpc(sender, upgrade)
 @rpc("authority", "call_remote", "reliable")
-func receive_upgrade(upgrade:UpgradeManager.Upgrades):
-	pass
+func receive_upgrade(player_id:int, upgrade:UpgradeManager.Upgrades):
+	var pi: PlayerInfo = Global.menu_manager.players.get(player_id)
+	if not pi: 
+		push_warning("Playerid not found when upgrading ")
+	pi.upgrades.append(upgrade)
 	
 
 func end_anim() -> void: 
