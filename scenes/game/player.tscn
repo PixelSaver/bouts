@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bu1323tbab7kv"]
 
 [ext_resource type="Script" uid="uid://s5gfltvo62hp" path="res://scenes/game/player.gd" id="1_6w7gq"]
+[ext_resource type="Shader" uid="uid://dg1yo2d0chife" path="res://shaders/sphere.gdshader" id="2_68xwl"]
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_dd427"]
 [ext_resource type="Script" uid="uid://fj7ykktocnh6" path="res://utilities/health_component.gd" id="3_u3rb4"]
 [ext_resource type="Script" uid="uid://1k8bpr23sn6k" path="res://scenes/game/hp_bar.gd" id="4_nybob"]
@@ -9,8 +10,19 @@
 friction = 0.2
 rough = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
-size = Vector2(76, 76)
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkf8s"]
+radius = 32.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y25gk"]
+shader = ExtResource("2_68xwl")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.50000002375
+shader_parameter/rotation_speed_x = 0.0
+shader_parameter/rotation_speed_y = 0.0
+shader_parameter/rotation_speed_z = 0.0
+shader_parameter/rotation_offset_x = 0.0
+shader_parameter/rotation_offset_y = 0.5
+shader_parameter/rotation_offset_z = 0.0
 
 [sub_resource type="Gradient" id="Gradient_68xwl"]
 offsets = PackedFloat32Array(0)
@@ -42,10 +54,11 @@ acceleration = 10000
 jump_strength = 2000
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=155895577]
-shape = SubResource("RectangleShape2D_gkedh")
+shape = SubResource("CircleShape2D_mkf8s")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=764257601]
-scale = Vector2(0.609375, 0.609375)
+material = SubResource("ShaderMaterial_y25gk")
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_dd427")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=150281943 node_paths=PackedStringArray("target")]
@@ -69,5 +82,13 @@ texture_progress = SubResource("GradientTexture1D_c7qcy")
 tint_under = Color(0, 0, 0, 1)
 tint_progress = Color(0.23921569, 0.8627451, 0.3019608, 1)
 script = ExtResource("4_nybob")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1465580296]
+
+[node name="Panel" type="Panel" parent="Node2D" unique_id=139069380]
+offset_left = 25.0
+offset_top = -10.0
+offset_right = 45.0
+offset_bottom = 10.0
 
 [connection signal="health_changed" from="HealthComponent" to="HPBar" method="_on_health_component_health_changed"]

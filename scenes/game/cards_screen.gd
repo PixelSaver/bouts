@@ -40,6 +40,7 @@ func _on_card_pressed(upgrade:UpgradeManager.Upgrades):
 		submit_upgrade_pick(upgrade)
 	else:
 		submit_upgrade_pick.rpc_id(1, upgrade)
+
 @rpc("any_peer", "reliable")
 ## Client rpc's server to tell it what upgrade it wants
 func submit_upgrade_pick(upgrade:UpgradeManager.Upgrades):

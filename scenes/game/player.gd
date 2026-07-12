@@ -6,7 +6,8 @@ signal died
 @export var _health_component: HealthComponent
 @export var acceleration := 400
 @export var jump_strength := 400
-@export var _damage := 1.;
+@export var _damage := 1.
+@export var sensitivity := 1.
 var is_on_floor := false
 var _jump_buffer := 0.3
 var _jump_buffer_max := 0.3
@@ -35,6 +36,10 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 func _handle_input():
 	if not is_multiplayer_authority(): return # only client controls client player
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	
 	var dir := Input.get_axis("left", "right")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
 	var _shoot = Vector2.ZERO

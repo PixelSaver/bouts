@@ -20,6 +20,8 @@ func spawn_bullet(atk:Attack, rot:float, pos:Vector2, owned_id:int) -> void:
 	inst.attack = atk
 	inst.global_position = pos
 	inst.global_rotation = rot
+	inst.velocity = Vector2.RIGHT.rotated(rot) * inst.speed
+	inst.acceleration = Vector2.DOWN * 500.0
 	inst.top_level = true
 	
 	self.add_child(inst)
@@ -34,6 +36,8 @@ func spawn_bullet_remote(net_id:int, pos:Vector2, rot:float, owned_id:int):
 	bullet.owner_id = owned_id
 	bullet.global_position = pos
 	bullet.global_rotation = rot
+	bullet.velocity = Vector2.RIGHT.rotated(rot) * bullet.speed
+	bullet.acceleration = Vector2.DOWN * 500.0
 	
 	add_child(bullet)
 	bullets[net_id] = bullet
@@ -48,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	if !multiplayer.is_server(): return
 	var states = []
 	for bullet in (bullets.values() as Array[Bullet]): 
-		bullet.global_position += Vector2.RIGHT.rotated(bullet.global_rotation) * delta * bullet.speed
+		bullet.server_update(delta)
 		states.append({
 			"id": bullet.net_id,
 			"pos": bullet.global_position,

@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dhx68cypk06u8" path="res://scenes/bullet.gd" id="1_mkf8s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
-radius = 20.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1aey"]
 content_margin_left = 0.0
@@ -16,7 +15,12 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="Curve" id="Curve_gkedh"]
+_data = [Vector2(0, 0), 0.0, 3.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [node name="Bullet" type="Area2D" unique_id=27237560]
+z_index = 1
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_mkf8s")
@@ -29,6 +33,12 @@ offset_right = 40.0
 offset_bottom = 40.0
 offset_transform_enabled = true
 offset_transform_position_ratio = Vector2(-0.5, -0.5)
+offset_transform_scale = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_h1aey")
+
+[node name="Trail" type="Line2D" parent="." unique_id=1388799987]
+top_level = true
+width = 20.0
+width_curve = SubResource("Curve_gkedh")
 
 [connection signal="body_entered" from="." to="." method="_body_entered"]
