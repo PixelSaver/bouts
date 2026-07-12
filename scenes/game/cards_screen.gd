@@ -35,22 +35,43 @@ func start_anim() -> void:
 		inst.pressed.connect(_on_card_pressed.bind(upgrade))
 
 func _on_card_pressed(upgrade:UpgradeManager.Upgrades):
-	submit_upgrade_pick.rpc_id(1, upgrade)
+	print("Upgrade: %s" % upgrade)
+	if multiplayer.is_server():
+		submit_upgrade_pick(upgrade)
+	else:
+		submit_upgrade_pick.rpc_id(1, upgrade)
 @rpc("any_peer", "reliable")
+## Client rpc's server to tell it what upgrade it wants
 func submit_upgrade_pick(upgrade:UpgradeManager.Upgrades):
 	if not multiplayer.is_server(): return
 	var sender := multiplayer.get_remote_sender_id()
+	sender = 1 if sender == 0 else sender
 	if not Global.round_state.player_states.keys().has(sender) or not Global.round_state.player_states.get(sender, []).has(upgrade): 
 		push_warning("Server doesn't have client picked upgrade in possible upgrades")
 		return
 	receive_upgrade.rpc(sender, upgrade)
-@rpc("authority", "call_remote", "reliable")
+@rpc("any_peer", "call_local", "reliable")
+## Server rpc's all clients to tell what upgrades it gave
 func receive_upgrade(player_id:int, upgrade:UpgradeManager.Upgrades):
 	var pi: PlayerInfo = Global.menu_manager.players.get(player_id)
 	if not pi: 
 		push_warning("Playerid not found when upgrading ")
 	pi.upgrades.append(upgrade)
-	
+	if multiplayer.is_server():
+		await card_selection_anim()
+		receive_move_on.rpc()
+
+@rpc("any_peer", "call_local", "reliable")
+func receive_move_on():
+	Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
+
+func card_selection_anim():
+	#TODO Add the card selection animation
+	await get_tree().process_frame
 
 func end_anim() -> void: 
-	pass
+	self.hide()
+	for card in _get_cards():
+		card.syncing = false
+	await get_tree().create_timer(2.0).timeout
+	queue_free()

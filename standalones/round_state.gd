@@ -5,3 +5,6 @@ class_name RoundState
 
 func set_player_upgrades(id:int, upgrades:Array[UpgradeManager.Upgrades]):
 	player_states.set(id, upgrades)
+
+func _to_string() -> String:
+	return "%s" % self.player_states

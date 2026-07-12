@@ -14,6 +14,7 @@ func _ready() -> void:
 			Global.player_won_id = id
 			#TODO Upgrade to 4 player
 			Global.round_state.set_player_upgrades(Global.get_losers().front(), ups)
+			print("On server, round state: %s" % Global.round_state)
 			for _id in Global.menu_manager.players.keys():
 				if _id == 1: continue
 				receive_upgrades.rpc_id(_id, id, ups)

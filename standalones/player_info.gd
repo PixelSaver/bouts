@@ -4,7 +4,7 @@ class_name PlayerInfo
 @export var player_name = ""
 @export var id = 0
 @export var color = Color.WHITE
-@export var upgrades: Array[int] = []
+@export var upgrades: Array[UpgradeManager.Upgrades] = []
 
 func _init(_name: String="") -> void:
 	player_name = _name if _name.length() > 0 else "PlayerName"
@@ -25,4 +25,4 @@ static func from_dict(d: Dictionary) -> PlayerInfo:
 	return p
 
 func _to_string() -> String:
-	return "PlayerInfo Res (ID: %s, Name: %s, Color: %s)" % [self.id, self.player_name, self.color]
+	return "PlayerInfo Res (ID: %s, Name: %s, Color: %s, Upgrades: %s)" % [self.id, self.player_name, self.color, self.upgrades]
