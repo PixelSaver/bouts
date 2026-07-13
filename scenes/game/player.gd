@@ -119,7 +119,7 @@ func get_player_scale() -> float: return _player_scale
 func set_player_scale(player_scale: float):
 	_player_scale = player_scale
 	_sprite.scale = Vector2.ONE * player_scale * 0.5
-	gun_radius = 35 * player_scale
+	gun_radius = int(35. * player_scale)
 	(_col.shape as CircleShape2D).radius = 30 * player_scale
 #endregion
 

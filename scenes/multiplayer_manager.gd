@@ -23,6 +23,15 @@ func _ready() -> void:
 	multiplayer.server_disconnected.connect(_server_disconnected)
 	SignalBus.host.connect(init_server)
 	SignalBus.join.connect(join_server)
+	
+	## On disconnect, reset 
+	#self.server_disconnected.connect(func():
+		#self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER))
+	#)
+	#TODO Make disconnection work with 4 players, checking if you're the last person in lobby
+	self.player_disconnected.connect(func(_id:int):
+		self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER))
+	)
 #region Network callbacks from SceneTree
 # Callback from SceneTree.
 
@@ -35,6 +44,7 @@ func _peer_connected(_id: int) -> void:
 
 
 func _peer_disconnected(_id: int) -> void:
+	push_warning("Peer %s disconnected" % _id)
 	players.erase(_id)
 	player_disconnected.emit(_id)
 	
@@ -60,6 +70,7 @@ func _server_connection_failed() -> void:
 
 ## Remove all info from server on disconnect
 func _server_disconnected() -> void:
+	push_warning("Server disconnected")
 	multiplayer.multiplayer_peer = null
 	players.clear()
 	server_disconnected.emit()

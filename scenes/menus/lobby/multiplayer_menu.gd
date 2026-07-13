@@ -18,6 +18,7 @@ func _ready() -> void:
 	loading_screen.show()
 	waiting_screen.hide()
 	SignalBus.hosted.connect(_on_hosted)
+	SignalBus.join.connect(_on_join)
 	waiting_start_game_button.pressed.connect(_on_start_game)
 
 func _on_start_game() -> void:
@@ -30,8 +31,12 @@ func start_game():
 func _on_hosted() -> void: 
 	loading_screen.end_anim()
 	waiting_screen.start_anim()
+func _on_join(_ip:String) -> void:
+	loading_screen.end_anim()
+	waiting_screen.start_anim()
 
 func start_anim() -> void: 
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	loading_screen.start_anim()
 func end_anim() -> void: 
 	queue_free()

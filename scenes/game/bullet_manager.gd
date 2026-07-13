@@ -83,4 +83,5 @@ func sync_projectiles(states: Array):
 		if bullet:
 			bullet.global_position = state.pos
 			bullet.global_rotation = state.rot
+			bullet._update_trail()
 #endregion
