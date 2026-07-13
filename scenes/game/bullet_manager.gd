@@ -1,6 +1,7 @@
 extends Node2D
 class_name BulletManager
 
+@export var bullet_distance_killzone := 1000
 var bullets: Dictionary[int, Bullet] = {}
 var next_id := 0
 
@@ -52,6 +53,9 @@ func _physics_process(delta: float) -> void:
 	if !multiplayer.is_server(): return
 	var states = []
 	for bullet in (bullets.values() as Array[Bullet]): 
+		if bullet.global_position.length() > bullet_distance_killzone:
+			remove_bullet(bullet)
+		
 		bullet.server_update(delta)
 		states.append({
 			"id": bullet.net_id,
@@ -59,6 +63,18 @@ func _physics_process(delta: float) -> void:
 			"rot": bullet.global_rotation,
 		})
 	sync_projectiles.rpc(states)
+
+func remove_bullet(bullet:Bullet):
+	bullets.erase(bullet.net_id)
+	bullet.queue_free()
+	receive_removed_bullet.rpc(bullet.net_id)
+@rpc("authority", "reliable", "call_remote")
+func receive_removed_bullet(id:int):
+	var bullet = bullets.get(id)
+	if bullet:
+		bullet.queue_free()
+		bullets.erase(id)
+	
 
 @rpc("authority", "call_remote", "unreliable")
 func sync_projectiles(states: Array):

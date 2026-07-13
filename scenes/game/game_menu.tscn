@@ -33,3 +33,4 @@ texture = ExtResource("2_m4cfo")
 
 [node name="BulletManager" type="Node2D" parent="." unique_id=494906724]
 script = ExtResource("3_dehnt")
+bullet_distance_killzone = null
