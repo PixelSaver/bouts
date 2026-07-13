@@ -38,7 +38,7 @@ colors = PackedColorArray(0.3412262, 0.86777294, 0.47989196, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_c7qcy"]
 gradient = SubResource("Gradient_wwvfn")
 
-[node name="Player" type="RigidBody2D" unique_id=84880262 node_paths=PackedStringArray("_health_component", "_gun")]
+[node name="Player" type="RigidBody2D" unique_id=84880262 node_paths=PackedStringArray("_health_component", "_sprite", "_col", "_gun")]
 collision_layer = 3
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_dd427")
@@ -50,6 +50,8 @@ max_contacts_reported = 10
 linear_damp = 10.0
 script = ExtResource("1_6w7gq")
 _health_component = NodePath("HealthComponent")
+_sprite = NodePath("Sprite2D")
+_col = NodePath("CollisionShape2D")
 _gun = NodePath("Gun")
 acceleration = 10000
 jump_strength = 2000

@@ -5,4 +5,6 @@
 
 [resource]
 script = ExtResource("2_k2c6a")
+name = "HP Up"
+description = "Increases your health!!"
 metadata/_custom_type_script = "uid://dpq46x6orgdle"

@@ -34,11 +34,12 @@ func start_anim() -> void:
 		if not player_info: 
 			printerr("Player info not readable as PlayerInfo")
 			continue
-		spawn_player.rpc(key, Vector2(i * 100, 0))
+		spawn_player.rpc(key, Vector2(i * 500, 0), player_info.upgrades)
 @rpc("authority", "reliable", "call_local")
-func spawn_player(id: int, pos: Vector2):
+func spawn_player(id: int, pos: Vector2, ups:Array[UpgradeManager.Upgrades]):
 	var inst = PLAYER.instantiate()
 	players.add_child(inst)
+	inst.apply_upgrades(ups)
 	await get_tree().process_frame
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)

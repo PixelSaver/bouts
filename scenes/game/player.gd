@@ -4,6 +4,8 @@ class_name Player
 signal died
 @export_subgroup("Nodes", "_")
 @export var _health_component: HealthComponent
+@export var _sprite: Sprite2D
+@export var _col: CollisionShape2D
 @export var _gun: Node2D
 @export var acceleration := 400
 @export var jump_strength := 400
@@ -16,27 +18,14 @@ var _jump_buffer_max := 0.3
 var _shoot_buffer := 0.2
 var _shoot_buffer_max := 0.2
 var _gun_angle := 0.
+var _player_scale := 1.0
 var input_dir : float
 var input_jump : bool
 
 func _ready() -> void:
 	_health_component.death.connect(_on_death)
 
-func _physics_process(delta: float) -> void:
-	_shoot_buffer -= delta
-	_jump_buffer -= delta
-	_handle_input()
-	if not multiplayer.is_server(): return
-	_process_movement(input_dir, input_jump, delta)
-
-func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	is_on_floor = false
-	for i in range(state.get_contact_count()):
-		var normal = state.get_contact_local_normal(i)
-		#var point = state.get_contact_local_position(i)
-		if normal.dot(Vector2.UP) > 0.999:
-			is_on_floor = true
-
+#region Input
 func _input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
@@ -87,11 +76,9 @@ func sync_state(pos:Vector2, vel:Vector2, gun_angle:float) -> void:
 	global_position = pos
 	linear_velocity = vel
 	_gun_angle = gun_angle
+#endregion
 
-#func _process_shoot(shoot)
-	#if _shoot != Vector2.ZERO and _shoot_buffer < 0.:
-		#if multiplayer.is_server(): self.shoot.rpc(input_shoot.angle())
-
+#region Movement
 func _process_movement(dir:float, jump:bool, _delta:float) -> void:
 	var can_jump := true
 	if not is_on_floor:
@@ -107,7 +94,35 @@ func _process_movement(dir:float, jump:bool, _delta:float) -> void:
 	if multiplayer.is_server():
 		sync_state.rpc(global_position, linear_velocity, _gun_angle)
 
-	
+func _physics_process(delta: float) -> void:
+	_shoot_buffer -= delta
+	_jump_buffer -= delta
+	_handle_input()
+	if not multiplayer.is_server(): return
+	_process_movement(input_dir, input_jump, delta)
+
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	is_on_floor = false
+	for i in range(state.get_contact_count()):
+		var normal = state.get_contact_local_normal(i)
+		#var point = state.get_contact_local_position(i)
+		if normal.dot(Vector2.UP) > 0.999:
+			is_on_floor = true
+#endregion
+
+func apply_upgrades(ups:Array[UpgradeManager.Upgrades]):
+	for up in ups:
+		UpgradeManager.apply_upgrade(self, up)
+
+#region Upgrade functions
+func get_player_scale() -> float: return _player_scale
+func set_player_scale(player_scale: float):
+	_player_scale = player_scale
+	_sprite.scale = Vector2.ONE * player_scale * 0.5
+	gun_radius = 35 * player_scale
+	(_col.shape as CircleShape2D).radius = 30 * player_scale
+#endregion
+
 func _on_death() -> void:
 	died.emit()
 	#queue_free()
