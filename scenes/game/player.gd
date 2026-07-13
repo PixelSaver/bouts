@@ -4,15 +4,18 @@ class_name Player
 signal died
 @export_subgroup("Nodes", "_")
 @export var _health_component: HealthComponent
+@export var _gun: Node2D
 @export var acceleration := 400
 @export var jump_strength := 400
 @export var _damage := 1.
 @export var sensitivity := 1.
+@export var gun_radius := 35
 var is_on_floor := false
 var _jump_buffer := 0.3
 var _jump_buffer_max := 0.3
 var _shoot_buffer := 0.2
 var _shoot_buffer_max := 0.2
+var _gun_angle := 0.
 var input_dir : float
 var input_jump : bool
 
@@ -34,23 +37,31 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		if normal.dot(Vector2.UP) > 0.999:
 			is_on_floor = true
 
-func _handle_input():
-	if not is_multiplayer_authority(): return # only client controls client player
+func _input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
+	if event is InputEventMouseMotion:
+		var diff = event.relative * sensitivity
+		_gun.position = (_gun.position + diff).normalized() * gun_radius
+		_gun_angle = _gun.position.angle()
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _handle_input():
+	if not is_multiplayer_authority(): 
+		_gun.position = Vector2.RIGHT.rotated(_gun_angle) * gun_radius
+		return # only client controls client player
 	
 	
 	var dir := Input.get_axis("left", "right")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
 	var _shoot = Vector2.ZERO
 	if Input.is_action_just_pressed("l_click"):
-		_shoot = (get_global_mouse_position() - self.global_position).normalized()
-		submit_shot.rpc(_shoot.angle(), multiplayer.get_unique_id())
+		submit_shot.rpc(_gun_angle, multiplayer.get_unique_id())
 	if multiplayer.is_server():
 		input_dir = dir
 		input_jump = jump
 	else:
-		submit_input.rpc(dir, jump)
+		submit_input.rpc(dir, jump, _gun_angle)
 
 @rpc("any_peer", "reliable")
 func submit_shot(angle:float, id:int):
@@ -64,16 +75,18 @@ func sync_bullet(angle:float, id:int):
 	#add_child(bullet)
 @rpc("any_peer", "unreliable")
 ## Sending input from client to server
-func submit_input(dir:float, jump:bool) -> void:
+func submit_input(dir:float, jump:bool, gun_angle:float) -> void:
 	input_dir = dir
 	input_jump = jump
+	_gun_angle = gun_angle
 
 @rpc("any_peer", "unreliable")
 ## Server processing and then sending back
-func sync_state(pos:Vector2, vel:Vector2) -> void:
+func sync_state(pos:Vector2, vel:Vector2, gun_angle:float) -> void:
 	if multiplayer.is_server(): return # don't overwrite server's local player
 	global_position = pos
 	linear_velocity = vel
+	_gun_angle = gun_angle
 
 #func _process_shoot(shoot)
 	#if _shoot != Vector2.ZERO and _shoot_buffer < 0.:
@@ -92,7 +105,7 @@ func _process_movement(dir:float, jump:bool, _delta:float) -> void:
 	if direction:
 		self.apply_central_force(Vector2.RIGHT * direction * acceleration)
 	if multiplayer.is_server():
-		sync_state.rpc(global_position, linear_velocity)
+		sync_state.rpc(global_position, linear_velocity, _gun_angle)
 
 	
 func _on_death() -> void:

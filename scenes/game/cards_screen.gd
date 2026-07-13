@@ -12,7 +12,7 @@ func _get_cards() -> Array[CardDisplay]:
 	return out
 
 func _ready() -> void:
-	pass
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 func start_anim() -> void: 
 	if Global.player_won_id == -1: 
 		push_error("Tied or winning player id was -1")

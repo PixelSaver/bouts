@@ -38,7 +38,7 @@ colors = PackedColorArray(0.3412262, 0.86777294, 0.47989196, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_c7qcy"]
 gradient = SubResource("Gradient_wwvfn")
 
-[node name="Player" type="RigidBody2D" unique_id=84880262 node_paths=PackedStringArray("_health_component")]
+[node name="Player" type="RigidBody2D" unique_id=84880262 node_paths=PackedStringArray("_health_component", "_gun")]
 collision_layer = 3
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_dd427")
@@ -50,6 +50,7 @@ max_contacts_reported = 10
 linear_damp = 10.0
 script = ExtResource("1_6w7gq")
 _health_component = NodePath("HealthComponent")
+_gun = NodePath("Gun")
 acceleration = 10000
 jump_strength = 2000
 
@@ -83,12 +84,13 @@ tint_under = Color(0, 0, 0, 1)
 tint_progress = Color(0.23921569, 0.8627451, 0.3019608, 1)
 script = ExtResource("4_nybob")
 
-[node name="Node2D" type="Node2D" parent="." unique_id=1465580296]
+[node name="Gun" type="Node2D" parent="." unique_id=2143634872]
+position = Vector2(35, 0)
 
-[node name="Panel" type="Panel" parent="Node2D" unique_id=139069380]
-offset_left = 25.0
+[node name="GunProto" type="Panel" parent="Gun" unique_id=139069380]
+offset_left = -10.0
 offset_top = -10.0
-offset_right = 45.0
+offset_right = 10.0
 offset_bottom = 10.0
 
 [connection signal="health_changed" from="HealthComponent" to="HPBar" method="_on_health_component_health_changed"]
