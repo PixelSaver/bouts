@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://b1glweeknxpox"]
+
+[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="1_r21v7"]
+[ext_resource type="Script" uid="uid://wler21gs1eif" path="res://scenes/active_ragdoll/stickman_ragdoll.gd" id="2_gpl15"]
+[ext_resource type="Script" uid="uid://d34uadqdeskbe" path="res://scenes/active_ragdoll/pelvis_left.gd" id="3_2341u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r21v7"]
+size = Vector2(174, 118)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpl15"]
+size = Vector2(1126, 20)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gpl15"]
+friction = 0.21
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
+size = Vector2(100, 20)
+
+[node name="ActiveRagdollTest" type="Node2D" unique_id=1572524226]
+
+[node name="Box" type="StaticBody2D" parent="." unique_id=756784022]
+position = Vector2(514, 704)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=2109091937]
+shape = SubResource("RectangleShape2D_r21v7")
+
+[node name="Sprite2D" type="Sprite2D" parent="Box" unique_id=1638827568]
+scale = Vector2(1.3593749, 0.90624976)
+texture = ExtResource("1_r21v7")
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1475093935]
+position = Vector2(554, 553)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=711020976]
+shape = SubResource("RectangleShape2D_gpl15")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=983935877]
+scale = Vector2(8.796875, 0.171875)
+texture = ExtResource("1_r21v7")
+
+[node name="Floor2" type="StaticBody2D" parent="." unique_id=1106884957]
+position = Vector2(-12, 125)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" unique_id=108052950]
+shape = SubResource("RectangleShape2D_gpl15")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2" unique_id=1643120922]
+scale = Vector2(8.796875, 0.171875)
+texture = ExtResource("1_r21v7")
+
+[node name="Floor3" type="StaticBody2D" parent="." unique_id=1197269738]
+position = Vector2(1129, 102)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor3" unique_id=2030181631]
+shape = SubResource("RectangleShape2D_gpl15")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor3" unique_id=1806053044]
+scale = Vector2(8.796875, 0.171875)
+texture = ExtResource("1_r21v7")
+
+[node name="StickmanRagdoll" type="Node2D" parent="." unique_id=78864159 node_paths=PackedStringArray("torso")]
+position = Vector2(305, 255)
+script = ExtResource("2_gpl15")
+power = 1
+torque = 80000
+torso = NodePath("Torso")
+
+[node name="Torso" type="RigidBody2D" parent="StickmanRagdoll" unique_id=1055579931]
+position = Vector2(0, -56)
+rotation = -1.5707964
+physics_material_override = SubResource("PhysicsMaterial_gpl15")
+linear_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/Torso" unique_id=1914518834]
+shape = SubResource("RectangleShape2D_gkedh")
+
+[node name="Sprite2D" type="Sprite2D" parent="StickmanRagdoll/Torso" unique_id=2141381815]
+scale = Vector2(0.7924631, 0.14969653)
+texture = ExtResource("1_r21v7")
+
+[node name="PelvisLeft" type="PinJoint2D" parent="StickmanRagdoll/Torso" unique_id=1780151298]
+position = Vector2(-56, 0)
+rotation = 1.5707964
+node_a = NodePath("..")
+node_b = NodePath("../../Left")
+script = ExtResource("3_2341u")
+target_angle = -2.094
+damping_ratio = 0.7
+
+[node name="PelvisRight" type="PinJoint2D" parent="StickmanRagdoll/Torso" unique_id=611427023]
+visible = false
+modulate = Color(0.42745098, 1, 0.41568628, 1)
+position = Vector2(-56, 0)
+rotation = 1.5707964
+node_a = NodePath("../../Right")
+node_b = NodePath("..")
+script = ExtResource("3_2341u")
+target_angle = -1.047
+stiffness = 0.0
+metadata/_custom_type_script = "uid://d34uadqdeskbe"
+
+[node name="Left" type="RigidBody2D" parent="StickmanRagdoll" unique_id=725183372]
+modulate = Color(1, 0.30980393, 0.24705882, 1)
+position = Vector2(-42, 44)
+rotation = -0.7853982
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_gpl15")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/Left" unique_id=1056531069]
+shape = SubResource("RectangleShape2D_gkedh")
+
+[node name="Sprite2D" type="Sprite2D" parent="StickmanRagdoll/Left" unique_id=1478559754]
+scale = Vector2(0.7924631, 0.14969653)
+texture = ExtResource("1_r21v7")
+
+[node name="Right" type="RigidBody2D" parent="StickmanRagdoll" unique_id=1489445878]
+modulate = Color(0.3529412, 1, 0.41568628, 1)
+position = Vector2(42, 44.000004)
+rotation = 0.7853982
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_gpl15")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/Right" unique_id=301975777]
+shape = SubResource("RectangleShape2D_gkedh")
+
+[node name="Sprite2D" type="Sprite2D" parent="StickmanRagdoll/Right" unique_id=1119028248]
+scale = Vector2(0.7924631, 0.14969653)
+texture = ExtResource("1_r21v7")
