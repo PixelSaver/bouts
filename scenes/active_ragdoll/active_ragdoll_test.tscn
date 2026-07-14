@@ -64,7 +64,6 @@ texture = ExtResource("1_r21v7")
 position = Vector2(305, 255)
 script = ExtResource("2_gpl15")
 power = 1
-torque = 80000
 torso = NodePath("Torso")
 
 [node name="Torso" type="RigidBody2D" parent="StickmanRagdoll" unique_id=1055579931]
@@ -87,7 +86,9 @@ node_a = NodePath("..")
 node_b = NodePath("../../Left")
 script = ExtResource("3_2341u")
 target_angle = -2.094
+stiffness = 100000000000.0
 damping_ratio = 0.7
+max_torque = 5000000000.0
 
 [node name="PelvisRight" type="PinJoint2D" parent="StickmanRagdoll/Torso" unique_id=611427023]
 visible = false
@@ -97,8 +98,8 @@ rotation = 1.5707964
 node_a = NodePath("../../Right")
 node_b = NodePath("..")
 script = ExtResource("3_2341u")
-target_angle = -1.047
-stiffness = 0.0
+target_angle = 1.047
+stiffness = 100000.0
 metadata/_custom_type_script = "uid://d34uadqdeskbe"
 
 [node name="Left" type="RigidBody2D" parent="StickmanRagdoll" unique_id=725183372]
