@@ -10,4 +10,4 @@ func _physics_process(delta: float) -> void:
 		torso.apply_force(Vector2.LEFT * power)
 	
 	var angle = torso.global_transform.get_rotation() + PI/2.
-	torso.apply_torque(- angle * torque)
+	#torso.apply_torque(- angle * torque)
