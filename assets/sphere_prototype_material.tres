@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://rr0pbqk1088t"]
+
+[ext_resource type="Shader" uid="uid://dg1yo2d0chife" path="res://shaders/sphere.gdshader" id="1_apbhu"]
+
+[resource]
+shader = ExtResource("1_apbhu")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.5
+shader_parameter/rotation_speed_x = 0.0
+shader_parameter/rotation_speed_y = 0.0
+shader_parameter/rotation_speed_z = 0.0
+shader_parameter/rotation_offset_x = 0.0
+shader_parameter/rotation_offset_y = 0.5
+shader_parameter/rotation_offset_z = 0.0
