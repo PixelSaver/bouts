@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="1_r21v7"]
 [ext_resource type="Script" uid="uid://wler21gs1eif" path="res://scenes/active_ragdoll/stickman_ragdoll.gd" id="2_gpl15"]
 [ext_resource type="Script" uid="uid://bbbjh7tp0fq7w" path="res://scenes/active_ragdoll/target_angle_rigidbody.gd" id="3_2341u"]
+[ext_resource type="PhysicsMaterial" uid="uid://w2lebln4ho1x" path="res://assets/ragdoll_physics_material.tres" id="3_fi4wy"]
 [ext_resource type="Shader" uid="uid://dg1yo2d0chife" path="res://shaders/sphere.gdshader" id="4_6748a"]
 [ext_resource type="Material" uid="uid://rr0pbqk1088t" path="res://assets/sphere_prototype_material.tres" id="5_c4p01"]
 
@@ -11,9 +12,6 @@ size = Vector2(174, 118)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpl15"]
 size = Vector2(1126, 20)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gpl15"]
-friction = 0.3
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
 radius = 25.0
@@ -34,6 +32,12 @@ size = Vector2(20, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
 size = Vector2(20, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4p01"]
+size = Vector2(20, 50)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkedh"]
+height = 73.539185
 
 [node name="ActiveRagdollTest" type="Node2D" unique_id=1572524226]
 
@@ -79,7 +83,7 @@ shape = SubResource("RectangleShape2D_gpl15")
 scale = Vector2(8.796875, 0.171875)
 texture = ExtResource("1_r21v7")
 
-[node name="StickmanRagdoll" type="Node2D" parent="." unique_id=78864159 node_paths=PackedStringArray("head", "torso", "r_leg", "l_leg", "r_arm", "l_arm")]
+[node name="StickmanRagdoll" type="Node2D" parent="." unique_id=78864159 node_paths=PackedStringArray("head", "torso", "r_leg", "l_leg", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_arm")]
 position = Vector2(305, 255)
 script = ExtResource("2_gpl15")
 power = 1000
@@ -88,12 +92,15 @@ head = NodePath("Head")
 torso = NodePath("Torso")
 r_leg = NodePath("RightLeg")
 l_leg = NodePath("LeftLeg")
-r_arm = NodePath("RightArm")
+r_shoulder = NodePath("Torso/ShoulderRight")
+r_arm_fore = NodePath("RightForeArm")
+r_elbow = NodePath("RightUpperArm/RightElbowJoint")
+r_arm_upper = NodePath("RightUpperArm")
 l_arm = NodePath("LeftArm")
 
 [node name="Head" type="RigidBody2D" parent="StickmanRagdoll" unique_id=109407763]
 position = Vector2(0, -53)
-physics_material_override = SubResource("PhysicsMaterial_gpl15")
+physics_material_override = ExtResource("3_fi4wy")
 gravity_scale = 0.5
 inertia = 1000.0
 linear_damp = 1.0
@@ -116,7 +123,7 @@ node_b = NodePath("../../Torso")
 
 [node name="Torso" type="RigidBody2D" parent="StickmanRagdoll" unique_id=1395912776]
 position = Vector2(0, 31)
-physics_material_override = SubResource("PhysicsMaterial_gpl15")
+physics_material_override = ExtResource("3_fi4wy")
 gravity_scale = 0.5
 inertia = 1000.0
 linear_damp = 1.0
@@ -154,7 +161,7 @@ node_b = NodePath("../../LeftArm")
 modulate = Color(0.42745098, 1, 0.41568628, 1)
 position = Vector2(0, -30.999996)
 rotation = 1.5707964
-node_a = NodePath("../../RightArm")
+node_a = NodePath("../../RightUpperArm")
 node_b = NodePath("..")
 
 [node name="MousePivot" type="Node2D" parent="StickmanRagdoll/Torso" unique_id=887366858]
@@ -170,12 +177,13 @@ modulate = Color(1, 0.30980393, 0.24705882, 1)
 position = Vector2(-42, 131)
 rotation = 0.7853982
 scale = Vector2(0.99999994, 0.99999994)
-physics_material_override = SubResource("PhysicsMaterial_gpl15")
+mass = 0.1
+physics_material_override = ExtResource("3_fi4wy")
 gravity_scale = 0.5
 center_of_mass_mode = 1
 inertia = 1000.0
 script = ExtResource("3_2341u")
-power = 300000.0
+power = 200000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/LeftLeg" unique_id=1056531069]
 shape = SubResource("RectangleShape2D_gkedh")
@@ -189,11 +197,12 @@ modulate = Color(0.3529412, 1, 0.41568628, 1)
 position = Vector2(42, 131)
 rotation = -0.7853982
 scale = Vector2(0.99999994, 0.99999994)
-physics_material_override = SubResource("PhysicsMaterial_gpl15")
+mass = 0.1
+physics_material_override = ExtResource("3_fi4wy")
 gravity_scale = 0.5
 inertia = 1000.0
 script = ExtResource("3_2341u")
-power = 300000.0
+power = 200000.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/RightLeg" unique_id=301975777]
@@ -208,13 +217,14 @@ modulate = Color(1, 0.30980393, 0.24705882, 1)
 position = Vector2(-42, 41)
 rotation = 0.7853982
 scale = Vector2(0.99999994, 0.99999994)
-physics_material_override = SubResource("PhysicsMaterial_gpl15")
+mass = 0.1
+physics_material_override = ExtResource("3_fi4wy")
 gravity_scale = 0.5
 center_of_mass_mode = 1
 inertia = 1000.0
 script = ExtResource("3_2341u")
 target_angle = -1.571
-power = 0.0
+power = 30000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/LeftArm" unique_id=220039728]
 shape = SubResource("RectangleShape2D_gkedh")
@@ -223,22 +233,75 @@ shape = SubResource("RectangleShape2D_gkedh")
 scale = Vector2(0.15, 0.8)
 texture = ExtResource("1_r21v7")
 
-[node name="RightArm" type="RigidBody2D" parent="StickmanRagdoll" unique_id=1791091802]
+[node name="RightUpperArm" type="RigidBody2D" parent="StickmanRagdoll" unique_id=1791091802]
 modulate = Color(0.3529412, 1, 0.41568628, 1)
-position = Vector2(42, 41.000004)
+position = Vector2(24, 23.000004)
 rotation = -0.7853982
 scale = Vector2(0.99999994, 0.99999994)
-physics_material_override = SubResource("PhysicsMaterial_gpl15")
+mass = 0.1
+physics_material_override = ExtResource("3_fi4wy")
 gravity_scale = 0.5
 inertia = 1000.0
 script = ExtResource("3_2341u")
 target_angle = 1.571
-power = 100000.0
+power = 30000.0
+damping = 3000.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/RightArm" unique_id=1234556854]
-shape = SubResource("RectangleShape2D_gkedh")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/RightUpperArm" unique_id=1234556854]
+shape = SubResource("RectangleShape2D_c4p01")
 
-[node name="Sprite2D" type="Sprite2D" parent="StickmanRagdoll/RightArm" unique_id=1726021373]
-scale = Vector2(0.15, 0.8)
+[node name="Sprite2D" type="Sprite2D" parent="StickmanRagdoll/RightUpperArm" unique_id=1726021373]
+scale = Vector2(0.15, 0.4)
 texture = ExtResource("1_r21v7")
+
+[node name="RightElbowJoint" type="PinJoint2D" parent="StickmanRagdoll/RightUpperArm" unique_id=2145242691]
+position = Vector2(0, 26.870062)
+node_a = NodePath("..")
+node_b = NodePath("../../RightForeArm")
+
+[node name="RightForeArm" type="RigidBody2D" parent="StickmanRagdoll" unique_id=725237422]
+modulate = Color(0.3529412, 1, 0.41568628, 1)
+position = Vector2(62, 61.000004)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+mass = 0.1
+physics_material_override = ExtResource("3_fi4wy")
+gravity_scale = 0.1
+inertia = 1000.0
+script = ExtResource("3_2341u")
+target_angle = 1.571
+power = 30000.0
+damping = 3000.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/RightForeArm" unique_id=1221393926]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="Sprite2D" type="Sprite2D" parent="StickmanRagdoll/RightForeArm" unique_id=2089813155]
+scale = Vector2(0.15, 0.4)
+texture = ExtResource("1_r21v7")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="StickmanRagdoll/RightForeArm" unique_id=1012052181]
+position = Vector2(0, 26.870062)
+node_b = NodePath("../../Sword")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="StickmanRagdoll/RightForeArm" unique_id=408834666]
+position = Vector2(0.70710707, 38.89088)
+node_b = NodePath("../../Sword")
+
+[node name="Sword" type="RigidBody2D" parent="StickmanRagdoll" unique_id=259221601]
+position = Vector2(110, 108)
+rotation = -0.7853982
+mass = 0.1
+physics_material_override = ExtResource("3_fi4wy")
+inertia = 1000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StickmanRagdoll/Sword" unique_id=561781650]
+shape = SubResource("CapsuleShape2D_gkedh")
+
+[node name="Line2D" type="Line2D" parent="StickmanRagdoll/Sword" unique_id=1155047539]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
