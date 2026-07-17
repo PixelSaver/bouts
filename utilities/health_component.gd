@@ -21,9 +21,9 @@ signal death()
 			health_changed.emit(health, max_health)
 ## The node (player/enemy) to own this health bar. If this is
 ## not set, the node will automatically use it's direct parent
-## if it's a RigidBody2D
-@export var target : RigidBody2D
-var _target : RigidBody2D
+## if it's a Player
+@export var target : Player
+var _target : Player
 
 var _pending_atks : Array[Attack] = []
 var _processing := false
@@ -31,7 +31,7 @@ var _processing := false
 func _ready() -> void:
 	if target != null:
 		_target = target
-	elif get_parent() != null and get_parent() is RigidBody2D:
+	elif get_parent() != null and get_parent() is Player:
 		_target = get_parent()
 	else:
 		print_tree_pretty()

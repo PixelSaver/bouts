@@ -1,7 +1,8 @@
 extends PixelMenu
 class_name GameMenu
 
-const PLAYER = preload("res://scenes/game/player.tscn")
+const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
+#"res://scenes/game/player_old.tscn"
 @onready var players: Node2D = $Players
 @onready var bullet_manager: Node2D = $BulletManager
 @onready var player_manager: PlayerManager = $Players
@@ -39,7 +40,7 @@ func start_anim() -> void:
 func spawn_player(id: int, pos: Vector2, ups:Array[UpgradeManager.Upgrades]):
 	var inst = PLAYER.instantiate()
 	players.add_child(inst)
-	inst.apply_upgrades(ups)
+	#inst.apply_upgrades(ups)
 	await get_tree().process_frame
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)

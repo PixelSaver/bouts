@@ -9,14 +9,14 @@ var cards : Dictionary[Upgrades, CardInfo] = {
 	Upgrades.SCALE_UP: preload("res://assets/upgrades/scale_up.tres"),
 }
 ## When instantiating player scene, call this for each upgrade
-func apply_upgrade(player:Player, upgrade_to_apply: Upgrades):
-	match upgrade_to_apply:
-		Upgrades.HP_UP:
-			player._health_component.max_health *= 1.3
-		Upgrades.SCALE_UP:
-			player.set_player_scale(player.get_player_scale() + 0.3)
-		_:
-			pass
+#func apply_upgrade(player:Player, upgrade_to_apply: Upgrades):
+	#match upgrade_to_apply:
+		#Upgrades.HP_UP:
+			#player._health_component.max_health *= 1.3
+		#Upgrades.SCALE_UP:
+			#player.set_player_scale(player.get_player_scale() + 0.3)
+		#_:
+			#pass
 
 func get_card_info(upgrade:Upgrades) -> CardInfo:
 	return cards.get(upgrade)

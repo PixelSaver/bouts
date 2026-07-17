@@ -1,5 +1,5 @@
 extends RigidBody2D
-class_name Player
+#class_name Player
 
 signal died
 @export_subgroup("Nodes", "_")
@@ -112,7 +112,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 func apply_upgrades(ups:Array[UpgradeManager.Upgrades]):
 	for up in ups:
-		UpgradeManager.apply_upgrade(self, up)
+		#UpgradeManager.apply_upgrade(self, up)
+		pass
 
 #region Upgrade functions
 func get_player_scale() -> float: return _player_scale
