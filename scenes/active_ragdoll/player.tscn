@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://dg1yo2d0chife" path="res://shaders/sphere.gdshader" id="4_mlfyp"]
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="5_6w5i6"]
 [ext_resource type="Material" uid="uid://rr0pbqk1088t" path="res://assets/sphere_prototype_material.tres" id="6_hy8pg"]
+[ext_resource type="Script" uid="uid://c52mqd72mbgvv" path="res://scenes/active_ragdoll/sword.gd" id="8_h3ani"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
 radius = 25.0
@@ -355,6 +356,7 @@ collision_mask = 2
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 inertia = 1000.0
+script = ExtResource("8_h3ani")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword" unique_id=1406178130]
 shape = SubResource("CapsuleShape2D_gkedh")

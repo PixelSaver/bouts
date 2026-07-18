@@ -33,12 +33,15 @@ class_name Player
 var _walk_cycle := 0.
 
 signal died
+var is_on_floor := false
 var input_dir := Vector2()
 var input_jump := false
 var _mouse_mode : Input.MouseMode = Input.MOUSE_MODE_VISIBLE
-
+var _look_angle := 0.0
 
 func _ready() -> void:
+	_health_component.death.connect(func():died.emit())
+	
 	var bodies: Array[RigidBody2D] = []
 	for child in get_children():
 		if child is not RigidBody2D: continue
@@ -83,49 +86,18 @@ func _ik_two_seg(
 	upper.target_angle = shoulder_angle - PI/2.
 	lower.target_angle = forearm_angle - PI/2.
 
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	is_on_floor = false
+	for i in range(state.get_contact_count()):
+		var normal = state.get_contact_local_normal(i)
+		#var point = state.get_contact_local_position(i)
+		if normal.dot(Vector2.UP) > 0.999:
+			is_on_floor = true
+
 func _physics_process(delta: float) -> void:
 	_handle_input()
 	if not multiplayer.is_server(): return
-	_process_movement(input_dir, input_jump, delta)
-
-func _process_movement(dir:Vector2, jump:bool, delta:float) -> void:
-	if jump:
-		torso.apply_central_impulse(Vector2.UP * 2000.)
-	if dir.x < 0:
-		torso.apply_force(Vector2.LEFT * power)
-		_walk_cycle += delta * 5.
-		#r_leg.target_angle = sin(_walk_cycle)*.5 
-		#l_leg.target_angle = cos(_walk_cycle)*.5 
-		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(cos(_walk_cycle)*100. , 500))
-		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(sin(_walk_cycle)*100. , 500))
-	elif dir.x > 0:
-		torso.apply_force(Vector2.RIGHT * power)
-		_walk_cycle += delta * 5.
-		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(-cos(_walk_cycle)*100. , 500))
-		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(-sin(_walk_cycle)*100. , 500))
-		#r_leg.target_angle = -sin(_walk_cycle)*.5 
-		#l_leg.target_angle = -cos(_walk_cycle)*.5 
-	else:
-		#r_leg.target_angle = 0.
-		#l_leg.target_angle = 0.
-		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(0, 500))
-		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(0, 500))
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		#var pos = torso.to_local(get_global_mouse_position())
-		#var dir = pos.normalized()
-		var dir = mouse_pivot.position + event.relative * 2.
-		dir = dir.normalized()
-		mouse_pivot.position = dir * 200
-		_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, mouse_pivot.global_position)
-		#_ik_arm(l_shoulder.global_position, l_arm_upper, l_elbow.global_position, l_arm_fore, mouse_pivot.global_position)
-	if Input.is_action_just_pressed("l_click"):
-		_mouse_mode = Input.MOUSE_MODE_CAPTURED
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if Input.is_action_just_pressed("esc"):
-		_mouse_mode = Input.MOUSE_MODE_VISIBLE
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	_process_movement(input_dir, input_jump, _look_angle, delta)
 
 func _handle_input():
 	if not is_multiplayer_authority(): 
@@ -135,21 +107,54 @@ func _handle_input():
 	
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
-	#var _shoot = Vector2.ZERO
-	#if Input.is_action_just_pressed("l_click"):
-		#submit_shot.rpc(_gun_angle, multiplayer.get_unique_id())
+	var look_angle = mouse_pivot.position.angle()
+	
 	if multiplayer.is_server():
 		input_dir = dir
 		input_jump = jump
 	else:
-		submit_input.rpc(dir, jump)
-
+		submit_input.rpc(dir, jump, look_angle)
 @rpc("any_peer", "unreliable")
 ## Sending input from client to server
-func submit_input(dir:Vector2, jump:bool) -> void:
+func submit_input(dir:Vector2, jump:bool, look_angle: float) -> void:
 	input_dir = dir
 	input_jump = jump
+	_look_angle = look_angle
 	#_gun_angle = gun_angle
+func _process_movement(dir:Vector2, jump:bool, look_angle:float, delta:float) -> void:
+	mouse_pivot.position = Vector2.RIGHT.rotated(look_angle) * 200
+	_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, mouse_pivot.global_position)
+	var can_jump := true
+	if not is_on_floor:
+		can_jump = false
+
+	if can_jump and (jump):
+		torso.apply_central_impulse(Vector2.UP * 2000.)
+	if dir.x < 0:
+		torso.apply_force(Vector2.LEFT * power)
+		_walk_cycle += delta * 5.
+		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(cos(_walk_cycle)*100. , 500))
+		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(sin(_walk_cycle)*100. , 500))
+	elif dir.x > 0:
+		torso.apply_force(Vector2.RIGHT * power)
+		_walk_cycle += delta * 5.
+		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(-cos(_walk_cycle)*100. , 500))
+		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(-sin(_walk_cycle)*100. , 500))
+	else:
+		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(0, 500))
+		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(0, 500))
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("l_click"):
+		_mouse_mode = Input.MOUSE_MODE_CAPTURED
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if Input.is_action_just_pressed("esc"):
+		_mouse_mode = Input.MOUSE_MODE_VISIBLE
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if not is_multiplayer_authority(): return
+	if event is InputEventMouseMotion:
+		var dir = mouse_pivot.position + event.relative * 2.
+		_look_angle = dir.normalized().angle()
 
 
 func damage(atk:Attack):

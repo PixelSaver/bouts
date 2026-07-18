@@ -79,6 +79,13 @@ func sync_state(pos:Vector2, vel:Vector2, gun_angle:float) -> void:
 #endregion
 
 #region Movement
+func _physics_process(delta: float) -> void:
+	_shoot_buffer -= delta
+	_jump_buffer -= delta
+	_handle_input()
+	if not multiplayer.is_server(): return
+	_process_movement(input_dir, input_jump, delta)
+
 func _process_movement(dir:float, jump:bool, _delta:float) -> void:
 	var can_jump := true
 	if not is_on_floor:
@@ -93,13 +100,6 @@ func _process_movement(dir:float, jump:bool, _delta:float) -> void:
 		self.apply_central_force(Vector2.RIGHT * direction * acceleration)
 	if multiplayer.is_server():
 		sync_state.rpc(global_position, linear_velocity, _gun_angle)
-
-func _physics_process(delta: float) -> void:
-	_shoot_buffer -= delta
-	_jump_buffer -= delta
-	_handle_input()
-	if not multiplayer.is_server(): return
-	_process_movement(input_dir, input_jump, delta)
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	is_on_floor = false

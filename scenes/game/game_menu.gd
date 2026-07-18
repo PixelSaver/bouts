@@ -41,7 +41,7 @@ func spawn_player(id: int, pos: Vector2, ups:Array[UpgradeManager.Upgrades]):
 	var inst = PLAYER.instantiate()
 	players.add_child(inst)
 	#inst.apply_upgrades(ups)
-	await get_tree().process_frame
+	#await get_tree().process_frame
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
 	player_manager.register_player_in_game(id, inst)
