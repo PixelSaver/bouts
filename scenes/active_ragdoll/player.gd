@@ -37,7 +37,7 @@ var is_on_floor := false
 var input_dir := Vector2()
 var input_jump := false
 var _mouse_mode : Input.MouseMode = Input.MOUSE_MODE_VISIBLE
-var _look_angle := 0.0
+var _look_pos := Vector2.ZERO
 var ragdoll_parts: Array[RigidBody2D] = []
 
 func _ready() -> void:
@@ -110,7 +110,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 func _physics_process(delta: float) -> void:
 	_handle_input()
 	if not multiplayer.is_server(): return
-	_process_movement(input_dir, input_jump, _look_angle, delta)
+	_process_movement(input_dir, input_jump, _look_pos, delta)
 
 func _handle_input():
 	if not is_multiplayer_authority(): 
@@ -120,19 +120,19 @@ func _handle_input():
 	
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
-	var look_angle = mouse_pivot.position.angle()
+	var look_pos = mouse_pivot.global_position
 	
 	if multiplayer.is_server():
 		input_dir = dir
 		input_jump = jump
 	else:
-		submit_input.rpc(dir, jump, look_angle)
+		submit_input.rpc(dir, jump, look_pos)
 @rpc("any_peer", "unreliable")
 ## Sending input from client to server
-func submit_input(dir:Vector2, jump:bool, look_angle: float) -> void:
+func submit_input(dir:Vector2, jump:bool, look_pos:Vector2) -> void:
 	input_dir = dir
 	input_jump = jump
-	_look_angle = look_angle
+	_look_pos = look_pos
 
 #region Syncing state
 @rpc("any_peer", "unreliable")
@@ -156,8 +156,8 @@ func get_state() -> Array:
 		})
 	return state
 #endregion
-func _process_movement(dir:Vector2, jump:bool, look_angle:float, delta:float) -> void:
-	mouse_pivot.position = Vector2.RIGHT.rotated(look_angle) * 200
+func _process_movement(dir:Vector2, jump:bool, look_pos:Vector2, delta:float) -> void:
+	mouse_pivot.global_position = look_pos
 	_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, mouse_pivot.global_position)
 	var can_jump := true
 	if not is_on_floor:
@@ -192,7 +192,11 @@ func _input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
 		var dir = mouse_pivot.position + event.relative * 2.
-		_look_angle = dir.normalized().angle()
+		if mouse_pivot.position.length() > 200:
+			mouse_pivot.position = dir.normalized() * 200.
+		else:
+			mouse_pivot.position = dir
+		_look_pos = mouse_pivot.global_position
 
 
 func damage(atk:Attack):
