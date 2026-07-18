@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="5_6w5i6"]
 [ext_resource type="Material" uid="uid://rr0pbqk1088t" path="res://assets/sphere_prototype_material.tres" id="6_hy8pg"]
 [ext_resource type="Script" uid="uid://c52mqd72mbgvv" path="res://scenes/active_ragdoll/sword.gd" id="8_h3ani"]
+[ext_resource type="Script" uid="uid://1k8bpr23sn6k" path="res://scenes/game/hp_bar.gd" id="9_mlfyp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
 radius = 25.0
@@ -25,6 +26,14 @@ shader_parameter/rotation_offset_z = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6748a"]
 size = Vector2(20, 120)
+
+[sub_resource type="Gradient" id="Gradient_mlfyp"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mlfyp"]
+gradient = SubResource("Gradient_mlfyp")
+width = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4p01"]
 size = Vector2(20, 50)
@@ -64,6 +73,7 @@ metadata/_custom_type_script = "uid://fj7ykktocnh6"
 [node name="Head" type="RigidBody2D" parent="." unique_id=751739713]
 position = Vector2(0, -53)
 collision_layer = 3
+collision_mask = 3
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
@@ -88,6 +98,7 @@ node_b = NodePath("../../Torso")
 [node name="Torso" type="RigidBody2D" parent="." unique_id=1868651906]
 position = Vector2(0, 31)
 collision_layer = 3
+collision_mask = 3
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
@@ -137,12 +148,30 @@ material = ExtResource("6_hy8pg")
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("5_6w5i6")
 
+[node name="HPBar" type="TextureProgressBar" parent="Torso" unique_id=1511458412]
+anchors_preset = -1
+offset_left = -75.0
+offset_top = -131.0
+offset_right = 75.0
+offset_bottom = -116.0
+value = 64.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_mlfyp")
+texture_over = SubResource("GradientTexture1D_mlfyp")
+texture_progress = SubResource("GradientTexture1D_mlfyp")
+tint_under = Color(0.18039216, 0.18039216, 0.18039216, 1)
+tint_over = Color(1, 1, 1, 0)
+tint_progress = Color(0.26968563, 0.71612406, 0.38974962, 1)
+script = ExtResource("9_mlfyp")
+metadata/_custom_type_script = "uid://1k8bpr23sn6k"
+
 [node name="RightUpperArm" type="RigidBody2D" parent="." unique_id=1834434279]
 modulate = Color(0.3529412, 1, 0.41568628, 1)
 position = Vector2(24, 23.000004)
 rotation = -0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
@@ -171,6 +200,7 @@ position = Vector2(62, 61.000004)
 rotation = -0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
@@ -204,6 +234,7 @@ position = Vector2(24, 113)
 rotation = -0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
@@ -232,6 +263,7 @@ position = Vector2(62, 151)
 rotation = -0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
@@ -255,6 +287,7 @@ position = Vector2(-24, 23.000004)
 rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
@@ -282,6 +315,7 @@ position = Vector2(-62, 61.000004)
 rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
@@ -304,6 +338,7 @@ position = Vector2(-24, 112)
 rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
@@ -331,6 +366,7 @@ position = Vector2(-62, 150)
 rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
+collision_mask = 3
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
@@ -351,11 +387,15 @@ texture = ExtResource("5_6w5i6")
 position = Vector2(110, 108)
 rotation = -0.7853982
 scale = Vector2(0.99999994, 0.99999994)
-collision_layer = 2
+collision_layer = 3
 collision_mask = 2
 mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 inertia = 1000.0
+can_sleep = false
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("8_h3ani")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword" unique_id=1406178130]
@@ -366,3 +406,6 @@ points = PackedVector2Array(0, -27, 0, 27)
 width = 20.0
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[connection signal="health_changed" from="HealthComponent" to="Torso/HPBar" method="_on_health_component_health_changed"]
+[connection signal="body_entered" from="Sword" to="Sword" method="_body_entered"]

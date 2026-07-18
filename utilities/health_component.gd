@@ -64,10 +64,12 @@ func sync_health(h:float, mh:float):
 
 ## Applies knockback unless target has the 'get_knockback_resistance' function
 func apply_knockback(atk:Attack):
-	var kb_res := 0.0
-	if _target.has_method("get_knockback_resistance"):
-		kb_res = _target.knockback_resistance
-	_target.apply_central_impulse(atk.knockback * (1-kb_res))
+	#var kb_res := 0.0
+	#if _target.has_method("get_knockback_resistance"):
+		#kb_res = _target.knockback_resistance
+	#_target.apply_central_impulse(atk.knockback * (1-kb_res))
+	#TODO Do knockback for health_component
+	pass
 
 func heal(delta:float) -> float:
 	health += delta

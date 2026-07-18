@@ -6,6 +6,7 @@ var t : Tween
 
 func _ready() -> void:
 	self.modulate.a = 0.0
+	pass
 
 func _on_health_component_health_changed(health: Variant, max_health: Variant) -> void:
 	self.value = health

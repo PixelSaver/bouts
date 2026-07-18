@@ -42,18 +42,6 @@ var ragdoll_parts: Array[RigidBody2D] = []
 
 func _ready() -> void:
 	_health_component.death.connect(func():died.emit())
-	ragdoll_parts = [
-		head,
-		torso,
-		r_leg_upper,
-		r_leg_lower,
-		l_leg_upper,
-		l_leg_lower,
-		r_arm_fore,
-		r_arm_upper,
-		l_arm_fore,
-		l_arm_upper
-	]
 	
 	var bodies: Array[RigidBody2D] = []
 	for child in get_children():
@@ -63,6 +51,7 @@ func _ready() -> void:
 		for part in bodies:
 			if body == part: continue
 			body.add_collision_exception_with(part)
+	ragdoll_parts = bodies
 	
 
 func _ik_two_seg(
