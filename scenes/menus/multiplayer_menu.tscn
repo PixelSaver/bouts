@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bq17fmc2pxh2f"]
 
-[ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/lobby/multiplayer_menu.gd" id="1_elvy3"]
-[ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/lobby/loading_screen.gd" id="2_ftwoh"]
+[ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/multiplayer_menu.gd" id="1_elvy3"]
+[ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/loading_screen.gd" id="2_ftwoh"]
 [ext_resource type="Script" uid="uid://crut4r5gwigu0" path="res://utilities/ui/menus/default_button.gd" id="3_7mco4"]
-[ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/lobby/waiting_screen.gd" id="4_ftwoh"]
+[ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
 
 [node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_start_game_button")]
 layout_mode = 3
