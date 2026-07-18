@@ -38,9 +38,22 @@ var input_dir := Vector2()
 var input_jump := false
 var _mouse_mode : Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var _look_angle := 0.0
+var ragdoll_parts: Array[RigidBody2D] = []
 
 func _ready() -> void:
 	_health_component.death.connect(func():died.emit())
+	ragdoll_parts = [
+		head,
+		torso,
+		r_leg_upper,
+		r_leg_lower,
+		l_leg_upper,
+		l_leg_lower,
+		r_arm_fore,
+		r_arm_upper,
+		l_arm_fore,
+		l_arm_upper
+	]
 	
 	var bodies: Array[RigidBody2D] = []
 	for child in get_children():
@@ -120,7 +133,29 @@ func submit_input(dir:Vector2, jump:bool, look_angle: float) -> void:
 	input_dir = dir
 	input_jump = jump
 	_look_angle = look_angle
-	#_gun_angle = gun_angle
+
+#region Syncing state
+@rpc("any_peer", "unreliable")
+## Server processing and then sending back
+func sync_state(state:Array) -> void:
+	if multiplayer.is_server(): return # don't overwrite server's local player
+	for i in range(min(state.size(), ragdoll_parts.size())):
+		var body := ragdoll_parts[i]
+		body.global_position = state[i]["pos"]
+		body.global_rotation = state[i]["rot"]
+		body.linear_velocity = state[i]["vel"]
+		body.angular_velocity = state[i]["ang_vel"]
+func get_state() -> Array:
+	var state := []
+	for body in ragdoll_parts:
+		state.append({
+			"pos": body.global_position,
+			"rot": body.global_rotation,
+			"vel": body.linear_velocity,
+			"ang_vel": body.angular_velocity,
+		})
+	return state
+#endregion
 func _process_movement(dir:Vector2, jump:bool, look_angle:float, delta:float) -> void:
 	mouse_pivot.position = Vector2.RIGHT.rotated(look_angle) * 200
 	_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, mouse_pivot.global_position)
@@ -143,6 +178,9 @@ func _process_movement(dir:Vector2, jump:bool, look_angle:float, delta:float) ->
 	else:
 		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(0, 500))
 		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(0, 500))
+	
+	if multiplayer.is_server():
+		sync_state.rpc(get_state())
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("l_click"):
