@@ -9,6 +9,23 @@
 [ext_resource type="Script" uid="uid://c52mqd72mbgvv" path="res://scenes/active_ragdoll/sword.gd" id="8_h3ani"]
 [ext_resource type="Script" uid="uid://1k8bpr23sn6k" path="res://scenes/game/hp_bar.gd" id="9_mlfyp"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4p01"]
+size = Vector2(20, 50)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkedh"]
+height = 73.539185
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6748a"]
+size = Vector2(20, 120)
+
+[sub_resource type="Gradient" id="Gradient_mlfyp"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mlfyp"]
+gradient = SubResource("Gradient_mlfyp")
+width = 1
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
 radius = 25.0
 
@@ -22,23 +39,6 @@ corner_radius_top_left = 1000000
 corner_radius_top_right = 1000000
 corner_radius_bottom_right = 1000000
 corner_radius_bottom_left = 1000000
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6748a"]
-size = Vector2(20, 120)
-
-[sub_resource type="Gradient" id="Gradient_mlfyp"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_mlfyp"]
-gradient = SubResource("Gradient_mlfyp")
-width = 1
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4p01"]
-size = Vector2(20, 50)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkedh"]
-height = 73.539185
 
 [node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component")]
 script = ExtResource("1_dnie3")
@@ -69,31 +69,259 @@ script = ExtResource("2_h3ani")
 target = NodePath("..")
 metadata/_custom_type_script = "uid://fj7ykktocnh6"
 
-[node name="Head" type="RigidBody2D" parent="." unique_id=751739713]
-position = Vector2(0, -53)
+[node name="LeftUpperLeg" type="RigidBody2D" parent="." unique_id=710101918]
+position = Vector2(-24, 112)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
 collision_layer = 3
 collision_mask = 3
+mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
-linear_damp = 1.0
 script = ExtResource("3_h3ani")
 power = 100000.0
+damping = 3000.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Head" unique_id=867884179]
-shape = SubResource("CircleShape2D_gkedh")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftUpperLeg" unique_id=1814108417]
+shape = SubResource("RectangleShape2D_c4p01")
 
-[node name="PinJoint2D" type="PinJoint2D" parent="Head" unique_id=1522637241]
-position = Vector2(0, 8.999998)
+[node name="LeftKneeJoint" type="PinJoint2D" parent="LeftUpperLeg" unique_id=1983069547]
+position = Vector2(0, 26.870062)
 node_a = NodePath("..")
-node_b = NodePath("../../Torso")
+node_b = NodePath("../../LeftLowerLeg")
 
-[node name="Panel" type="Panel" parent="Head" unique_id=341360680]
-custom_minimum_size = Vector2(55, 55)
-offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(-0.5, -0.5)
-theme_override_styles/panel = SubResource("StyleBoxFlat_h3ani")
+[node name="Line2D2" type="Line2D" parent="LeftUpperLeg" unique_id=84891668]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+default_color = Color(0.6, 0.6, 0.6, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="LeftLowerLeg" type="RigidBody2D" parent="." unique_id=846012462]
+position = Vector2(-62, 150)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 3
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+gravity_scale = 0.1
+inertia = 1000.0
+script = ExtResource("3_h3ani")
+power = 100000.0
+damping = 3000.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftLowerLeg" unique_id=385604177]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="Line2D" type="Line2D" parent="LeftLowerLeg" unique_id=1332451978]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+default_color = Color(0.6, 0.6, 0.6, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="LeftUpperArm" type="RigidBody2D" parent="." unique_id=1475750158]
+position = Vector2(-24, 23.000004)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 3
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+gravity_scale = 0.5
+inertia = 1.0
+script = ExtResource("3_h3ani")
+power = 0.0
+damping = 0.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftUpperArm" unique_id=758886371]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="LeftElbowJoint" type="PinJoint2D" parent="LeftUpperArm" unique_id=1086980430]
+position = Vector2(0, 26.870062)
+node_a = NodePath("..")
+node_b = NodePath("../../LeftForeArm")
+
+[node name="Line2D2" type="Line2D" parent="LeftUpperArm" unique_id=450247548]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+default_color = Color(0.6, 0.6, 0.6, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="LeftForeArm" type="RigidBody2D" parent="." unique_id=2106891287]
+position = Vector2(-62, 61.000004)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 3
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+gravity_scale = 0.1
+inertia = 1.0
+script = ExtResource("3_h3ani")
+power = 0.0
+damping = 0.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftForeArm" unique_id=3125516]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="Line2D2" type="Line2D" parent="LeftForeArm" unique_id=387669743]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+default_color = Color(0.6, 0.6, 0.6, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="RightUpperLeg" type="RigidBody2D" parent="." unique_id=580507090]
+position = Vector2(24, 113)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 3
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+gravity_scale = 0.5
+inertia = 1000.0
+script = ExtResource("3_h3ani")
+target_angle = 1.571
+power = 100000.0
+damping = 3000.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightUpperLeg" unique_id=52254470]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="RightKneeJoint" type="PinJoint2D" parent="RightUpperLeg" unique_id=472450168]
+position = Vector2(0, 26.870062)
+node_a = NodePath("..")
+node_b = NodePath("../../RightLowerLeg")
+
+[node name="Line2D" type="Line2D" parent="RightUpperLeg" unique_id=986950146]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="RightLowerLeg" type="RigidBody2D" parent="." unique_id=1179430326]
+position = Vector2(62, 151)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 3
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+gravity_scale = 0.1
+inertia = 1000.0
+script = ExtResource("3_h3ani")
+target_angle = 1.571
+power = 100000.0
+damping = 3000.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightLowerLeg" unique_id=77711055]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="Line2D" type="Line2D" parent="RightLowerLeg" unique_id=422881894]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Sword" type="RigidBody2D" parent="." unique_id=1659679071]
+position = Vector2(110, 108)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 2
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+inertia = 1000.0
+can_sleep = false
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("8_h3ani")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword" unique_id=1406178130]
+shape = SubResource("CapsuleShape2D_gkedh")
+
+[node name="Line2D" type="Line2D" parent="Sword" unique_id=1888423101]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="RightUpperArm" type="RigidBody2D" parent="." unique_id=1834434279]
+position = Vector2(24, 23.000004)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 3
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+gravity_scale = 0.5
+inertia = 1000.0
+script = ExtResource("3_h3ani")
+target_angle = 1.571
+power = 30000.0
+damping = 3000.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightUpperArm" unique_id=1493452502]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="RightElbowJoint" type="PinJoint2D" parent="RightUpperArm" unique_id=1036282210]
+position = Vector2(0, 26.870062)
+node_a = NodePath("..")
+node_b = NodePath("../../RightForeArm")
+
+[node name="Line2D" type="Line2D" parent="RightUpperArm" unique_id=136771595]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="RightForeArm" type="RigidBody2D" parent="." unique_id=1087112112]
+position = Vector2(62, 61.000004)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 3
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+gravity_scale = 0.1
+inertia = 1000.0
+script = ExtResource("3_h3ani")
+target_angle = 1.571
+power = 30000.0
+damping = 3000.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightForeArm" unique_id=1682250458]
+shape = SubResource("RectangleShape2D_c4p01")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RightForeArm" unique_id=69178001]
+position = Vector2(0, 26.870062)
+node_a = NodePath("..")
+node_b = NodePath("../../Sword")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="RightForeArm" unique_id=2136750669]
+position = Vector2(0.70710707, 38.89088)
+node_a = NodePath("..")
+node_b = NodePath("../../Sword")
+
+[node name="Line2D" type="Line2D" parent="RightForeArm" unique_id=621809011]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="Torso" type="RigidBody2D" parent="." unique_id=1868651906]
 position = Vector2(0, 31)
@@ -162,268 +390,36 @@ script = ExtResource("9_mlfyp")
 metadata/_custom_type_script = "uid://1k8bpr23sn6k"
 
 [node name="Line2D" type="Line2D" parent="Torso" unique_id=742678777]
-points = PackedVector2Array(0, -52, 0, 52)
+points = PackedVector2Array(0, -55, 0, 60)
 width = 20.0
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="RightUpperArm" type="RigidBody2D" parent="." unique_id=1834434279]
-position = Vector2(24, 23.000004)
-rotation = -0.7853982
-scale = Vector2(0.9999999, 0.9999999)
+[node name="Head" type="RigidBody2D" parent="." unique_id=751739713]
+position = Vector2(0, -53)
 collision_layer = 3
 collision_mask = 3
-mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
-script = ExtResource("3_h3ani")
-target_angle = 1.571
-power = 30000.0
-damping = 3000.0
-metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightUpperArm" unique_id=1493452502]
-shape = SubResource("RectangleShape2D_c4p01")
-
-[node name="RightElbowJoint" type="PinJoint2D" parent="RightUpperArm" unique_id=1036282210]
-position = Vector2(0, 26.870062)
-node_a = NodePath("..")
-node_b = NodePath("../../RightForeArm")
-
-[node name="Line2D" type="Line2D" parent="RightUpperArm" unique_id=136771595]
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="RightForeArm" type="RigidBody2D" parent="." unique_id=1087112112]
-position = Vector2(62, 61.000004)
-rotation = -0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 3
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-gravity_scale = 0.1
-inertia = 1000.0
-script = ExtResource("3_h3ani")
-target_angle = 1.571
-power = 30000.0
-damping = 3000.0
-metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightForeArm" unique_id=1682250458]
-shape = SubResource("RectangleShape2D_c4p01")
-
-[node name="PinJoint2D" type="PinJoint2D" parent="RightForeArm" unique_id=69178001]
-position = Vector2(0, 26.870062)
-node_a = NodePath("..")
-node_b = NodePath("../../Sword")
-
-[node name="PinJoint2D2" type="PinJoint2D" parent="RightForeArm" unique_id=2136750669]
-position = Vector2(0.70710707, 38.89088)
-node_a = NodePath("..")
-node_b = NodePath("../../Sword")
-
-[node name="Line2D" type="Line2D" parent="RightForeArm" unique_id=1851821136]
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="RightUpperLeg" type="RigidBody2D" parent="." unique_id=580507090]
-position = Vector2(24, 113)
-rotation = -0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 3
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-gravity_scale = 0.5
-inertia = 1000.0
-script = ExtResource("3_h3ani")
-target_angle = 1.571
-power = 100000.0
-damping = 3000.0
-metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightUpperLeg" unique_id=52254470]
-shape = SubResource("RectangleShape2D_c4p01")
-
-[node name="RightKneeJoint" type="PinJoint2D" parent="RightUpperLeg" unique_id=472450168]
-position = Vector2(0, 26.870062)
-node_a = NodePath("..")
-node_b = NodePath("../../RightLowerLeg")
-
-[node name="Line2D" type="Line2D" parent="RightUpperLeg" unique_id=1142992234]
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="RightLowerLeg" type="RigidBody2D" parent="." unique_id=1179430326]
-position = Vector2(62, 151)
-rotation = -0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 3
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-gravity_scale = 0.1
-inertia = 1000.0
-script = ExtResource("3_h3ani")
-target_angle = 1.571
-power = 100000.0
-damping = 3000.0
-metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightLowerLeg" unique_id=77711055]
-shape = SubResource("RectangleShape2D_c4p01")
-
-[node name="Line2D" type="Line2D" parent="RightLowerLeg" unique_id=452437320]
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="LeftUpperArm" type="RigidBody2D" parent="." unique_id=1475750158]
-position = Vector2(-24, 23.000004)
-rotation = 0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 3
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-gravity_scale = 0.5
-inertia = 1.0
-script = ExtResource("3_h3ani")
-power = 0.0
-damping = 0.0
-metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftUpperArm" unique_id=758886371]
-shape = SubResource("RectangleShape2D_c4p01")
-
-[node name="LeftElbowJoint" type="PinJoint2D" parent="LeftUpperArm" unique_id=1086980430]
-position = Vector2(0, 26.870062)
-node_a = NodePath("..")
-node_b = NodePath("../../LeftForeArm")
-
-[node name="Line2D" type="Line2D" parent="LeftUpperArm" unique_id=280702337]
-z_index = -1
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-default_color = Color(0.73467994, 0.73467994, 0.7346799, 1)
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="LeftForeArm" type="RigidBody2D" parent="." unique_id=2106891287]
-position = Vector2(-62, 61.000004)
-rotation = 0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 3
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-gravity_scale = 0.1
-inertia = 1.0
-script = ExtResource("3_h3ani")
-power = 0.0
-damping = 0.0
-metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftForeArm" unique_id=3125516]
-shape = SubResource("RectangleShape2D_c4p01")
-
-[node name="Line2D" type="Line2D" parent="LeftForeArm" unique_id=131915495]
-z_index = -1
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-default_color = Color(0.73467994, 0.73467994, 0.7346799, 1)
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="LeftUpperLeg" type="RigidBody2D" parent="." unique_id=710101918]
-position = Vector2(-24, 112)
-rotation = 0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 3
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-gravity_scale = 0.5
-inertia = 1000.0
+linear_damp = 1.0
 script = ExtResource("3_h3ani")
 power = 100000.0
-damping = 3000.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftUpperLeg" unique_id=1814108417]
-shape = SubResource("RectangleShape2D_c4p01")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head" unique_id=867884179]
+shape = SubResource("CircleShape2D_gkedh")
 
-[node name="LeftKneeJoint" type="PinJoint2D" parent="LeftUpperLeg" unique_id=1983069547]
-position = Vector2(0, 26.870062)
+[node name="PinJoint2D" type="PinJoint2D" parent="Head" unique_id=1522637241]
+position = Vector2(0, 8.999998)
 node_a = NodePath("..")
-node_b = NodePath("../../LeftLowerLeg")
+node_b = NodePath("../../Torso")
 
-[node name="Line2D" type="Line2D" parent="LeftUpperLeg" unique_id=597952752]
-z_index = -1
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-default_color = Color(0.73467994, 0.73467994, 0.7346799, 1)
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="LeftLowerLeg" type="RigidBody2D" parent="." unique_id=846012462]
-position = Vector2(-62, 150)
-rotation = 0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 3
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-gravity_scale = 0.1
-inertia = 1000.0
-script = ExtResource("3_h3ani")
-power = 100000.0
-damping = 3000.0
-metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftLowerLeg" unique_id=385604177]
-shape = SubResource("RectangleShape2D_c4p01")
-
-[node name="Line2D" type="Line2D" parent="LeftLowerLeg" unique_id=472255579]
-z_index = -1
-points = PackedVector2Array(0, -20, 0, 20)
-width = 20.0
-default_color = Color(0.73467994, 0.73467994, 0.7346799, 1)
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Sword" type="RigidBody2D" parent="." unique_id=1659679071]
-position = Vector2(110, 108)
-rotation = -0.7853982
-scale = Vector2(0.99999994, 0.99999994)
-collision_layer = 3
-collision_mask = 2
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-inertia = 1000.0
-can_sleep = false
-continuous_cd = 1
-contact_monitor = true
-max_contacts_reported = 10
-script = ExtResource("8_h3ani")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword" unique_id=1406178130]
-shape = SubResource("CapsuleShape2D_gkedh")
-
-[node name="Line2D" type="Line2D" parent="Sword" unique_id=1888423101]
-points = PackedVector2Array(0, -27, 0, 27)
-width = 20.0
-begin_cap_mode = 2
-end_cap_mode = 2
+[node name="Panel" type="Panel" parent="Head" unique_id=341360680]
+custom_minimum_size = Vector2(55, 55)
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_h3ani")
 
 [connection signal="health_changed" from="HealthComponent" to="Torso/HPBar" method="_on_health_component_health_changed"]
 [connection signal="body_entered" from="Sword" to="Sword" method="_body_entered"]
