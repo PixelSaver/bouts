@@ -187,6 +187,8 @@ func _input(event: InputEvent) -> void:
 			mouse_pivot.position = dir
 		_look_pos = mouse_pivot.global_position
 
+func set_color(col:Color) -> void:
+	self.modulate = col
 
 func damage(atk:Attack):
 	_health_component.damage(atk)

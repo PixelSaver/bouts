@@ -11,7 +11,7 @@ enum Scene {
 var scenes = {
 	Scene.START: preload("res://scenes/menus/start_screen.tscn"),
 	Scene.GAME: preload("res://scenes/game/game_menu.tscn"),
-	Scene.MULTIPLAYER: preload("res://scenes/menus/lobby/multiplayer_menu.tscn"),
+	Scene.MULTIPLAYER: preload("res://scenes/menus/multiplayer_menu.tscn"),
 	Scene.CARDS: preload("res://scenes/game/cards_screen.tscn"),
 }
 func get_scene(scene:Scene) -> PackedScene:

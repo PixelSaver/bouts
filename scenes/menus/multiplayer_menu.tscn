@@ -5,7 +5,18 @@
 [ext_resource type="Script" uid="uid://crut4r5gwigu0" path="res://utilities/ui/menus/default_button.gd" id="3_7mco4"]
 [ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
 
-[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_start_game_button")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58ccb"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_start_game_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +26,8 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_elvy3")
 loading_screen = NodePath("LoadingScreen")
+name_ip = NodePath("LoadingScreen/VBoxContainer/HBoxContainer/Name")
+color_ip = NodePath("LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer/MarginContainer/ColorPicker")
 loading_ip = NodePath("LoadingScreen/VBoxContainer/IPInput")
 loading_host_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton")
 loading_join_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton")
@@ -23,7 +36,6 @@ waiting_start_game_button = NodePath("WaitingScreen/MarginContainer/VBoxContaine
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="LoadingScreen" type="Control" parent="." unique_id=1846798797]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,6 +64,48 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=1784142041]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Name" type="LineEdit" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1547209254]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "player name"
+
+[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1367602326]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_58ccb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel" unique_id=1464235866]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=915812846]
+layout_mode = 2
+text = " Color:"
+
+[node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=1641163226]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ColorPicker" type="ColorPickerButton" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer/MarginContainer" unique_id=619973256]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 10
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+edit_intensity = false
 
 [node name="IPInput" type="LineEdit" parent="LoadingScreen/VBoxContainer" unique_id=227558515]
 layout_mode = 2
@@ -135,6 +189,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_list_text")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

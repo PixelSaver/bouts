@@ -63,7 +63,7 @@ func sync_health(h:float, mh:float):
 	max_health = mh
 
 ## Applies knockback unless target has the 'get_knockback_resistance' function
-func apply_knockback(atk:Attack):
+func apply_knockback(_atk:Attack):
 	#var kb_res := 0.0
 	#if _target.has_method("get_knockback_resistance"):
 		#kb_res = _target.knockback_resistance

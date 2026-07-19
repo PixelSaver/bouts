@@ -4,7 +4,6 @@ class_name GameMenu
 const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
 #"res://scenes/game/player_old.tscn"
 @onready var players: Node2D = $Players
-@onready var bullet_manager: Node2D = $BulletManager
 @onready var player_manager: PlayerManager = $Players
 
 func _ready() -> void:
@@ -35,13 +34,15 @@ func start_anim() -> void:
 		if not player_info: 
 			printerr("Player info not readable as PlayerInfo")
 			continue
-		spawn_player.rpc(key, Vector2(i * 500, 0), player_info.upgrades)
+		spawn_player.rpc(key, Vector2(i * 500, 0), player_info.to_dict())
 @rpc("authority", "reliable", "call_local")
-func spawn_player(id: int, pos: Vector2, ups:Array[UpgradeManager.Upgrades]):
+func spawn_player(id: int, pos: Vector2, _pi:Dictionary):
+	var pi = PlayerInfo.from_dict(_pi)
 	var inst = PLAYER.instantiate()
 	players.add_child(inst)
 	#inst.apply_upgrades(ups)
 	#await get_tree().process_frame
+	inst.set_color(pi.color)
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
 	player_manager.register_player_in_game(id, inst)
