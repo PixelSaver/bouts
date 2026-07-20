@@ -40,8 +40,9 @@ corner_radius_top_right = 1000000
 corner_radius_bottom_right = 1000000
 corner_radius_bottom_left = 1000000
 
-[node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component")]
+[node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component", "r_hand_marker")]
 script = ExtResource("1_dnie3")
+sensitivity = 1500.0
 power = 1000
 head = NodePath("Head")
 torso = NodePath("Torso")
@@ -62,6 +63,7 @@ l_arm_fore = NodePath("LeftForeArm")
 l_elbow = NodePath("LeftUpperArm/LeftElbowJoint")
 l_arm_upper = NodePath("LeftUpperArm")
 _health_component = NodePath("HealthComponent")
+r_hand_marker = NodePath("RightForeArm/RightHandMarker")
 metadata/_custom_type_script = "uid://wler21gs1eif"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1625169633 node_paths=PackedStringArray("target")]
@@ -322,6 +324,9 @@ points = PackedVector2Array(0, -27, 0, 27)
 width = 20.0
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="RightHandMarker" type="Marker2D" parent="RightForeArm" unique_id=211320700]
+position = Vector2(2.861023e-06, 26.87006)
 
 [node name="Torso" type="RigidBody2D" parent="." unique_id=1868651906]
 position = Vector2(0, 31)

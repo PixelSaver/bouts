@@ -29,15 +29,16 @@ class_name Player
 @export var l_arm_upper: TargetAngleRigidBody2D
 @export_group("Nodes", "_")
 @export var _health_component: HealthComponent
-@onready var mouse_pivot: Node2D = $Torso/MousePivot
+@export var r_hand_marker: Marker2D
+var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
 
 signal died
 var is_on_floor := false
 var input_dir := Vector2()
 var input_jump := false
+var input_motion := Vector2.ZERO
 var _mouse_mode : Input.MouseMode = Input.MOUSE_MODE_VISIBLE
-var _look_pos := Vector2.ZERO
 var ragdoll_parts: Array[RigidBody2D] = []
 
 func _ready() -> void:
@@ -67,11 +68,11 @@ func _ik_two_seg(
 	
 	var target_distance := root_pos.distance_to(target_point)
 	
-	target_distance = clamp(
-		target_distance, 
-		abs(upper_length - fore_length) + 0.001,
-		upper_length + fore_length - 0.001
-	)
+	#target_distance = clamp(
+		#target_distance, 
+		#abs(upper_length - fore_length) + .001,
+		#upper_length + fore_length - .001
+	#)
 	var target_angle := (target_point - root_pos).angle()
 	
 	var upper_offset := acos(clamp(
@@ -99,7 +100,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 func _physics_process(delta: float) -> void:
 	_handle_input()
 	if not multiplayer.is_server(): return
-	_process_movement(input_dir, input_jump, _look_pos, delta)
+	_process_movement(input_dir, input_jump, input_motion, delta)
 
 func _handle_input():
 	if not is_multiplayer_authority(): 
@@ -109,19 +110,21 @@ func _handle_input():
 	
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
-	var look_pos = mouse_pivot.global_position
+	var motion = mouse_motion
+	mouse_motion = Vector2.ZERO
 	
 	if multiplayer.is_server():
 		input_dir = dir
 		input_jump = jump
+		input_motion = motion
 	else:
-		submit_input.rpc(dir, jump, look_pos)
+		submit_input.rpc(dir, jump, motion)
 @rpc("any_peer", "unreliable")
 ## Sending input from client to server
-func submit_input(dir:Vector2, jump:bool, look_pos:Vector2) -> void:
+func submit_input(dir:Vector2, jump:bool, _mouse_motion:Vector2) -> void:
 	input_dir = dir
 	input_jump = jump
-	_look_pos = look_pos
+	mouse_motion = _mouse_motion
 
 #region Syncing state
 @rpc("any_peer", "unreliable")
@@ -145,9 +148,10 @@ func get_state() -> Array:
 		})
 	return state
 #endregion
-func _process_movement(dir:Vector2, jump:bool, look_pos:Vector2, delta:float) -> void:
-	mouse_pivot.global_position = look_pos
-	_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, mouse_pivot.global_position)
+func _process_movement(dir:Vector2, jump:bool, _mouse_motion:Vector2, delta:float) -> void:
+	var target = r_hand_marker.global_position + _mouse_motion
+	#mouse_pivot.global_position = look_pos
+	_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, target)
 	var can_jump := true
 	if not is_on_floor:
 		can_jump = false
@@ -168,6 +172,9 @@ func _process_movement(dir:Vector2, jump:bool, look_pos:Vector2, delta:float) ->
 		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(0, 500))
 		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(0, 500))
 	
+	var err = target.distance_to(r_hand_marker.global_position)
+	print("Hand error: %s" % err)
+	
 	if multiplayer.is_server():
 		sync_state.rpc(get_state())
 
@@ -178,14 +185,9 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("esc"):
 		_mouse_mode = Input.MOUSE_MODE_VISIBLE
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if not is_multiplayer_authority(): return
+	if multiplayer and not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
-		var dir = mouse_pivot.position + event.relative * 2.
-		if mouse_pivot.position.length() > 200:
-			mouse_pivot.position = dir.normalized() * 200.
-		else:
-			mouse_pivot.position = dir
-		_look_pos = mouse_pivot.global_position
+		mouse_motion += event.relative * sensitivity
 
 func set_color(col:Color) -> void:
 	self.modulate = col
