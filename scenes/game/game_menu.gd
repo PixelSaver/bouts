@@ -9,15 +9,15 @@ const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
 func _ready() -> void:
 	if multiplayer.is_server():
 		player_manager.player_won.connect(func(id:int):
-			var ups = UpgradeManager.get_random_upgrades(5)
+			#var ups = UpgradeManager.get_random_upgrades(5)
 			Global.round_state = RoundState.new()
 			Global.player_won_id = id
 			#TODO Upgrade to 4 player
-			Global.round_state.set_player_upgrades(Global.get_losers().front(), ups)
+			#Global.round_state.set_player_upgrades(Global.get_losers().front(), ups)
 			print("On server, round state: %s" % Global.round_state)
-			for _id in Global.menu_manager.players.keys():
-				if _id == 1: continue
-				receive_upgrades.rpc_id(_id, id, ups)
+			#for _id in Global.menu_manager.players.keys():
+				#if _id == 1: continue
+				#receive_upgrades.rpc_id(_id, id, ups)
 			player_won.rpc(id)
 		)
 		player_manager.tie.connect(func():
@@ -47,13 +47,13 @@ func spawn_player(id: int, pos: Vector2, _pi:Dictionary):
 	inst.set_multiplayer_authority(id)
 	player_manager.register_player_in_game(id, inst)
 
-@rpc("any_peer", "reliable", "call_remote")
-func receive_upgrades(win_id:int, upgrades:Array[UpgradeManager.Upgrades]):
-	#HACK Update winners and losers better, clean up al the Global.player_won_id = id and stuff
-	Global.player_won_id = win_id
-	Global.round_state = RoundState.new()
-	#TODO Upgrade to 4 player
-	Global.round_state.set_player_upgrades(Global.get_losers().front(), upgrades)
+#@rpc("any_peer", "reliable", "call_remote")
+#func receive_upgrades(win_id:int, upgrades:Array[UpgradeManager.Upgrades]):
+	##HACK Update winners and losers better, clean up al the Global.player_won_id = id and stuff
+	#Global.player_won_id = win_id
+	#Global.round_state = RoundState.new()
+	##TODO Upgrade to 4 player
+	#Global.round_state.set_player_upgrades(Global.get_losers().front(), upgrades)
 
 @rpc("authority", "call_local", "reliable")
 func player_won(id:int) -> void:
@@ -66,7 +66,7 @@ func player_won(id:int) -> void:
 		# tie
 		pass
 	else:
-		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.CARDS))
+		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
 
 func end_anim() -> void: 
 	queue_free()
