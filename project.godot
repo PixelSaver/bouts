@@ -20,7 +20,7 @@ config/icon="res://assets/icon.svg"
 Global="*uid://cw2cid6mippjr"
 SignalBus="*uid://76heinnvc1fe"
 SceneDatabase="*uid://b7w6r5xa8o86w"
-UpgradeManager="*uid://c1gxu2g185xng"
+WeaponManager="*uid://8qulco7uupu8"
 
 [editor_plugins]
 
