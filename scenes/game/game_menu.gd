@@ -10,11 +10,11 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		player_manager.player_won.connect(func(id:int):
 			#var ups = UpgradeManager.get_random_upgrades(5)
-			Global.round_state = RoundState.new()
+			#Global.round_state = RoundState.new()
 			Global.player_won_id = id
 			#TODO Upgrade to 4 player
 			#Global.round_state.set_player_upgrades(Global.get_losers().front(), ups)
-			print("On server, round state: %s" % Global.round_state)
+			#print("On server, round state: %s" % Global.round_state)
 			#for _id in Global.menu_manager.players.keys():
 				#if _id == 1: continue
 				#receive_upgrades.rpc_id(_id, id, ups)
@@ -69,4 +69,6 @@ func player_won(id:int) -> void:
 		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
 
 func end_anim() -> void: 
+	self.hide()
+	await get_tree().create_timer(3.).timeout
 	queue_free()

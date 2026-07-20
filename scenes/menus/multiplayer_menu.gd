@@ -26,7 +26,7 @@ func _ready() -> void:
 func _on_start_game() -> void:
 	start_game.rpc()
 
-@rpc("authority", "call_local")
+@rpc("authority", "call_local", "reliable")
 func start_game():
 	Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
 

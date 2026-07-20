@@ -50,7 +50,7 @@ func _ready() -> void:
 		bodies.append(child)
 	for body in bodies:
 		for part in bodies:
-			if body == part: continue
+			if body == part or body is Weapon: continue
 			body.add_collision_exception_with(part)
 	ragdoll_parts = bodies
 	
@@ -172,8 +172,8 @@ func _process_movement(dir:Vector2, jump:bool, _mouse_motion:Vector2, delta:floa
 		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(0, 500))
 		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(0, 500))
 	
-	var err = target.distance_to(r_hand_marker.global_position)
-	print("Hand error: %s" % err)
+	#var err = target.distance_to(r_hand_marker.global_position)
+	#print("Hand error: %s" % err)
 	
 	if multiplayer.is_server():
 		sync_state.rpc(get_state())

@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://fj7ykktocnh6" path="res://utilities/health_component.gd" id="2_h3ani"]
 [ext_resource type="Script" uid="uid://bbbjh7tp0fq7w" path="res://scenes/active_ragdoll/target_angle_rigidbody.gd" id="3_h3ani"]
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="5_6w5i6"]
+[ext_resource type="Script" uid="uid://b6ewgxfuv3c4g" path="res://scenes/weapons/generic_sword.gd" id="5_h3ani"]
 [ext_resource type="Material" uid="uid://rr0pbqk1088t" path="res://assets/sphere_prototype_material.tres" id="6_hy8pg"]
-[ext_resource type="Script" uid="uid://c52mqd72mbgvv" path="res://scenes/active_ragdoll/sword.gd" id="8_h3ani"]
 [ext_resource type="Script" uid="uid://1k8bpr23sn6k" path="res://scenes/game/hp_bar.gd" id="9_mlfyp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4p01"]
@@ -236,7 +236,7 @@ width = 20.0
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="Sword" type="RigidBody2D" parent="." unique_id=1659679071]
+[node name="Sword" type="RigidBody2D" parent="." unique_id=1218223522]
 position = Vector2(110, 108)
 rotation = -0.7853982
 scale = Vector2(0.9999999, 0.9999999)
@@ -249,7 +249,10 @@ can_sleep = false
 continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 10
-script = ExtResource("8_h3ani")
+script = ExtResource("5_h3ani")
+weapon_name = "Generic Sword"
+weapon_description = "Just a sword"
+metadata/_custom_type_script = "uid://b6ewgxfuv3c4g"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword" unique_id=1406178130]
 shape = SubResource("CapsuleShape2D_gkedh")
@@ -427,4 +430,3 @@ offset_transform_position_ratio = Vector2(-0.5, -0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_h3ani")
 
 [connection signal="health_changed" from="HealthComponent" to="Torso/HPBar" method="_on_health_component_health_changed"]
-[connection signal="body_entered" from="Sword" to="Sword" method="_body_entered"]
