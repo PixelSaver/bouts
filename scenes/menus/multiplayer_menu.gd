@@ -15,8 +15,8 @@ class_name MultiplayerMenu
 func _ready() -> void: 
 	loading_host_button.pressed.connect(_on_host_button_pressed)
 	loading_join_button.pressed.connect(_on_join.bind(loading_ip.text))
-	name_ip.text_changed.connect(_update_player_info)
-	color_ip.color_changed.connect(_update_player_info)
+	name_ip.text_changed.connect(func(n:String): _update_player_info())
+	color_ip.color_changed.connect(func(n:Color): _update_player_info())
 	loading_screen.show()
 	waiting_screen.hide()
 	SignalBus.hosted.connect(_on_hosted)

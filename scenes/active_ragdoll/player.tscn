@@ -18,14 +18,6 @@ height = 73.539185
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6748a"]
 size = Vector2(20, 120)
 
-[sub_resource type="Gradient" id="Gradient_mlfyp"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_mlfyp"]
-gradient = SubResource("Gradient_mlfyp")
-width = 1
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
 radius = 25.0
 
@@ -39,6 +31,14 @@ corner_radius_top_left = 1000000
 corner_radius_top_right = 1000000
 corner_radius_bottom_right = 1000000
 corner_radius_bottom_left = 1000000
+
+[sub_resource type="Gradient" id="Gradient_mlfyp"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mlfyp"]
+gradient = SubResource("Gradient_mlfyp")
+width = 1
 
 [node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component", "r_hand_marker")]
 script = ExtResource("1_dnie3")
@@ -398,23 +398,6 @@ material = ExtResource("6_hy8pg")
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("5_6w5i6")
 
-[node name="HPBar" type="TextureProgressBar" parent="Torso" unique_id=1511458412]
-anchors_preset = -1
-offset_left = -75.0
-offset_top = -131.0
-offset_right = 75.0
-offset_bottom = -116.0
-value = 64.0
-nine_patch_stretch = true
-texture_under = SubResource("GradientTexture1D_mlfyp")
-texture_over = SubResource("GradientTexture1D_mlfyp")
-texture_progress = SubResource("GradientTexture1D_mlfyp")
-tint_under = Color(0.18039216, 0.18039216, 0.18039216, 1)
-tint_over = Color(1, 1, 1, 0)
-tint_progress = Color(0.26968563, 0.71612406, 0.38974962, 1)
-script = ExtResource("9_mlfyp")
-metadata/_custom_type_script = "uid://1k8bpr23sn6k"
-
 [node name="Line2D" type="Line2D" parent="Torso" unique_id=742678777]
 points = PackedVector2Array(0, -55, 0, 60)
 width = 20.0
@@ -449,4 +432,22 @@ offset_transform_enabled = true
 offset_transform_position_ratio = Vector2(-0.5, -0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_h3ani")
 
-[connection signal="health_changed" from="HealthComponent" to="Torso/HPBar" method="_on_health_component_health_changed"]
+[node name="HPBar" type="TextureProgressBar" parent="." unique_id=1511458412 node_paths=PackedStringArray("follow_target")]
+anchors_preset = -1
+offset_left = -75.0
+offset_top = -100.0
+offset_right = 75.0
+offset_bottom = -85.0
+value = 64.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_mlfyp")
+texture_over = SubResource("GradientTexture1D_mlfyp")
+texture_progress = SubResource("GradientTexture1D_mlfyp")
+tint_under = Color(0.18039216, 0.18039216, 0.18039216, 1)
+tint_over = Color(1, 1, 1, 0)
+tint_progress = Color(0.26968563, 0.71612406, 0.38974962, 1)
+script = ExtResource("9_mlfyp")
+follow_target = NodePath("../Torso")
+metadata/_custom_type_script = "uid://1k8bpr23sn6k"
+
+[connection signal="health_changed" from="HealthComponent" to="HPBar" method="_on_health_component_health_changed"]

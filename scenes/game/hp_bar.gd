@@ -1,12 +1,16 @@
 extends TextureProgressBar
 class_name HPBar
 
+@export var follow_target := Node2D
+@export var follow_offset := Vector2.UP * 130.
 @export var fade_delay := 3.0
 var t : Tween
 
 func _ready() -> void:
 	self.modulate.a = 0.0
-	pass
+
+func _process(_delta: float) -> void:
+	self.global_position = follow_target.global_position + follow_offset - self.size * 0.5
 
 func _on_health_component_health_changed(health: Variant, max_health: Variant) -> void:
 	self.value = health

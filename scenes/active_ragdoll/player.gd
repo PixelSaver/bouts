@@ -201,7 +201,8 @@ func _input(event: InputEvent) -> void:
 		mouse_motion += event.relative * sensitivity
 
 func set_color(col:Color) -> void:
-	self.modulate = col
+	for part in ragdoll_parts:
+		part.modulate = col
 
 func damage(atk:Attack):
 	_health_component.damage(atk)
