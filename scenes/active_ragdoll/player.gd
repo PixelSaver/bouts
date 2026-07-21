@@ -124,7 +124,7 @@ func _handle_input():
 func submit_input(dir:Vector2, jump:bool, _mouse_motion:Vector2) -> void:
 	input_dir = dir
 	input_jump = jump
-	mouse_motion = _mouse_motion
+	input_motion = _mouse_motion
 
 #region Syncing state
 @rpc("any_peer", "unreliable")
@@ -185,7 +185,7 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("esc"):
 		_mouse_mode = Input.MOUSE_MODE_VISIBLE
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if multiplayer and not is_multiplayer_authority(): return
+	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
 		mouse_motion += event.relative * sensitivity
 

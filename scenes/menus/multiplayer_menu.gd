@@ -13,7 +13,7 @@ class_name MultiplayerMenu
 @export var waiting_start_game_button: DefaultButton
 
 func _ready() -> void: 
-	loading_host_button.pressed.connect(_on_hosted)
+	loading_host_button.pressed.connect(_on_host_button_pressed)
 	loading_join_button.pressed.connect(_on_join.bind(loading_ip.text))
 	name_ip.text_changed.connect(_update_player_info)
 	color_ip.color_changed.connect(_update_player_info)
@@ -30,11 +30,12 @@ func _on_start_game() -> void:
 func start_game():
 	Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
 
-func _on_hosted() -> void: 
+func _on_host_button_pressed() -> void: 
 	_update_player_info()
+	SignalBus.host.emit()
+func _on_hosted():
 	loading_screen.end_anim()
 	waiting_screen.start_anim()
-	SignalBus.host.emit()
 func _on_join(_ip:String) -> void:
 	_update_player_info()
 	SignalBus.join.emit(loading_ip.text)
