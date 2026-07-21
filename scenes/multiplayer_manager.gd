@@ -32,6 +32,11 @@ func _ready() -> void:
 	self.player_disconnected.connect(func(_id:int):
 		self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER))
 	)
+	_randomize_color()
+
+func _randomize_color() -> void:
+	print("Randomizing color")
+	player_info.color = Color(randf(), randf(), randf())
 #region Network callbacks from SceneTree
 # Callback from SceneTree.
 

@@ -23,13 +23,7 @@ func _ready() -> void:
 		player_manager.tie.connect(func():
 			player_won.rpc(-1)
 		)
-func _debug_tree():
-	await get_tree().process_frame
-	await get_tree().process_frame
-	print("Client %s: " % multiplayer.get_unique_id())
-	print_tree_pretty()
 func start_anim() -> void: 
-	_debug_tree()
 	if not multiplayer.is_server(): return
 	await get_tree().create_timer(0.3).timeout
 	var keys = Global.menu_manager.players.keys()

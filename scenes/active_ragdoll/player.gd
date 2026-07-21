@@ -34,24 +34,28 @@ var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
 
 signal died
-var is_on_floor := false
+var can_jump := false
 var input_dir := Vector2()
 var input_jump := false
 var input_motion := Vector2.ZERO
 var _mouse_mode : Input.MouseMode = Input.MOUSE_MODE_VISIBLE
-var ragdoll_parts: Array[RigidBody2D] = []
+var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
 
 func _ready() -> void:
 	_health_component.death.connect(func():died.emit())
 	
-	var bodies: Array[RigidBody2D] = []
+	var bodies: Array[TargetAngleRigidBody2D] = []
+	var weapon: Weapon
 	for child in get_children():
-		if child is not RigidBody2D: continue
+		if child is Weapon: weapon = child
+		if child is not TargetAngleRigidBody2D: continue
 		bodies.append(child)
 	for body in bodies:
+		weapon.add_collision_exception_with(body)
 		for part in bodies:
-			if body == part or body is Weapon: continue
+			if body == part: continue
 			body.add_collision_exception_with(part)
+	
 	ragdoll_parts = bodies
 	
 
@@ -60,20 +64,28 @@ func _ik_two_seg(
 	upper:TargetAngleRigidBody2D, 
 	joint:Vector2, 
 	lower:TargetAngleRigidBody2D, 
-	target_point:Vector2
+	target_point:Vector2,
+	#print_debug:bool=false
 ) -> void:
 	var upper_length := root_pos.distance_to(joint)
 	#var fore_length := joint.distance_to(target_point)
 	var fore_length = upper_length
 	
+	var to_target = target_point - root_pos
 	var target_distance := root_pos.distance_to(target_point)
 	
+	var min_distance := upper_length * 0.5
+	if target_distance < min_distance:
+		to_target = to_target.normalized() if target_distance > 0.0001 else Vector2.RIGHT
+		to_target *= min_distance
+		target_distance = min_distance
 	#target_distance = clamp(
 		#target_distance, 
 		#abs(upper_length - fore_length) + .001,
 		#upper_length + fore_length - .001
 	#)
-	var target_angle := (target_point - root_pos).angle()
+	var clamped_target = root_pos + to_target
+	var target_angle := to_target.angle()
 	
 	var upper_offset := acos(clamp(
 		(upper_length * upper_length + target_distance * target_distance - fore_length * fore_length) /\
@@ -85,22 +97,24 @@ func _ik_two_seg(
 	
 	var shoulder_angle := target_angle - upper_offset
 	var new_elbow = root_pos + Vector2.from_angle(shoulder_angle) * upper_length
-	var forearm_angle := (target_point - new_elbow).angle()
+	var forearm_angle := (clamped_target - new_elbow).angle()
 	upper.target_angle = shoulder_angle - PI/2.
 	lower.target_angle = forearm_angle - PI/2.
 
-func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	is_on_floor = false
-	for i in range(state.get_contact_count()):
-		var normal = state.get_contact_local_normal(i)
-		#var point = state.get_contact_local_position(i)
-		if normal.dot(Vector2.UP) > 0.999:
-			is_on_floor = true
 
 func _physics_process(delta: float) -> void:
 	_handle_input()
 	if not multiplayer.is_server(): return
+	_update_can_jump()
 	_process_movement(input_dir, input_jump, input_motion, delta)
+
+func _update_can_jump() -> void:
+	can_jump = false
+	for part in ragdoll_parts:
+		can_jump = can_jump or part.is_touching_ground
+	#if is_multiplayer_authority() and multiplayer.is_server():
+		#print("Can jump? %s" % can_jump)
+	
 
 func _handle_input():
 	if not is_multiplayer_authority(): 
@@ -152,12 +166,9 @@ func _process_movement(dir:Vector2, jump:bool, _mouse_motion:Vector2, delta:floa
 	var target = r_hand_marker.global_position + _mouse_motion
 	#mouse_pivot.global_position = look_pos
 	_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, target)
-	var can_jump := true
-	if not is_on_floor:
-		can_jump = false
 
 	if can_jump and (jump):
-		torso.apply_central_impulse(Vector2.UP * 2000.)
+		torso.apply_central_impulse(Vector2.UP * 1300.)
 	if dir.x < 0:
 		torso.apply_force(Vector2.LEFT * power)
 		_walk_cycle += delta * 5.

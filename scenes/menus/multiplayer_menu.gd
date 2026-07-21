@@ -22,6 +22,11 @@ func _ready() -> void:
 	SignalBus.hosted.connect(_on_hosted)
 	#SignalBus.join.connect(_on_join)
 	waiting_start_game_button.pressed.connect(_on_start_game)
+	_update_color()
+
+func _update_color() -> void:
+	await get_tree().process_frame
+	color_ip.color = Global.menu_manager.player_info.color
 
 func _on_start_game() -> void:
 	start_game.rpc()
