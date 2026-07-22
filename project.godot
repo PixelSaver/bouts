@@ -21,10 +21,11 @@ Global="*uid://cw2cid6mippjr"
 SignalBus="*uid://76heinnvc1fe"
 SceneDatabase="*uid://b7w6r5xa8o86w"
 WeaponManager="*uid://8qulco7uupu8"
+Talo="*uid://bpmdn8oc34pg7"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/StyleboxFancy/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg", "res://addons/talo/plugin.cfg")
 
 [file_customization]
 

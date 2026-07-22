@@ -160,7 +160,7 @@ vertical_alignment = 1
 script = ExtResource("4_6ygue")
 modulate_parent = null
 direction = Vector2(-1, 1)
-distance = 500.0
+distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
 [node name="VS" type="RichTextLabel" parent="HBoxContainer" unique_id=17418500]
@@ -179,6 +179,7 @@ vertical_alignment = 1
 script = ExtResource("4_6ygue")
 modulate_parent = null
 scale_curve = SubResource("Curve_vpl7u")
+distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
 [node name="Right" type="RichTextLabel" parent="HBoxContainer" unique_id=889759422]
@@ -198,5 +199,5 @@ vertical_alignment = 1
 script = ExtResource("4_6ygue")
 modulate_parent = null
 direction = Vector2(1, -1)
-distance = 500.0
+distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
