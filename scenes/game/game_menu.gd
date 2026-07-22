@@ -23,10 +23,36 @@ func _ready() -> void:
 		player_manager.tie.connect(func():
 			player_won.rpc(-1)
 		)
+	var banner_ts = get_all_tweenables($Banners)
+	for tw in banner_ts:
+		tw.tween_value = 1.0
+		tw.modulate_parent.a = 1.0
 func start_anim() -> void: 
-	if not multiplayer.is_server(): return
-	await get_tree().create_timer(0.3).timeout
 	var keys = Global.menu_manager.players.keys()
+	
+	# animation
+	var all_ts = get_all_tweenables(self)
+	for tw in all_ts:
+		tw.tween_value = 1.0
+		tw.modulate_parent.a = 1.0
+	if t and t.is_running(): t.kill()
+	t = default_tween()
+	var banner_ts = get_all_tweenables($Banners)
+	for tw in banner_ts:
+		print("Tweening %s" % tw.parent.name)
+		t.tween_property(tw, "tween_value", 0., 1.5)
+	await t.finished
+	await $HBoxContainer.animate(Global.round_state.get_wins(keys[0]), Global.round_state.get_wins(keys[1]))
+	t = default_tween().set_parallel(false)
+	t.tween_property($HBoxContainer, "offset_transform_scale", Vector2.ONE * 1.3, 0.8)
+	t.tween_property($HBoxContainer, "offset_transform_scale", Vector2.ONE, 0.8)
+	await t.finished
+	t = default_tween()
+	for tw in all_ts:
+		t.tween_property(tw, "tween_value", 1.0, 0.7)
+		t.tween_property(tw, "modulate_parent:a", 0.0, 0.7)
+	if not multiplayer.is_server(): return
+	
 	#print(keys.size())
 	for i in range(keys.size()):
 		var key = keys[i]
@@ -35,10 +61,11 @@ func start_anim() -> void:
 			printerr("Player info not readable as PlayerInfo")
 			continue
 		spawn_player.rpc(key, Vector2(i * 500, 0), player_info.to_dict())
+
 @rpc("authority", "reliable", "call_local")
 func spawn_player(id: int, pos: Vector2, _pi:Dictionary):
 	var pi = PlayerInfo.from_dict(_pi)
-	var inst = PLAYER.instantiate()
+	var inst = PLAYER.instantiate() as Player
 	players.add_child(inst)
 	#inst.apply_upgrades(ups)
 	#await get_tree().process_frame
@@ -46,6 +73,7 @@ func spawn_player(id: int, pos: Vector2, _pi:Dictionary):
 	inst.set_color(pi.color)
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
+	inst.begin_round(Global.round_state.get_wins(id))
 	player_manager.register_player_in_game(id, inst)
 
 #@rpc("any_peer", "reliable", "call_remote")
@@ -59,7 +87,7 @@ func spawn_player(id: int, pos: Vector2, _pi:Dictionary):
 @rpc("authority", "call_local", "reliable")
 func player_won(id:int) -> void:
 	player_manager.stop_player_sync()
-	Global.player_won_id = id
+	Global.set_winner(id)
 	print("Client %s sees %s won" % [self.multiplayer.get_unique_id(), id])
 	await get_tree().process_frame
 	await get_tree().process_frame

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="5_6w5i6"]
 [ext_resource type="Script" uid="uid://b6ewgxfuv3c4g" path="res://scenes/weapons/generic_sword.gd" id="5_h3ani"]
 [ext_resource type="Material" uid="uid://rr0pbqk1088t" path="res://assets/sphere_prototype_material.tres" id="6_hy8pg"]
+[ext_resource type="Script" uid="uid://d1bfvfeni03bw" path="res://scenes/active_ragdoll/win_number_label.gd" id="9_6w5i6"]
 [ext_resource type="Script" uid="uid://1k8bpr23sn6k" path="res://scenes/game/hp_bar.gd" id="9_mlfyp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4p01"]
@@ -40,7 +41,7 @@ colors = PackedColorArray(1, 1, 1, 1)
 gradient = SubResource("Gradient_mlfyp")
 width = 1
 
-[node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component", "r_hand_marker")]
+[node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component", "_win_number_label", "r_hand_marker")]
 script = ExtResource("1_dnie3")
 sensitivity = 1500.0
 power = 1000
@@ -63,6 +64,7 @@ l_arm_fore = NodePath("LeftForeArm")
 l_elbow = NodePath("LeftUpperArm/LeftElbowJoint")
 l_arm_upper = NodePath("LeftUpperArm")
 _health_component = NodePath("HealthComponent")
+_win_number_label = NodePath("RichTextLabel")
 r_hand_marker = NodePath("RightForeArm/RightHandMarker")
 metadata/_custom_type_script = "uid://wler21gs1eif"
 
@@ -449,5 +451,17 @@ tint_progress = Color(0.26968563, 0.71612406, 0.38974962, 1)
 script = ExtResource("9_mlfyp")
 follow_target = NodePath("../Torso")
 metadata/_custom_type_script = "uid://1k8bpr23sn6k"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1433324906 node_paths=PackedStringArray("follow_target")]
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_6w5i6")
+follow_target = NodePath("../Torso")
 
 [connection signal="health_changed" from="HealthComponent" to="HPBar" method="_on_health_component_health_changed"]

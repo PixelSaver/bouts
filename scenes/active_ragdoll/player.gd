@@ -29,6 +29,7 @@ class_name Player
 @export var l_arm_upper: TargetAngleRigidBody2D
 @export_group("Nodes", "_")
 @export var _health_component: HealthComponent
+@export var _win_number_label: WinNumberLabel
 @export var r_hand_marker: Marker2D
 var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
@@ -55,9 +56,10 @@ func _ready() -> void:
 		for part in bodies:
 			if body == part: continue
 			body.add_collision_exception_with(part)
-	
 	ragdoll_parts = bodies
-	
+
+func begin_round(wins:int) -> void:
+	_win_number_label.flash_wins(wins)
 
 func _ik_two_seg(
 	root_pos:Vector2, 

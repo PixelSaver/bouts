@@ -8,10 +8,17 @@ extends Node
 		tween_value = val
 		apply(val)
 @export var use_local_transform := false
+@export var modulate_parent : Color = Color.WHITE :
+	set(val):
+		modulate_parent = val
+		if parent: parent.modulate = modulate_parent
+@export var scale_curve : Curve
 @export var direction : Vector2 = Vector2.ZERO
 @export var distance: float = 100.0
 @export_tool_button("Randomize distance") var randomize_action = _randomize_distance
 var parent : Control
+
+
 
 func _randomize_distance():
 	distance = randf_range(0.2, 4.0) * 100
@@ -28,5 +35,7 @@ func apply(t:float) -> void:
 	var offset = direction.normalized() * distance * t
 	if use_local_transform:
 		offset *= parent.get_transform() 
+	if scale_curve:
+		parent.offset_transform_scale = Vector2.ONE * scale_curve.sample(t)
 	
 	parent.offset_transform_position = offset

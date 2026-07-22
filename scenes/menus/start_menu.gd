@@ -3,7 +3,6 @@ class_name StartMenu
 
 @export var buttons: Array[DefaultButton]
 var all_t : Array[Tweenable] = []
-var t: Tween 
 
 func _ready() -> void: 
 	all_t = get_all_tweenables(self)

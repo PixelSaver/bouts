@@ -3,9 +3,66 @@
 [ext_resource type="Script" uid="uid://yqflg2inlut8" path="res://scenes/game/game_menu.gd" id="1_r32m2"]
 [ext_resource type="Script" uid="uid://cbuirvhhuvscx" path="res://scenes/game/player_manager.gd" id="2_6ygue"]
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_m4cfo"]
+[ext_resource type="Script" uid="uid://b4pdlxyjxim6i" path="res://utilities/ui/tweenable.gd" id="4_6ygue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
 size = Vector2(1126, 20)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpl7u"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.15124992, 0.09771829, 0.32366547, 0.6)
+skew = Vector2(1, 0)
+corner_detail = 1
+
+[sub_resource type="GDScript" id="GDScript_gkedh"]
+resource_name = "animate"
+script/source = "extends HBoxContainer
+
+@export var ts : Array[Tweenable] = []
+@onready var left: RichTextLabel = $Left
+@onready var right: RichTextLabel = $Right
+var t: Tween
+
+#region tweenable
+func get_all_tweenables(root: Node) -> Array[Tweenable]:
+	var out: Array[Tweenable] = []
+	_dfs_collect(root, out)
+	return out
+
+static func _dfs_collect(node: Node, out: Array[Tweenable]) -> void:
+	for child in node.get_children():
+		if child is Tweenable:
+			out.append(child)
+
+		if child.get_child_count() > 0:
+			_dfs_collect(child, out)
+
+func default_tween() -> Tween:
+	return create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT)
+#endregion
+
+func _ready() -> void:
+	for tw in ts:
+		tw.tween_value = 1.0
+
+func animate(left_wins:int, right_wins:int):
+	left.text = str(left_wins)
+	right.text = str(right_wins)
+	if t and t.is_running(): t.kill()
+	t = default_tween().set_parallel(false)
+	#var ts = get_all_tweenables(self)
+	for tweenable in ts:
+		tweenable.tween_value = 1.0
+		t.tween_property(tweenable, \"tween_value\", 0., 0.7)
+	await t.finished
+"
+
+[sub_resource type="Curve" id="Curve_vpl7u"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
 
 [node name="GameMenu" type="Control" unique_id=298745656]
 layout_mode = 3
@@ -29,3 +86,117 @@ shape = SubResource("RectangleShape2D_gkedh")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=735638639]
 scale = Vector2(8.796875, 0.171875)
 texture = ExtResource("2_m4cfo")
+
+[node name="Banners" type="Control" parent="." unique_id=82936727]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="Panel" parent="Banners" unique_id=379312930]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_vpl7u")
+
+[node name="Tweenable" type="Node" parent="Banners/Left" unique_id=1074056299]
+script = ExtResource("4_6ygue")
+modulate_parent = null
+direction = Vector2(-1, 0)
+distance = 1000.0
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="Right" type="Panel" parent="Banners" unique_id=704097427]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_vpl7u")
+
+[node name="Tweenable" type="Node" parent="Banners/Right" unique_id=1319248044]
+script = ExtResource("4_6ygue")
+modulate_parent = null
+direction = Vector2(1, 0)
+distance = 1000.0
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2050594764 node_paths=PackedStringArray("ts")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_constants/separation = 30
+alignment = 1
+script = SubResource("GDScript_gkedh")
+ts = [NodePath("Left/Tweenable"), NodePath("VS/Tweenable"), NodePath("Right/Tweenable")]
+
+[node name="Left" type="RichTextLabel" parent="HBoxContainer" unique_id=1185060618]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_font_sizes/normal_font_size = 100
+text = "1"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tweenable" type="Node" parent="HBoxContainer/Left" unique_id=1214984781]
+script = ExtResource("4_6ygue")
+modulate_parent = null
+direction = Vector2(-1, 1)
+distance = 500.0
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="VS" type="RichTextLabel" parent="HBoxContainer" unique_id=17418500]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_font_sizes/normal_font_size = 100
+text = "VS"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tweenable" type="Node" parent="HBoxContainer/VS" unique_id=12368391]
+script = ExtResource("4_6ygue")
+modulate_parent = null
+scale_curve = SubResource("Curve_vpl7u")
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="Right" type="RichTextLabel" parent="HBoxContainer" unique_id=889759422]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_font_sizes/normal_font_size = 100
+text = "1
+"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tweenable" type="Node" parent="HBoxContainer/Right" unique_id=638500118]
+script = ExtResource("4_6ygue")
+modulate_parent = null
+direction = Vector2(1, -1)
+distance = 500.0
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"

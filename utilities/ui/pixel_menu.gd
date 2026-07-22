@@ -4,7 +4,7 @@ extends Control
 class_name PixelMenu
 
 var is_animating = false
-
+var t : Tween 
 
 func start_anim():
 	push_error("Pixel Menu anim functions unfulfilled. Please define start_anim() in %s" % self)
