@@ -19,10 +19,10 @@ offset_bottom = 720.0
 
 [node name="ChannelListLabel" type="Label" parent="Control" unique_id=1257984929]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 164.0
-offset_bottom = 43.0
+offset_left = -59.5
+offset_top = 65.0
+offset_right = 299.5
+offset_bottom = 120.0
 text = "Available channels"
 
 [node name="ChannelList" type="Panel" parent="Control" unique_id=2073287342]

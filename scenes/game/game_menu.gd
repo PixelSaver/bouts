@@ -5,6 +5,7 @@ const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
 #"res://scenes/game/player_old.tscn"
 @onready var players: Node2D = $Players
 @onready var player_manager: PlayerManager = $Players
+var t : Tween
 
 func _ready() -> void:
 	if multiplayer.is_server():

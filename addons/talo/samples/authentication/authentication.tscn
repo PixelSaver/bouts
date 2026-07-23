@@ -29,6 +29,7 @@ offset_bottom = 40.0
 
 [node name="Login" parent="UI/States" unique_id=863259645 instance=ExtResource("2_fsclp")]
 unique_name_in_owner = true
+visible = false
 
 [node name="Register" parent="UI/States" unique_id=1550849126 instance=ExtResource("1_5qw25")]
 unique_name_in_owner = true

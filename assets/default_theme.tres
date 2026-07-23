@@ -1,5 +1,9 @@
 [gd_resource type="Theme" format=3 uid="uid://djxds56cenfds"]
 
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="1_cs2sx"]
+[ext_resource type="FontFile" uid="uid://d2q6l6xd0ne2i" path="res://assets/fonts/Cutehandwriting-Regular.otf" id="1_qew4h"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="2_vkpim"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gkedh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_plx5h"]
@@ -10,19 +14,55 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fdur0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qew4h"]
+[sub_resource type="Resource" id="Resource_203bq"]
+script = ExtResource("1_cs2sx")
+color = Color(0.8509804, 0.6392157, 0.8039216, 1)
+width_left = 2
+width_top = 2
+width_right = 2
+width_bottom = 2
+
+[sub_resource type="StyleBox" id="StyleBox_oal56"]
+resource_local_to_scene = false
+resource_name = ""
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 0.6)
+script = ExtResource("2_vkpim")
+draw_center = false
+borders = Array[ExtResource("1_cs2sx")]([SubResource("Resource_203bq")])
+corner_detail = 5
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_blur = 0
+
+[sub_resource type="Resource" id="Resource_qlib5"]
+script = ExtResource("1_cs2sx")
+color = Color(0.26932546, 0.25951993, 0.38099545, 1)
+width_bottom = 2
+
+[sub_resource type="StyleBox" id="StyleBox_xakvy"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("2_vkpim")
+color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+borders = Array[ExtResource("1_cs2sx")]([SubResource("Resource_qlib5")])
 corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o54fn"]
 content_margin_left = 0.0
@@ -36,14 +76,22 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [resource]
-default_font_size = 40
+default_font = ExtResource("1_qew4h")
+default_font_size = 25
 Button/styles/disabled = SubResource("StyleBoxEmpty_gkedh")
 Button/styles/focus = SubResource("StyleBoxEmpty_plx5h")
 Button/styles/hover = SubResource("StyleBoxEmpty_c7qcy")
 Button/styles/normal = SubResource("StyleBoxEmpty_rfxp3")
 Button/styles/pressed = SubResource("StyleBoxEmpty_fdur0")
+CheckButton/colors/button_checked_color = Color(0.8509804, 0.6392157, 0.8039216, 1)
+CheckButton/colors/button_unchecked_color = Color(0.8509804, 0.6392157, 0.8039216, 1)
 ColorPickerButton/font_sizes/font_size = 10
-LineEdit/styles/normal = SubResource("StyleBoxFlat_qew4h")
+LineEdit/colors/caret_color = Color(0.8509804, 0.6392157, 0.8039216, 1)
+LineEdit/colors/font_color = Color(0.8784314, 0.8784314, 0.8627451, 1)
+LineEdit/colors/font_placeholder_color = Color(0.8784314, 0.8784314, 0.8627451, 0.6)
+LineEdit/colors/selection_color = Color(0.44313726, 0.49803922, 0.6901961, 1)
+LineEdit/styles/focus = SubResource("StyleBox_oal56")
+LineEdit/styles/normal = SubResource("StyleBox_xakvy")
 MarginContainer/constants/margin_bottom = 20
 MarginContainer/constants/margin_left = 20
 MarginContainer/constants/margin_right = 20

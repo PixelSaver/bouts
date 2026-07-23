@@ -25,7 +25,7 @@ Talo="*uid://bpmdn8oc34pg7"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/StyleboxFancy/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg", "res://addons/talo/plugin.cfg")
+enabled=PackedStringArray("res://addons/StyleboxFancy/plugin.cfg", "res://addons/cheatsheet_viewer/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg", "res://addons/talo/plugin.cfg")
 
 [file_customization]
 
@@ -143,3 +143,4 @@ r_click={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.44313726, 0.49803922, 0.6901961, 1)

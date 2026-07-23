@@ -10,8 +10,8 @@ func _enter_tree() -> void:
 	call_deferred("_ensure_label")
 
 func _ensure_label():
-	self.custom_minimum_size = Vector2(150, 80)
-	
+	if self.custom_minimum_size == Vector2.ZERO:
+		self.custom_minimum_size = Vector2(150, 80)
 	for child in get_children():
 		if child is RichTextLabel:
 			return
@@ -34,17 +34,19 @@ func _ready() -> void:
 	self.pressed.connect(_on_pressed)
 
 func _notification(what: int) -> void:
+	if Engine.is_editor_hint(): return
 	match what:
 		NOTIFICATION_MOUSE_ENTER:
 			_hover()
 		NOTIFICATION_MOUSE_EXIT:
 			_unhover()
 		NOTIFICATION_FOCUS_ENTER:
-			pass
+			_hover()
 		NOTIFICATION_FOCUS_EXIT:
-			pass
+			_unhover()
 
 func _on_pressed() -> void:
+	if Engine.is_editor_hint(): return
 	if t and t.is_running(): t.kill()
 	t = create_tween().set_ease(Tween.EASE_OUT)
 	t.set_trans(Tween.TRANS_QUINT)
@@ -53,12 +55,14 @@ func _on_pressed() -> void:
 	
 
 func _hover() -> void:
+	if Engine.is_editor_hint(): return
 	if t and t.is_running(): t.kill()
 	t = create_tween().set_ease(Tween.EASE_OUT)
 	t.set_trans(Tween.TRANS_QUINT).set_parallel(true)
 	t.tween_property(self, "scale", Vector2.ONE * 1.1, 0.7)
 	
 func _unhover() -> void:
+	if Engine.is_editor_hint(): return
 	if t and t.is_running(): t.kill()
 	t = create_tween().set_ease(Tween.EASE_OUT)
 	t.set_trans(Tween.TRANS_ELASTIC).set_parallel(true)
