@@ -14,6 +14,22 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fdur0"]
 
+[sub_resource type="StyleBox" id="StyleBox_vkpim"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("2_vkpim")
+color = Color(0.38039216, 0.36862746, 0.52156866, 0.6)
+corner_detail = 5
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_blur = 0
+
 [sub_resource type="Resource" id="Resource_203bq"]
 script = ExtResource("1_cs2sx")
 color = Color(0.8509804, 0.6392157, 0.8039216, 1)
@@ -64,16 +80,20 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o54fn"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+[sub_resource type="StyleBox" id="StyleBox_cs2sx"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("2_vkpim")
+color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [resource]
 default_font = ExtResource("1_qew4h")
@@ -86,6 +106,7 @@ Button/styles/pressed = SubResource("StyleBoxEmpty_fdur0")
 CheckButton/colors/button_checked_color = Color(0.8509804, 0.6392157, 0.8039216, 1)
 CheckButton/colors/button_unchecked_color = Color(0.8509804, 0.6392157, 0.8039216, 1)
 ColorPickerButton/font_sizes/font_size = 10
+ColorPickerButton/styles/normal = SubResource("StyleBox_vkpim")
 LineEdit/colors/caret_color = Color(0.8509804, 0.6392157, 0.8039216, 1)
 LineEdit/colors/font_color = Color(0.8784314, 0.8784314, 0.8627451, 1)
 LineEdit/colors/font_placeholder_color = Color(0.8784314, 0.8784314, 0.8627451, 0.6)
@@ -96,5 +117,5 @@ MarginContainer/constants/margin_bottom = 20
 MarginContainer/constants/margin_left = 20
 MarginContainer/constants/margin_right = 20
 MarginContainer/constants/margin_top = 20
-Panel/styles/panel = SubResource("StyleBoxFlat_o54fn")
+Panel/styles/panel = SubResource("StyleBox_cs2sx")
 VBoxContainer/constants/separation = 10

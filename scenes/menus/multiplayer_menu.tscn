@@ -3,18 +3,8 @@
 [ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/multiplayer_menu.gd" id="1_elvy3"]
 [ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/loading_screen.gd" id="2_ftwoh"]
 [ext_resource type="Script" uid="uid://crut4r5gwigu0" path="res://utilities/ui/menus/default_button.gd" id="3_7mco4"]
+[ext_resource type="Script" uid="uid://dmxfx72msunjl" path="res://scenes/menus/auth/shadowed_button.gd" id="3_livv6"]
 [ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58ccb"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
 [node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_start_game_button")]
 layout_mode = 3
@@ -77,7 +67,6 @@ placeholder_text = "player name"
 [node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1367602326]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_58ccb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel" unique_id=1464235866]
 layout_mode = 1
@@ -118,12 +107,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HostButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer" unique_id=809439393]
+[node name="HostButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer" unique_id=1659879073]
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("3_7mco4")
-metadata/_custom_type_script = "uid://crut4r5gwigu0"
+script = ExtResource("3_livv6")
+metadata/_custom_type_script = "uid://dmxfx72msunjl"
 
 [node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=19866599]
 layout_mode = 1
@@ -155,12 +144,12 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="JoinButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2" unique_id=1345880807]
+[node name="JoinButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2" unique_id=1398853382]
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("3_7mco4")
-metadata/_custom_type_script = "uid://crut4r5gwigu0"
+script = ExtResource("3_livv6")
+metadata/_custom_type_script = "uid://dmxfx72msunjl"
 
 [node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1016080236]
 layout_mode = 1

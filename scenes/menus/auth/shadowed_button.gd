@@ -1,5 +1,6 @@
 @tool
 extends DefaultButton
+class_name ShadowedButton
 
 @onready var panel: Panel = $Panel
 @export var shadow_range := Vector2(5, 15)

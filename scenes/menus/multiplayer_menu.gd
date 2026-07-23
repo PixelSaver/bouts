@@ -26,6 +26,7 @@ func _ready() -> void:
 
 func _update_color() -> void:
 	await get_tree().process_frame
+	await get_tree().process_frame
 	color_ip.color = Global.menu_manager.player_info.color
 
 func _on_start_game() -> void:
