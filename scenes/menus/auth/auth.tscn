@@ -1,94 +1,17 @@
 [gd_scene format=3 uid="uid://8va83h0kpxa7"]
 
 [ext_resource type="Script" uid="uid://civhebnw76xj2" path="res://scenes/menus/auth/auth.gd" id="1_vaa3k"]
-[ext_resource type="PackedScene" uid="uid://co0uou3idf65q" path="res://addons/talo/samples/authentication/states/login.tscn" id="2_kohhh"]
-[ext_resource type="PackedScene" uid="uid://bjopxp3rhpinb" path="res://addons/talo/samples/authentication/states/register.tscn" id="3_depmy"]
-[ext_resource type="PackedScene" uid="uid://dv6o0q01wov2o" path="res://addons/talo/samples/authentication/states/verify.tscn" id="4_yvpmj"]
-[ext_resource type="PackedScene" uid="uid://df6qjcnw1atpn" path="res://addons/talo/samples/authentication/states/in_game.tscn" id="5_mxy2r"]
-[ext_resource type="PackedScene" uid="uid://b6mypp2qa8m4u" path="res://addons/talo/samples/authentication/states/change_email.tscn" id="6_t2t6y"]
-[ext_resource type="PackedScene" uid="uid://dh520ugjh11i" path="res://addons/talo/samples/authentication/states/change_identifier.tscn" id="7_e8q2q"]
-[ext_resource type="PackedScene" uid="uid://bdfuoxfyblqtw" path="res://addons/talo/samples/authentication/states/change_password.tscn" id="8_ys7ar"]
-[ext_resource type="PackedScene" uid="uid://b0nvmmnpff27a" path="res://addons/talo/samples/authentication/states/forgot_password.tscn" id="9_giadv"]
-[ext_resource type="PackedScene" uid="uid://8aqpg6o0a1xx" path="res://addons/talo/samples/authentication/states/reset_password.tscn" id="10_rt06l"]
-[ext_resource type="PackedScene" uid="uid://d17bvaxw1qew4" path="res://addons/talo/samples/authentication/states/delete_account.tscn" id="11_msmk4"]
+[ext_resource type="PackedScene" uid="uid://b36h23sf6qxnu" path="res://scenes/menus/auth/verify.tscn" id="4_gbxt7"]
 [ext_resource type="PackedScene" uid="uid://cm40pyudytuay" path="res://scenes/menus/auth/login.tscn" id="12_t2t6y"]
-[ext_resource type="Script" uid="uid://xnqo2kax64o2" path="res://scenes/menus/auth/register.gd" id="13_e8q2q"]
-[ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="13_t2t6y"]
-[ext_resource type="Script" uid="uid://dmxfx72msunjl" path="res://scenes/menus/auth/shadowed_button.gd" id="14_t2t6y"]
-[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="15_ys7ar"]
-[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="16_giadv"]
+[ext_resource type="PackedScene" uid="uid://lt3hsfxrgf02" path="res://scenes/menus/auth/register.tscn" id="13_yvpmj"]
+[ext_resource type="PackedScene" uid="uid://cnu2nw28xkb5g" path="res://scenes/menus/auth/change_email.tscn" id="14_mxy2r"]
+[ext_resource type="PackedScene" uid="uid://dbidcuumabt0w" path="res://scenes/menus/auth/change_identifier.tscn" id="15_e8q2q"]
+[ext_resource type="PackedScene" uid="uid://dwht4nqa211ks" path="res://scenes/menus/auth/change_password.tscn" id="16_ys7ar"]
+[ext_resource type="PackedScene" uid="uid://pjvsiototkg0" path="res://scenes/menus/auth/forgot_password.tscn" id="17_giadv"]
+[ext_resource type="PackedScene" uid="uid://clydoc3hs0xef" path="res://scenes/menus/auth/reset_password.tscn" id="18_ys7ar"]
+[ext_resource type="PackedScene" uid="uid://cmlbwhk8sbhao" path="res://scenes/menus/auth/delete_account.tscn" id="19_ys7ar"]
 
-[sub_resource type="Resource" id="Resource_qlib5"]
-script = ExtResource("15_ys7ar")
-color = Color(0.26932546, 0.25951993, 0.38099545, 1)
-width_bottom = 2
-
-[sub_resource type="StyleBox" id="StyleBox_t2t6y"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-script = ExtResource("16_giadv")
-color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-borders = Array[ExtResource("15_ys7ar")]([SubResource("Resource_qlib5")])
-corner_detail = 5
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-expand_margin_right = 40.0
-
-[sub_resource type="GDScript" id="GDScript_gkedh"]
-resource_name = "secret_toggle"
-script/source = "extends CheckButton
-
-@onready var password: LineEdit = %Password
-
-func _toggled(toggled_on: bool) -> void:
-	password.secret = toggled_on
-"
-
-[sub_resource type="StyleBox" id="StyleBox_gkedh"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = -1.0
-content_margin_top = -1.0
-content_margin_right = -1.0
-content_margin_bottom = -1.0
-script = ExtResource("16_giadv")
-color = Color(0.6392157, 0.81960785, 0.6862745, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_enabled = true
-shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
-shadow_blur = 0
-shadow_offset = Vector2(5, 5)
-metadata/_custom_type_script = "uid://bkl6g25jwb47h"
-
-[sub_resource type="StyleBox" id="StyleBox_msmk4"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = -1.0
-content_margin_top = -1.0
-content_margin_right = -1.0
-content_margin_bottom = -1.0
-script = ExtResource("16_giadv")
-color = Color(0.5647059, 0.7058824, 0.87058824, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_enabled = true
-shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.64705884)
-shadow_blur = 0
-shadow_offset = Vector2(5, 5)
-metadata/_custom_type_script = "uid://bkl6g25jwb47h"
-
-[node name="Auth" type="Control" unique_id=1587909374]
+[node name="Auth" type="Control" unique_id=1587909374 node_paths=PackedStringArray("login", "register", "verify", "change_password", "change_email", "change_identifier", "forgot_password", "reset_password", "delete_account", "states_cont")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,58 +19,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vaa3k")
+login = NodePath("States/Login")
+register = NodePath("States/Register")
+verify = NodePath("States/Verify")
+change_password = NodePath("States/ChangePassword")
+change_email = NodePath("States/ChangeEmail")
+change_identifier = NodePath("States/ChangeIdentifier")
+forgot_password = NodePath("States/ForgotPassword")
+reset_password = NodePath("States/ResetPassword")
+delete_account = NodePath("States/DeleteAccount")
+states_cont = NodePath("States")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
-
-[node name="Example" type="Control" parent="." unique_id=1569263311]
-anchors_preset = 0
-offset_right = 1080.0
-offset_bottom = 720.0
-
-[node name="States" type="Control" parent="Example" unique_id=1228534155]
-unique_name_in_owner = true
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Login" parent="Example/States" unique_id=17406197 instance=ExtResource("2_kohhh")]
-unique_name_in_owner = true
-visible = false
-
-[node name="Register" parent="Example/States" unique_id=1264734755 instance=ExtResource("3_depmy")]
-unique_name_in_owner = true
-visible = false
-
-[node name="Verify" parent="Example/States" unique_id=1267061117 instance=ExtResource("4_yvpmj")]
-unique_name_in_owner = true
-visible = false
-
-[node name="InGame" parent="Example/States" unique_id=1917541957 instance=ExtResource("5_mxy2r")]
-unique_name_in_owner = true
-visible = false
-
-[node name="ChangeEmail" parent="Example/States" unique_id=277492208 instance=ExtResource("6_t2t6y")]
-unique_name_in_owner = true
-visible = false
-
-[node name="ChangeIdentifier" parent="Example/States" unique_id=283511872 instance=ExtResource("7_e8q2q")]
-unique_name_in_owner = true
-visible = false
-
-[node name="ChangePassword" parent="Example/States" unique_id=1072846770 instance=ExtResource("8_ys7ar")]
-unique_name_in_owner = true
-visible = false
-
-[node name="ForgotPassword" parent="Example/States" unique_id=2131296827 instance=ExtResource("9_giadv")]
-unique_name_in_owner = true
-visible = false
-
-[node name="ResetPassword" parent="Example/States" unique_id=1140819461 instance=ExtResource("10_rt06l")]
-unique_name_in_owner = true
-visible = false
-
-[node name="DeleteAccount" parent="Example/States" unique_id=1727370789 instance=ExtResource("11_msmk4")]
-unique_name_in_owner = true
-visible = false
 
 [node name="States" type="Control" parent="." unique_id=768982225]
 layout_mode = 1
@@ -159,181 +41,56 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="Login" parent="States" unique_id=406103922 instance=ExtResource("12_t2t6y")]
+layout_mode = 1
+
+[node name="Register" parent="States" unique_id=1315094372 instance=ExtResource("13_yvpmj")]
+layout_mode = 1
+
+[node name="Verify" parent="States" unique_id=803086660 instance=ExtResource("4_gbxt7")]
 visible = false
 layout_mode = 1
 
-[node name="Register" type="Control" parent="States" unique_id=416219779]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("13_e8q2q")
-metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
-
-[node name="MarginContainer" type="MarginContainer" parent="States/Register" unique_id=109120698]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("13_t2t6y")
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
-
-[node name="VBoxContainer" type="VBoxContainer" parent="States/Register/MarginContainer" unique_id=1409181127]
-layout_mode = 2
-size_flags_vertical = 4
-theme = ExtResource("13_t2t6y")
-theme_override_constants/separation = 24
-
-[node name="Title" type="Label" parent="States/Register/MarginContainer/VBoxContainer" unique_id=1377358761]
-layout_mode = 2
-size_flags_vertical = 0
-theme = ExtResource("13_t2t6y")
-theme_override_font_sizes/font_size = 50
-text = "Register"
-horizontal_alignment = 1
-
-[node name="Username" type="LineEdit" parent="States/Register/MarginContainer/VBoxContainer" unique_id=1952099558]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("13_t2t6y")
-theme_override_font_sizes/font_size = 20
-placeholder_text = "Username"
-max_length = 80
-expand_to_text_length = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="States/Register/MarginContainer/VBoxContainer" unique_id=1294365109]
-layout_mode = 2
-alignment = 1
-
-[node name="Password" type="LineEdit" parent="States/Register/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1985783182]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(360, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 1
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBox_t2t6y")
-placeholder_text = "Password"
-max_length = 80
-expand_to_text_length = true
-secret = true
-
-[node name="CheckButton" type="CheckButton" parent="States/Register/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1174436761]
-layout_mode = 2
-button_pressed = true
-script = SubResource("GDScript_gkedh")
-
-[node name="Control" type="Control" parent="States/Register/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1998018959]
-layout_mode = 2
-
-[node name="EnableVerification" type="CheckBox" parent="States/Register/MarginContainer/VBoxContainer" unique_id=1393267034]
-unique_name_in_owner = true
+[node name="ChangeEmail" parent="States" unique_id=1260993476 instance=ExtResource("14_mxy2r")]
 visible = false
-custom_minimum_size = Vector2(400, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("13_t2t6y")
-text = "Enable email verification"
+layout_mode = 1
 
-[node name="Email" type="LineEdit" parent="States/Register/MarginContainer/VBoxContainer" unique_id=1885610197]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("13_t2t6y")
-theme_override_font_sizes/font_size = 20
-placeholder_text = "Email address"
-max_length = 80
-expand_to_text_length = true
+[node name="ChangeIdentifier" parent="States" unique_id=110884241 instance=ExtResource("15_e8q2q")]
+visible = false
+layout_mode = 1
 
-[node name="Submit" type="Button" parent="States/Register/MarginContainer/VBoxContainer" unique_id=390746667]
-custom_minimum_size = Vector2(250, 50)
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 1
-theme = ExtResource("13_t2t6y")
-script = ExtResource("14_t2t6y")
-metadata/_custom_type_script = "uid://crut4r5gwigu0"
+[node name="ChangePassword" parent="States" unique_id=1148859096 instance=ExtResource("16_ys7ar")]
+visible = false
+layout_mode = 1
 
-[node name="Panel" type="Panel" parent="States/Register/MarginContainer/VBoxContainer/Submit" unique_id=1036052688]
+[node name="ForgotPassword" parent="States" unique_id=1604336518 instance=ExtResource("17_giadv")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBox_gkedh")
 
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="States/Register/MarginContainer/VBoxContainer/Submit" unique_id=1054514562]
-clip_contents = false
+[node name="ResetPassword" parent="States" unique_id=1968684969 instance=ExtResource("18_ys7ar")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-bbcode_enabled = true
-text = "Submit"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Login" type="Button" parent="States/Register/MarginContainer/VBoxContainer" unique_id=649734650]
-custom_minimum_size = Vector2(250, 50)
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 1
-script = ExtResource("14_t2t6y")
-metadata/_custom_type_script = "uid://crut4r5gwigu0"
-
-[node name="Panel" type="Panel" parent="States/Register/MarginContainer/VBoxContainer/Login" unique_id=1370975748]
+[node name="DeleteAccount" parent="States" unique_id=27609548 instance=ExtResource("19_ys7ar")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBox_msmk4")
-
-[node name="_RichTextLabel_90691" type="RichTextLabel" parent="States/Register/MarginContainer/VBoxContainer/Login" unique_id=14426951]
-clip_contents = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-bbcode_enabled = true
-text = "Go to Login"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ValidationLabel" type="Label" parent="States/Register/MarginContainer/VBoxContainer" unique_id=502017101]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("13_t2t6y")
-
-[connection signal="pressed" from="States/Register/MarginContainer/VBoxContainer/Submit" to="States/Register" method="_on_submit_pressed"]
-[connection signal="pressed" from="States/Register/MarginContainer/VBoxContainer/Login" to="States/Register" method="_on_login_pressed"]

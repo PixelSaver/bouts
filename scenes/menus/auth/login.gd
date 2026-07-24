@@ -1,5 +1,5 @@
-extends PixelMenu
-#class_name NAME
+extends AuthMenu
+class_name AuthLogin
 
 signal verification_required
 signal go_to_forgot_password
@@ -8,14 +8,15 @@ signal go_to_register
 @onready var username: LineEdit = %Username
 @onready var password: LineEdit = %Password
 @onready var validation_label: Label = %ValidationLabel
-@onready var submit: DefaultButton = $MarginContainer/VBoxContainer/Submit
-@onready var forgot_password: DefaultButton = $MarginContainer/VBoxContainer/ForgotPassword
-@onready var register: DefaultButton = $MarginContainer/VBoxContainer/Register
+#@onready var submit: DefaultButton = $MarginContainer/VBoxContainer/Submit
+#@onready var forgot_password: DefaultButton = $MarginContainer/VBoxContainer/ForgotPassword
+#@onready var register: DefaultButton = $MarginContainer/VBoxContainer/Register
 
-func _ready() -> void:
-	submit.pressed.connect(_on_submit_pressed)
-	forgot_password.pressed.connect(_on_forgot_password_pressed)
-	register.pressed.connect(_on_register_pressed)
+#func _ready() -> void:
+#submit.pressed.connect(_on_submit_pressed)
+#forgot_password.pressed.connect(_on_forgot_password_pressed)
+#register.pressed.connect(_on_register_pressed)
+
 
 func _on_submit_pressed() -> void:
 	validation_label.text = ""
@@ -43,12 +44,10 @@ func _on_submit_pressed() -> void:
 		Talo.player_auth.LoginResult.OK:
 			Log.pr("Login result went through!")
 
+
 func _on_forgot_password_pressed() -> void:
 	go_to_forgot_password.emit()
 
+
 func _on_register_pressed() -> void:
 	go_to_register.emit()
-
-
-func start_anim() -> void: pass
-func end_anim() -> void: pass

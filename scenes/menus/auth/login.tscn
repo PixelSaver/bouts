@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dmxfx72msunjl" path="res://scenes/menus/auth/shadowed_button.gd" id="3_n6w38"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_quxmt"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_0sl57"]
+[ext_resource type="Script" uid="uid://cd6yjv6qeab11" path="res://scenes/menus/auth/secret_toggle.gd" id="5_wofij"]
 
 [sub_resource type="Resource" id="Resource_qlib5"]
 script = ExtResource("4_quxmt")
@@ -27,16 +28,6 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 expand_margin_right = 40.0
-
-[sub_resource type="GDScript" id="GDScript_wofij"]
-resource_name = "secret_toggle"
-script/source = "extends CheckButton
-
-@onready var password: LineEdit = %Password
-
-func _toggled(toggled_on: bool) -> void:
-	password.secret = toggled_on
-"
 
 [sub_resource type="StyleBox" id="StyleBox_gkedh"]
 resource_local_to_scene = false
@@ -159,13 +150,16 @@ max_length = 80
 expand_to_text_length = true
 secret = true
 
-[node name="CheckButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=568603834]
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=568603834 node_paths=PackedStringArray("password")]
 layout_mode = 2
+mouse_filter = 1
 button_pressed = true
-script = SubResource("GDScript_wofij")
+script = ExtResource("5_wofij")
+password = NodePath("../Password")
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1427725507]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Submit" type="Button" parent="MarginContainer/VBoxContainer" unique_id=921213246]
 custom_minimum_size = Vector2(250, 50)
@@ -283,3 +277,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
 theme_override_colors/font_color = Color(0.92156863, 0.7647059, 0.654902, 1)
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Submit" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ForgotPassword" to="." method="_on_forgot_password_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Register" to="." method="_on_register_pressed"]
