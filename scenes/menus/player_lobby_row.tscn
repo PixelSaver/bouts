@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://c60016lgfrals"]
+
+[ext_resource type="Script" uid="uid://bkbfmrefw38t7" path="res://scenes/menus/player_lobby_row.gd" id="1_pennx"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="2_odqdg"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="3_3f0tn"]
+[ext_resource type="Script" uid="uid://dmxfx72msunjl" path="res://scenes/menus/auth/shadowed_button.gd" id="4_nmbvh"]
+
+[sub_resource type="StyleBox" id="StyleBox_jxd0g"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("3_3f0tn")
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBox" id="StyleBox_0jrml"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("3_3f0tn")
+color = Color(0.92156863, 0.7647059, 0.654902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[node name="PlayerLobbyRow" type="Panel" unique_id=1710346516 node_paths=PackedStringArray("panel_color", "player_name", "kick_cont", "kick_button")]
+custom_minimum_size = Vector2(0, 60)
+script = ExtResource("1_pennx")
+panel_color = NodePath("HBoxContainer/MarginContainer/Panel")
+player_name = NodePath("HBoxContainer/RichTextLabel")
+kick_cont = NodePath("HBoxContainer/MarginContainer2")
+kick_button = NodePath("HBoxContainer/MarginContainer2/ShadowedButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=17826105]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1537010009]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 1102.0
+offset_bottom = 60.0
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=2069736598]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer" unique_id=198438061]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_jxd0g")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer" unique_id=1423809698]
+layout_mode = 2
+bbcode_enabled = true
+text = "PlayerName"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="HBoxContainer" unique_id=636445098]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer" unique_id=1826672683]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 10
+
+[node name="ShadowedButton" type="Button" parent="HBoxContainer/MarginContainer2" unique_id=946530915]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+script = ExtResource("4_nmbvh")
+metadata/_custom_type_script = "uid://dmxfx72msunjl"
+
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer2/ShadowedButton" unique_id=414103384]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_0jrml")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="HBoxContainer/MarginContainer2/ShadowedButton" unique_id=861290328]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Kick"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1

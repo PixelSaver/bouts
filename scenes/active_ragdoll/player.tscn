@@ -4,9 +4,7 @@
 [ext_resource type="PhysicsMaterial" uid="uid://w2lebln4ho1x" path="res://assets/ragdoll_physics_material.tres" id="2_04ies"]
 [ext_resource type="Script" uid="uid://fj7ykktocnh6" path="res://utilities/health_component.gd" id="2_h3ani"]
 [ext_resource type="Script" uid="uid://bbbjh7tp0fq7w" path="res://scenes/active_ragdoll/target_angle_rigidbody.gd" id="3_h3ani"]
-[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="5_6w5i6"]
 [ext_resource type="Script" uid="uid://b6ewgxfuv3c4g" path="res://scenes/weapons/generic_sword.gd" id="5_h3ani"]
-[ext_resource type="Material" uid="uid://rr0pbqk1088t" path="res://assets/sphere_prototype_material.tres" id="6_hy8pg"]
 [ext_resource type="Script" uid="uid://d1bfvfeni03bw" path="res://scenes/active_ragdoll/win_number_label.gd" id="9_6w5i6"]
 [ext_resource type="Script" uid="uid://1k8bpr23sn6k" path="res://scenes/game/hp_bar.gd" id="9_mlfyp"]
 
@@ -391,14 +389,6 @@ position = Vector2(0, -30.999996)
 rotation = 1.5707964
 node_a = NodePath("../../RightUpperArm")
 node_b = NodePath("..")
-
-[node name="MousePivot" type="Node2D" parent="Torso" unique_id=1057398034]
-position = Vector2(100, -31)
-
-[node name="Sprite2D" type="Sprite2D" parent="Torso/MousePivot" unique_id=2139955083]
-material = ExtResource("6_hy8pg")
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("5_6w5i6")
 
 [node name="Line2D" type="Line2D" parent="Torso" unique_id=742678777]
 points = PackedVector2Array(0, -55, 0, 60)

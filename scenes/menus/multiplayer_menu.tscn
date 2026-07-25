@@ -2,9 +2,68 @@
 
 [ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/multiplayer_menu.gd" id="1_elvy3"]
 [ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/loading_screen.gd" id="2_ftwoh"]
-[ext_resource type="Script" uid="uid://crut4r5gwigu0" path="res://utilities/ui/menus/default_button.gd" id="3_7mco4"]
 [ext_resource type="Script" uid="uid://dmxfx72msunjl" path="res://scenes/menus/auth/shadowed_button.gd" id="3_livv6"]
 [ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_sb6po"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_4kuv5"]
+[ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="8_jxd0g"]
+
+[sub_resource type="StyleBox" id="StyleBox_sb6po"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_4kuv5")
+color = Color(0.92156863, 0.7647059, 0.654902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_4kuv5"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_4kuv5")
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_0jrml"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_4kuv5")
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
 [node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_start_game_button")]
 layout_mode = 3
@@ -22,10 +81,11 @@ loading_ip = NodePath("LoadingScreen/VBoxContainer/IPInput")
 loading_host_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton")
 loading_join_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton")
 waiting_screen = NodePath("WaitingScreen")
-waiting_start_game_button = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGameButton")
+waiting_start_game_button = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="LoadingScreen" type="Control" parent="." unique_id=1846798797]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,8 +117,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=1784142041]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
 
 [node name="Name" type="LineEdit" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1547209254]
 layout_mode = 2
@@ -79,11 +140,12 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=915812846]
 layout_mode = 2
-text = " Color:"
+text = " Color"
 
 [node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=1641163226]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
@@ -91,39 +153,41 @@ theme_override_constants/margin_bottom = 5
 [node name="ColorPicker" type="ColorPickerButton" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer/MarginContainer" unique_id=619973256]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 10
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 edit_intensity = false
 
 [node name="IPInput" type="LineEdit" parent="LoadingScreen/VBoxContainer" unique_id=227558515]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 placeholder_text = "ip address"
 
 [node name="ButtonContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=558283635]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/ButtonContainer" unique_id=1680235105]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HostButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer" unique_id=1659879073]
+[node name="HostButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer" unique_id=1363817932]
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_livv6")
 metadata/_custom_type_script = "uid://dmxfx72msunjl"
 
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=19866599]
+[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=168535097]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_sb6po")
 
-[node name="@RichTextLabel@66287" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=1451495987]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=1807359543]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -131,7 +195,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "Host"
 fit_content = true
@@ -144,23 +210,24 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="JoinButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2" unique_id=1398853382]
-custom_minimum_size = Vector2(150, 80)
+[node name="JoinButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2" unique_id=1768478903]
+custom_minimum_size = Vector2(150, 60)
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_livv6")
 metadata/_custom_type_script = "uid://dmxfx72msunjl"
 
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1016080236]
+[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1267245097]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_4kuv5")
 
-[node name="_RichTextLabel_66287" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1933289814]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1141828527]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -168,7 +235,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "Join"
 fit_content = true
@@ -177,8 +246,7 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_list_text")]
-visible = false
+[node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -187,7 +255,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("4_ftwoh")
-player_list_text = NodePath("MarginContainer/VBoxContainer/PlayersText")
+player_lobby_cont = NodePath("MarginContainer/VBoxContainer/PlayerLobbyCont")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="MarginContainer" type="MarginContainer" parent="WaitingScreen" unique_id=346364770]
@@ -202,19 +270,17 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=445454870]
+[node name="Title" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=445454870]
 layout_mode = 2
 mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
 text = "Bouts Lobby"
 fit_content = true
 scroll_active = false
 
-[node name="PlayersText" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=800020448]
+[node name="PlayerLobbyCont" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=546159757]
 layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 1
-text = "Player 1: 
-Player 2: "
 
 [node name="HBoxContainer" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=1810043665]
 custom_minimum_size = Vector2(0, 50)
@@ -225,13 +291,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="StartGameButton" type="Button" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer" unique_id=240238785]
-custom_minimum_size = Vector2(150, 80)
+[node name="StartGame" type="Button" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer" unique_id=34680924]
+custom_minimum_size = Vector2(220, 70)
 layout_mode = 2
-script = ExtResource("3_7mco4")
+size_flags_horizontal = 4
+mouse_filter = 1
+theme = ExtResource("8_jxd0g")
+script = ExtResource("3_livv6")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
-[node name="Panel" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGameButton" unique_id=711415696]
+[node name="Panel" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame" unique_id=862787937]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -239,8 +308,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_0jrml")
 
-[node name="@RichTextLabel@68758" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGameButton" unique_id=402434014]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame" unique_id=1537359171]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -249,8 +319,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
 bbcode_enabled = true
-text = "[font_size=28]Start Game"
+text = "Start Game
+"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
