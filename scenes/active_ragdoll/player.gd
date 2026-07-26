@@ -39,157 +39,211 @@ var can_jump := false
 var input_dir := Vector2()
 var input_jump := false
 var input_motion := Vector2.ZERO
-var _mouse_mode : Input.MouseMode = Input.MOUSE_MODE_VISIBLE
+var _mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
 
+
 func _ready() -> void:
-	_health_component.death.connect(func():died.emit())
-	
+	_health_component.death.connect(
+		func():
+			died.emit(),
+	)
+
 	var bodies: Array[TargetAngleRigidBody2D] = []
 	var weapon: Weapon
 	for child in get_children():
-		if child is Weapon: weapon = child
-		if child is not TargetAngleRigidBody2D: continue
+		if child is Weapon:
+			weapon = child
+		if child is not TargetAngleRigidBody2D:
+			continue
 		bodies.append(child)
 	for body in bodies:
 		weapon.add_collision_exception_with(body)
 		for part in bodies:
-			if body == part: continue
+			if body == part:
+				continue
 			body.add_collision_exception_with(part)
 	ragdoll_parts = bodies
 
-func begin_round(wins:int) -> void:
+
+func get_cam_follow_node() -> Node2D:
+	return torso
+
+
+func begin_round(wins: int) -> void:
 	_win_number_label.flash_wins(wins)
 
+
 func _ik_two_seg(
-	root_pos:Vector2, 
-	upper:TargetAngleRigidBody2D, 
-	joint:Vector2, 
-	lower:TargetAngleRigidBody2D, 
-	target_point:Vector2,
+	root_pos: Vector2,
+	upper: TargetAngleRigidBody2D,
+	joint: Vector2,
+	lower: TargetAngleRigidBody2D,
+	target_point: Vector2,
 	#print_debug:bool=false
 ) -> void:
 	var upper_length := root_pos.distance_to(joint)
 	#var fore_length := joint.distance_to(target_point)
 	var fore_length = upper_length
-	
+
 	var to_target = target_point - root_pos
 	var target_distance := root_pos.distance_to(target_point)
-	
+
 	var min_distance := upper_length * 0.5
 	if target_distance < min_distance:
 		to_target = to_target.normalized() if target_distance > 0.0001 else Vector2.RIGHT
 		to_target *= min_distance
 		target_distance = min_distance
 	#target_distance = clamp(
-		#target_distance, 
-		#abs(upper_length - fore_length) + .001,
-		#upper_length + fore_length - .001
+	#target_distance,
+	#abs(upper_length - fore_length) + .001,
+	#upper_length + fore_length - .001
 	#)
 	var clamped_target = root_pos + to_target
 	var target_angle := to_target.angle()
-	
-	var upper_offset := acos(clamp(
-		(upper_length * upper_length + target_distance * target_distance - fore_length * fore_length) /\
-		(2.0 * upper_length * target_distance),
-		-1.0,
-		1.0
-	))
-	
-	
+
+	var upper_offset := acos(
+		clamp(
+			(upper_length * upper_length + target_distance * target_distance
+			- fore_length * fore_length) / \
+					(2.0 * upper_length * target_distance),
+			-1.0,
+			1.0,
+		)
+	)
+
 	var shoulder_angle := target_angle - upper_offset
 	var new_elbow = root_pos + Vector2.from_angle(shoulder_angle) * upper_length
 	var forearm_angle := (clamped_target - new_elbow).angle()
-	upper.target_angle = shoulder_angle - PI/2.
-	lower.target_angle = forearm_angle - PI/2.
+	upper.target_angle = shoulder_angle - PI / 2.
+	lower.target_angle = forearm_angle - PI / 2.
 
 
 func _physics_process(delta: float) -> void:
 	_handle_input()
-	if not multiplayer.is_server(): return
+	if not multiplayer.is_server():
+		return
 	_update_can_jump()
 	_process_movement(input_dir, input_jump, input_motion, delta)
+
 
 func _update_can_jump() -> void:
 	can_jump = false
 	for part in ragdoll_parts:
 		can_jump = can_jump or part.is_touching_ground
 	#if is_multiplayer_authority() and multiplayer.is_server():
-		#print("Can jump? %s" % can_jump)
-	
+	#print("Can jump? %s" % can_jump)
+
 
 func _handle_input():
-	if not is_multiplayer_authority(): 
+	if not is_multiplayer_authority():
 		#_gun.position = Vector2.RIGHT.rotated(_gun_angle) * gun_radius
 		return # only client controls client player
-	
-	
+
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
 	var motion = mouse_motion
 	mouse_motion = Vector2.ZERO
-	
+
 	if multiplayer.is_server():
 		input_dir = dir
 		input_jump = jump
 		input_motion = motion
 	else:
 		submit_input.rpc(dir, jump, motion)
+
+
 @rpc("any_peer", "unreliable")
 ## Sending input from client to server
-func submit_input(dir:Vector2, jump:bool, _mouse_motion:Vector2) -> void:
+func submit_input(dir: Vector2, jump: bool, _mouse_motion: Vector2) -> void:
 	input_dir = dir
 	input_jump = jump
 	input_motion = _mouse_motion
 
 #region Syncing state
+
 @rpc("any_peer", "unreliable")
 ## Server processing and then sending back
-func sync_state(state:Array) -> void:
-	if multiplayer.is_server(): return # don't overwrite server's local player
+func sync_state(state: Array) -> void:
+	if multiplayer.is_server():
+		return # don't overwrite server's local player
 	for i in range(min(state.size(), ragdoll_parts.size())):
 		var body := ragdoll_parts[i]
 		body.global_position = state[i]["pos"]
 		body.global_rotation = state[i]["rot"]
 		body.linear_velocity = state[i]["vel"]
 		body.angular_velocity = state[i]["ang_vel"]
+
+
 func get_state() -> Array:
 	var state := []
 	for body in ragdoll_parts:
-		state.append({
-			"pos": body.global_position,
-			"rot": body.global_rotation,
-			"vel": body.linear_velocity,
-			"ang_vel": body.angular_velocity,
-		})
+		state.append(
+			{
+				"pos": body.global_position,
+				"rot": body.global_rotation,
+				"vel": body.linear_velocity,
+				"ang_vel": body.angular_velocity,
+			}
+		)
 	return state
 #endregion
-func _process_movement(dir:Vector2, jump:bool, _mouse_motion:Vector2, delta:float) -> void:
+func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
 	var target = r_hand_marker.global_position + _mouse_motion
 	#mouse_pivot.global_position = look_pos
-	_ik_two_seg(r_shoulder.global_position, r_arm_upper, r_elbow.global_position, r_arm_fore, target)
+	_ik_two_seg(
+		r_shoulder.global_position,
+		r_arm_upper,
+		r_elbow.global_position,
+		r_arm_fore,
+		target,
+	)
 
 	if can_jump and (jump):
 		torso.apply_central_impulse(Vector2.UP * 1300.)
 	if dir.x < 0:
 		torso.apply_force(Vector2.LEFT * power)
 		_walk_cycle += delta * 5.
-		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(cos(_walk_cycle)*100. , 500))
-		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(sin(_walk_cycle)*100. , 500))
+		_ik_two_seg(
+			l_pelvis.position,
+			l_leg_upper,
+			l_knee.position,
+			l_leg_lower,
+			Vector2(cos(_walk_cycle) * 100., 500),
+		)
+		_ik_two_seg(
+			r_pelvis.position,
+			r_leg_upper,
+			r_knee.position,
+			r_leg_lower,
+			Vector2(sin(_walk_cycle) * 100., 500),
+		)
 	elif dir.x > 0:
 		torso.apply_force(Vector2.RIGHT * power)
 		_walk_cycle += delta * 5.
-		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(-cos(_walk_cycle)*100. , 500))
-		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(-sin(_walk_cycle)*100. , 500))
+		_ik_two_seg(
+			l_pelvis.position,
+			l_leg_upper,
+			l_knee.position,
+			l_leg_lower,
+			Vector2(-cos(_walk_cycle) * 100., 500),
+		)
+		_ik_two_seg(
+			r_pelvis.position,
+			r_leg_upper,
+			r_knee.position,
+			r_leg_lower,
+			Vector2(-sin(_walk_cycle) * 100., 500),
+		)
 	else:
 		_ik_two_seg(l_pelvis.position, l_leg_upper, l_knee.position, l_leg_lower, Vector2(0, 500))
 		_ik_two_seg(r_pelvis.position, r_leg_upper, r_knee.position, r_leg_lower, Vector2(0, 500))
-	
+
 	#var err = target.distance_to(r_hand_marker.global_position)
 	#print("Hand error: %s" % err)
-	
 	if multiplayer.is_server():
 		sync_state.rpc(get_state())
+
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("l_click"):
@@ -198,13 +252,16 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("esc"):
 		_mouse_mode = Input.MOUSE_MODE_VISIBLE
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if not is_multiplayer_authority(): return
+	if not is_multiplayer_authority():
+		return
 	if event is InputEventMouseMotion:
 		mouse_motion += event.relative * sensitivity
 
-func set_color(col:Color) -> void:
+
+func set_color(col: Color) -> void:
 	for part in ragdoll_parts:
 		part.modulate = col
 
-func damage(atk:Attack):
+
+func damage(atk: Attack):
 	_health_component.damage(atk)

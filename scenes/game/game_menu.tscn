@@ -209,22 +209,25 @@ direction = Vector2(1, -1)
 distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="PhantomCamera2D" type="Node2D" parent="." unique_id=726822718]
-top_level = true
-script = ExtResource("8_y61kw")
-follow_mode = 3
-tween_resource = SubResource("Resource_6lcsq")
-follow_damping = true
-auto_zoom = true
-auto_zoom_min = 0.5
-auto_zoom_max = 1.0
-metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=395550679]
 top_level = true
+zoom = Vector2(5, 5)
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=206576365]
 process_priority = 300
 process_physics_priority = 300
 script = ExtResource("10_yoncu")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PhantomCamera2D" type="Node2D" parent="." unique_id=726822718]
+top_level = true
+script = ExtResource("8_y61kw")
+follow_mode = 3
+zoom = Vector2(5, 5)
+tween_resource = SubResource("Resource_6lcsq")
+follow_damping = true
+auto_zoom = true
+auto_zoom_min = 0.5
+auto_zoom_max = 1.0
+auto_zoom_margin = Vector4(100, 100, 100, 100)
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"

@@ -95,7 +95,7 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	inst.set_color(pi.color)
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
-	camera.append_follow_targets(inst)
+	camera.append_follow_targets(inst.get_cam_follow_node())
 	inst.begin_round(Global.round_state.get_wins(id))
 	player_manager.register_player_in_game(id, inst)
 
