@@ -7,6 +7,9 @@
 [ext_resource type="Script" uid="uid://37ep8qd6rfa6" path="res://scenes/game/map_manager.gd" id="4_xppml"]
 [ext_resource type="PackedScene" uid="uid://cpdx3wny0t6im" path="res://scenes/game/maps/default_map.tscn" id="5_xppml"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_y2var"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="8_y61kw"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_g4dfm"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="10_yoncu"]
 
 [sub_resource type="StyleBox" id="StyleBox_jxd0g"]
 resource_local_to_scene = false
@@ -67,7 +70,10 @@ func animate(left_wins:int, right_wins:int):
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
-[node name="GameMenu" type="Control" unique_id=298745656 node_paths=PackedStringArray("map_man", "banners_cont", "text_cont")]
+[sub_resource type="Resource" id="Resource_6lcsq"]
+script = ExtResource("9_g4dfm")
+
+[node name="GameMenu" type="Control" unique_id=298745656 node_paths=PackedStringArray("map_man", "banners_cont", "camera", "text_cont")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,6 +83,7 @@ grow_vertical = 2
 script = ExtResource("1_r32m2")
 map_man = NodePath("MapManager")
 banners_cont = NodePath("CanvasLayer/Banners")
+camera = NodePath("PhantomCamera2D")
 text_cont = NodePath("CanvasLayer/TextCont")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
@@ -201,3 +208,23 @@ script = ExtResource("4_6ygue")
 direction = Vector2(1, -1)
 distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="PhantomCamera2D" type="Node2D" parent="." unique_id=726822718]
+top_level = true
+script = ExtResource("8_y61kw")
+follow_mode = 3
+tween_resource = SubResource("Resource_6lcsq")
+follow_damping = true
+auto_zoom = true
+auto_zoom_min = 0.5
+auto_zoom_max = 1.0
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=395550679]
+top_level = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=206576365]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("10_yoncu")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"

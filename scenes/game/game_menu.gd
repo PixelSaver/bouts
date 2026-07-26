@@ -5,6 +5,7 @@ const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
 #"res://scenes/game/player_old.tscn"
 @export var map_man: MapManager
 @export var banners_cont: Control
+@export var camera: PhantomCamera2D
 @export var text_cont: Control
 @onready var players: Node2D = $Players
 @onready var player_manager: PlayerManager = $Players
@@ -94,6 +95,7 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	inst.set_color(pi.color)
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
+	camera.append_follow_targets(inst)
 	inst.begin_round(Global.round_state.get_wins(id))
 	player_manager.register_player_in_game(id, inst)
 
