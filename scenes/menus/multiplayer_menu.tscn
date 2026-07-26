@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_sb6po"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_4kuv5"]
+[ext_resource type="PackedScene" uid="uid://c60016lgfrals" path="res://scenes/menus/player_lobby_row.tscn" id="7_4kuv5"]
 [ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="8_jxd0g"]
 
 [sub_resource type="StyleBox" id="StyleBox_sb6po"]
@@ -282,6 +283,9 @@ scroll_active = false
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="PlayerLobbyRow" parent="WaitingScreen/MarginContainer/VBoxContainer/PlayerLobbyCont" unique_id=1710346516 instance=ExtResource("7_4kuv5")]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=1810043665]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -328,3 +332,5 @@ scroll_active = false
 shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[editable path="WaitingScreen/MarginContainer/VBoxContainer/PlayerLobbyCont/PlayerLobbyRow"]

@@ -2,20 +2,23 @@
 
 [ext_resource type="Script" uid="uid://yqflg2inlut8" path="res://scenes/game/game_menu.gd" id="1_r32m2"]
 [ext_resource type="Script" uid="uid://cbuirvhhuvscx" path="res://scenes/game/player_manager.gd" id="2_6ygue"]
-[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_m4cfo"]
 [ext_resource type="Script" uid="uid://b4pdlxyjxim6i" path="res://utilities/ui/tweenable.gd" id="4_6ygue"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_paljw"]
+[ext_resource type="Script" uid="uid://37ep8qd6rfa6" path="res://scenes/game/map_manager.gd" id="4_xppml"]
+[ext_resource type="PackedScene" uid="uid://cpdx3wny0t6im" path="res://scenes/game/maps/default_map.tscn" id="5_xppml"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_y2var"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkedh"]
-size = Vector2(1126, 20)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpl7u"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.15124992, 0.09771829, 0.32366547, 0.6)
+[sub_resource type="StyleBox" id="StyleBox_jxd0g"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_y2var")
+color = Color(0.8509804, 0.6392157, 0.8039216, 0.9019608)
 skew = Vector2(1, 0)
-corner_detail = 1
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
 [sub_resource type="GDScript" id="GDScript_gkedh"]
 resource_name = "animate"
@@ -64,7 +67,7 @@ func animate(left_wins:int, right_wins:int):
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
-[node name="GameMenu" type="Control" unique_id=298745656]
+[node name="GameMenu" type="Control" unique_id=298745656 node_paths=PackedStringArray("map_man", "banners_cont", "text_cont")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,30 +75,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_r32m2")
+map_man = NodePath("MapManager")
+banners_cont = NodePath("CanvasLayer/Banners")
+text_cont = NodePath("CanvasLayer/TextCont")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="Players" type="Node2D" parent="." unique_id=966644347]
 script = ExtResource("2_6ygue")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1255126868]
-position = Vector2(554, 553)
+[node name="MapManager" type="Node2D" parent="." unique_id=2028090887]
+script = ExtResource("4_xppml")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1656066140]
-shape = SubResource("RectangleShape2D_gkedh")
+[node name="Map" parent="MapManager" unique_id=895377889 instance=ExtResource("5_xppml")]
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=735638639]
-scale = Vector2(8.796875, 0.171875)
-texture = ExtResource("2_m4cfo")
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=118128479]
 
-[node name="Banners" type="Control" parent="." unique_id=82936727]
-layout_mode = 1
+[node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Left" type="Panel" parent="Banners" unique_id=379312930]
+[node name="Left" type="Panel" parent="CanvasLayer/Banners" unique_id=379312930]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.5
@@ -104,16 +107,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
-theme_override_styles/panel = SubResource("StyleBoxFlat_vpl7u")
+theme_override_styles/panel = SubResource("StyleBox_jxd0g")
 
-[node name="Tweenable" type="Node" parent="Banners/Left" unique_id=1074056299]
+[node name="Tweenable" type="Node" parent="CanvasLayer/Banners/Left" unique_id=1074056299]
 script = ExtResource("4_6ygue")
-modulate_parent = null
 direction = Vector2(-1, 0)
 distance = 1000.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="Right" type="Panel" parent="Banners" unique_id=704097427]
+[node name="Right" type="Panel" parent="CanvasLayer/Banners" unique_id=704097427]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -122,17 +124,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
-theme_override_styles/panel = SubResource("StyleBoxFlat_vpl7u")
+theme_override_styles/panel = SubResource("StyleBox_jxd0g")
 
-[node name="Tweenable" type="Node" parent="Banners/Right" unique_id=1319248044]
+[node name="Tweenable" type="Node" parent="CanvasLayer/Banners/Right" unique_id=1319248044]
 script = ExtResource("4_6ygue")
-modulate_parent = null
 direction = Vector2(1, 0)
 distance = 1000.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2050594764 node_paths=PackedStringArray("ts")]
-layout_mode = 1
+[node name="TextCont" type="HBoxContainer" parent="CanvasLayer" unique_id=2050594764 node_paths=PackedStringArray("ts")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -144,9 +144,10 @@ alignment = 1
 script = SubResource("GDScript_gkedh")
 ts = [NodePath("Left/Tweenable"), NodePath("VS/Tweenable"), NodePath("Right/Tweenable")]
 
-[node name="Left" type="RichTextLabel" parent="HBoxContainer" unique_id=1185060618]
+[node name="Left" type="RichTextLabel" parent="CanvasLayer/TextCont" unique_id=1185060618]
 layout_mode = 2
 offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
 theme_override_font_sizes/normal_font_size = 100
 text = "1"
 fit_content = true
@@ -156,16 +157,16 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tweenable" type="Node" parent="HBoxContainer/Left" unique_id=1214984781]
+[node name="Tweenable" type="Node" parent="CanvasLayer/TextCont/Left" unique_id=1214984781]
 script = ExtResource("4_6ygue")
-modulate_parent = null
 direction = Vector2(-1, 1)
 distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="VS" type="RichTextLabel" parent="HBoxContainer" unique_id=17418500]
+[node name="VS" type="RichTextLabel" parent="CanvasLayer/TextCont" unique_id=17418500]
 layout_mode = 2
 offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
 theme_override_font_sizes/normal_font_size = 100
 text = "VS"
 fit_content = true
@@ -175,16 +176,16 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tweenable" type="Node" parent="HBoxContainer/VS" unique_id=12368391]
+[node name="Tweenable" type="Node" parent="CanvasLayer/TextCont/VS" unique_id=12368391]
 script = ExtResource("4_6ygue")
-modulate_parent = null
 scale_curve = SubResource("Curve_vpl7u")
 distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="Right" type="RichTextLabel" parent="HBoxContainer" unique_id=889759422]
+[node name="Right" type="RichTextLabel" parent="CanvasLayer/TextCont" unique_id=889759422]
 layout_mode = 2
 offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
 theme_override_font_sizes/normal_font_size = 100
 text = "1
 "
@@ -195,9 +196,8 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tweenable" type="Node" parent="HBoxContainer/Right" unique_id=638500118]
+[node name="Tweenable" type="Node" parent="CanvasLayer/TextCont/Right" unique_id=638500118]
 script = ExtResource("4_6ygue")
-modulate_parent = null
 direction = Vector2(1, -1)
 distance = 700.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"

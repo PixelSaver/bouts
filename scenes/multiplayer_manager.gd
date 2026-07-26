@@ -122,7 +122,6 @@ func init_server() -> void:
 	var id := multiplayer.get_unique_id() # Should be 1
 	player_info.id = id
 	_register_player(player_info.to_dict())
-	player_connected.emit(id, player_info)
 
 	SignalBus.hosted.emit()
 

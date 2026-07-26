@@ -40,11 +40,16 @@ metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
 [node name="PlayerLobbyRow" type="Panel" unique_id=1710346516 node_paths=PackedStringArray("panel_color", "player_name", "kick_cont", "kick_button")]
 custom_minimum_size = Vector2(0, 60)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_pennx")
-panel_color = NodePath("HBoxContainer/MarginContainer/Panel")
-player_name = NodePath("HBoxContainer/RichTextLabel")
-kick_cont = NodePath("HBoxContainer/MarginContainer2")
-kick_button = NodePath("HBoxContainer/MarginContainer2/ShadowedButton")
+panel_color = NodePath("MarginContainer/HBoxContainer/Panel")
+player_name = NodePath("MarginContainer/HBoxContainer/RichTextLabel")
+kick_cont = NodePath("")
+kick_button = NodePath("MarginContainer/HBoxContainer/ShadowedButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=17826105]
 layout_mode = 1
@@ -58,26 +63,16 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1537010009]
-layout_mode = 0
-offset_left = 10.0
-offset_right = 1102.0
-offset_bottom = 60.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1537010009]
+layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=2069736598]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 10
-
-[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer" unique_id=198438061]
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer" unique_id=198438061]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_jxd0g")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer" unique_id=1423809698]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer" unique_id=1423809698]
 layout_mode = 2
 bbcode_enabled = true
 text = "PlayerName"
@@ -86,26 +81,18 @@ scroll_active = false
 autowrap_mode = 0
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="HBoxContainer" unique_id=636445098]
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer" unique_id=636445098]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer" unique_id=1826672683]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 10
-
-[node name="ShadowedButton" type="Button" parent="HBoxContainer/MarginContainer2" unique_id=946530915]
+[node name="ShadowedButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=946530915]
 custom_minimum_size = Vector2(100, 0)
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
 script = ExtResource("4_nmbvh")
 metadata/_custom_type_script = "uid://dmxfx72msunjl"
 
-[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer2/ShadowedButton" unique_id=414103384]
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/ShadowedButton" unique_id=414103384]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -115,7 +102,7 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBox_0jrml")
 
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="HBoxContainer/MarginContainer2/ShadowedButton" unique_id=861290328]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="MarginContainer/HBoxContainer/ShadowedButton" unique_id=861290328]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15

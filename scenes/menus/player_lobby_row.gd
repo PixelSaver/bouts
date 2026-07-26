@@ -5,7 +5,6 @@ signal kick_player(id: int)
 @export_group("Nodes", "_")
 @export var panel_color: Panel
 @export var player_name: RichTextLabel
-@export var kick_cont: Control
 @export var kick_button: DefaultButton
 var _player_info: PlayerInfo
 
@@ -24,4 +23,4 @@ func load_player(pi: PlayerInfo):
 	var box = panel_color.get_theme_stylebox("panel").duplicate() as StyleBoxFancy
 	box.color = pi.color
 	player_name.text = pi.player_name
-	kick_cont.visible = (pi.id == multiplayer.get_unique_id())
+	kick_button.visible = (pi.id == multiplayer.get_unique_id() and multiplayer.is_server())
