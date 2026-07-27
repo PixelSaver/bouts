@@ -33,6 +33,12 @@ class_name Player
 @export var r_hand_marker: Marker2D
 var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
+var _disabled := DisableMode.FREE
+enum DisableMode {
+	FREE,
+	PHYSICS,
+	FROZEN,
+}
 
 signal died
 var can_jump := false
@@ -64,6 +70,25 @@ func _ready() -> void:
 				continue
 			body.add_collision_exception_with(part)
 	ragdoll_parts = bodies
+
+
+func set_disable(disabled: DisableMode) -> void:
+	if _disabled == disabled:
+		return
+	_disabled = disabled
+	match disabled:
+		DisableMode.FREE:
+			for part in ragdoll_parts:
+				part.disabled = false
+				part.freeze = false
+		DisableMode.PHYSICS:
+			for part in ragdoll_parts:
+				part.disabled = true
+				part.freeze = false
+		DisableMode.FROZEN:
+			for part in ragdoll_parts:
+				part.disabled = true
+				part.freeze = true
 
 
 func get_cam_follow_node() -> Node2D:
@@ -104,8 +129,10 @@ func _ik_two_seg(
 
 	var upper_offset := acos(
 		clamp(
-			(upper_length * upper_length + target_distance * target_distance
-			- fore_length * fore_length) / \
+			(
+				upper_length * upper_length + target_distance * target_distance
+				- fore_length * fore_length
+			) / \
 					(2.0 * upper_length * target_distance),
 			-1.0,
 			1.0,
@@ -139,6 +166,8 @@ func _handle_input():
 	if not is_multiplayer_authority():
 		#_gun.position = Vector2.RIGHT.rotated(_gun_angle) * gun_radius
 		return # only client controls client player
+	if _disabled == DisableMode.FROZEN:
+		return
 
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
@@ -246,6 +275,9 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 
 
 func _input(event: InputEvent) -> void:
+	if _disabled == DisableMode.FROZEN:
+		return
+
 	if Input.is_action_just_pressed("l_click"):
 		_mouse_mode = Input.MOUSE_MODE_CAPTURED
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

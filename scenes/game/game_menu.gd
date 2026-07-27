@@ -48,18 +48,25 @@ func start_anim() -> void:
 	if t and t.is_running():
 		t.kill()
 	t = default_tween()
+
+	# Banners
 	var banner_ts = get_all_tweenables(banners_cont)
 	for tw in banner_ts:
-		print("Tweening %s" % tw.parent.name)
 		t.tween_property(tw, "tween_value", 0., 0.7)
 	await t.finished
+
+	# text
 	await text_cont.animate(
 		Global.round_state.get_wins(keys[0]),
 		Global.round_state.get_wins(keys[1]),
 	)
-	t = default_tween().set_parallel(false)
-	t.tween_property(text_cont, "offset_transform_scale", Vector2.ONE * 1.3, 0.5)
-	t.tween_property(text_cont, "offset_transform_scale", Vector2.ONE, 0.5)
+
+	# bounce
+	t = default_tween().set_parallel(false).set_trans(Tween.TRANS_CIRC)
+	t.set_ease(Tween.EASE_OUT)
+	t.tween_property(text_cont, "offset_transform_scale", Vector2.ONE * 1.3, 0.3)
+	t.set_ease(Tween.EASE_IN)
+	t.tween_property(text_cont, "offset_transform_scale", Vector2.ONE, 0.3)
 	await t.finished
 	t = default_tween()
 	for tw in all_ts:

@@ -11,9 +11,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4p01"]
 size = Vector2(20, 50)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkedh"]
-height = 73.539185
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6748a"]
 size = Vector2(20, 120)
 
@@ -30,6 +27,9 @@ corner_radius_top_left = 1000000
 corner_radius_top_right = 1000000
 corner_radius_bottom_right = 1000000
 corner_radius_bottom_left = 1000000
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkedh"]
+height = 73.539185
 
 [sub_resource type="Gradient" id="Gradient_mlfyp"]
 offsets = PackedFloat32Array(1)
@@ -81,6 +81,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -113,6 +114,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -140,6 +142,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -172,6 +175,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
 inertia = 1.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -199,6 +203,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -231,6 +236,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -248,33 +254,6 @@ width = 20.0
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="Sword" type="RigidBody2D" parent="." unique_id=1218223522]
-position = Vector2(110, 108)
-rotation = -0.7853982
-scale = Vector2(0.9999999, 0.9999999)
-collision_layer = 3
-collision_mask = 2
-mass = 0.1
-physics_material_override = ExtResource("2_04ies")
-inertia = 1000.0
-can_sleep = false
-continuous_cd = 1
-contact_monitor = true
-max_contacts_reported = 10
-script = ExtResource("5_h3ani")
-weapon_name = "Generic Sword"
-weapon_description = "Just a sword"
-metadata/_custom_type_script = "uid://b6ewgxfuv3c4g"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword" unique_id=1406178130]
-shape = SubResource("CapsuleShape2D_gkedh")
-
-[node name="Line2D" type="Line2D" parent="Sword" unique_id=1888423101]
-points = PackedVector2Array(0, -27, 0, 27)
-width = 20.0
-begin_cap_mode = 2
-end_cap_mode = 2
-
 [node name="RightUpperArm" type="RigidBody2D" parent="." unique_id=1834434279]
 position = Vector2(24, 23.000004)
 rotation = -0.7853982
@@ -285,6 +264,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -317,6 +297,7 @@ mass = 0.1
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.1
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 script = ExtResource("3_h3ani")
@@ -354,6 +335,7 @@ collision_mask = 3
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 linear_damp = 1.0
@@ -403,6 +385,7 @@ collision_mask = 3
 physics_material_override = ExtResource("2_04ies")
 gravity_scale = 0.5
 inertia = 1000.0
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 linear_damp = 1.0
@@ -423,6 +406,33 @@ custom_minimum_size = Vector2(55, 55)
 offset_transform_enabled = true
 offset_transform_position_ratio = Vector2(-0.5, -0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_h3ani")
+
+[node name="Sword" type="RigidBody2D" parent="." unique_id=1218223522]
+position = Vector2(110, 108)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+collision_layer = 3
+collision_mask = 2
+mass = 0.1
+physics_material_override = ExtResource("2_04ies")
+inertia = 100.0
+can_sleep = false
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("5_h3ani")
+weapon_name = "Generic Sword"
+weapon_description = "Just a sword"
+metadata/_custom_type_script = "uid://b6ewgxfuv3c4g"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword" unique_id=1406178130]
+shape = SubResource("CapsuleShape2D_gkedh")
+
+[node name="Line2D" type="Line2D" parent="Sword" unique_id=1888423101]
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="HPBar" type="TextureProgressBar" parent="." unique_id=1511458412 node_paths=PackedStringArray("follow_target")]
 anchors_preset = -1
