@@ -12,6 +12,16 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_hit_cooldown -= delta
+	if multiplayer.is_server():
+		_sync_state.rpc(global_position, global_rotation, linear_velocity, angular_velocity)
+
+
+@rpc("any_peer", "unreliable", "call_remote")
+func _sync_state(pos: Vector2, rot: float, vel: Vector2, ang_vel: float) -> void:
+	self.global_position = pos
+	self.global_rotation = rot
+	self.linear_velocity = vel
+	self.angular_velocity = ang_vel
 
 
 func _body_entered(body: Node) -> void:

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/multiplayer_menu.gd" id="1_elvy3"]
 [ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/loading_screen.gd" id="2_ftwoh"]
-[ext_resource type="Script" uid="uid://dmxfx72msunjl" path="res://scenes/menus/auth/shadowed_button.gd" id="3_livv6"]
+[ext_resource type="Script" path="res://scenes/menus/auth/shadowed_button.gd" id="3_livv6"]
 [ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_sb6po"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_4kuv5"]
@@ -95,7 +95,7 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_start_game_button")]
+[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_color", "waiting_start_game_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -111,6 +111,7 @@ loading_ip = NodePath("LoadingScreen/VBoxContainer/IPInput")
 loading_host_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton")
 loading_join_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton")
 waiting_screen = NodePath("WaitingScreen")
+waiting_color = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/ColorPickerButton")
 waiting_start_game_button = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
@@ -336,6 +337,27 @@ player = NodePath("Player")
 [node name="Panel" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay" unique_id=606535111]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_5jciy")
+
+[node name="MarginContainer" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel" unique_id=246007997]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer" unique_id=122363357]
+layout_mode = 2
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control" unique_id=529634187]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Player" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay" unique_id=1098918678 instance=ExtResource("9_0haww")]
 position = Vector2(277, 215)

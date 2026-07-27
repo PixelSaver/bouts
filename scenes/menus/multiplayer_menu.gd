@@ -10,6 +10,7 @@ class_name MultiplayerMenu
 @export var loading_join_button: Button
 @export_group("Waiting", "waiting_")
 @export var waiting_screen: PixelMenu
+@export var waiting_color: ColorPickerButton
 @export var waiting_start_game_button: DefaultButton
 
 
@@ -24,6 +25,11 @@ func _ready() -> void:
 		func(_n: Color):
 			_update_player_info(),
 	)
+	waiting_color.color_changed.connect(
+		func(_n: Color):
+			_update_player_info(),
+	)
+
 	loading_screen.show()
 	waiting_screen.hide()
 	SignalBus.hosted.connect(_on_hosted)
@@ -68,8 +74,21 @@ func _update_player_info() -> void:
 	var p_info = Global.menu_manager.player_info
 	if not name_ip.text.is_empty():
 		p_info.player_name = name_ip.name
-	p_info.color = color_ip.color
-	SignalBus.player_info_changed.emit(p_info)
+	if loading_screen.visible:
+		p_info.color = color_ip.color
+		waiting_color.color = color_ip.color
+	else:
+		p_info.color = waiting_color.color
+		color_ip.color = waiting_color.color
+
+	sync_player_info.rpc(multiplayer.get_unique_id(), p_info.to_dict())
+
+
+@rpc("any_peer", "reliable", "call_local")
+func sync_player_info(id: int, pi_dict: Dictionary) -> void:
+	var pi = PlayerInfo.from_dict(pi_dict)
+	Global.menu_manager.players.set(id, pi)
+	SignalBus.player_info_changed.emit(id, pi)
 
 
 func start_anim() -> void:
