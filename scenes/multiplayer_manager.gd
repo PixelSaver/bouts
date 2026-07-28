@@ -24,16 +24,17 @@ func _ready() -> void:
 	multiplayer.server_disconnected.connect(_server_disconnected)
 	SignalBus.host.connect(init_server)
 	SignalBus.join.connect(join_server)
+	SignalBus.leave_requested.connect(_on_leave_requested)
 
 	## On disconnect, reset
 	#self.server_disconnected.connect(func():
 	#self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER))
 	#)
 	#TODO Make disconnection work with 4 players, checking if you're the last person in lobby
-	self.player_disconnected.connect(
-		func(_id: int):
-			self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)),
-	)
+	#self.player_disconnected.connect(
+	#func(_id: int):
+	#self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)),
+	#)
 	_randomize_color()
 
 
@@ -124,6 +125,11 @@ func init_server() -> void:
 	_register_player(player_info.to_dict())
 
 	SignalBus.hosted.emit()
+
+
+func _on_leave_requested() -> void:
+	free_networking()
+	players.clear()
 
 
 func free_networking() -> void:

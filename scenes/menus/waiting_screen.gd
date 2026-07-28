@@ -11,6 +11,8 @@ func _ready() -> void:
 	#_update_player_list()
 	Global.menu_manager.player_connected.connect(
 		func(_x, pi: PlayerInfo):
+			if pi.id == multiplayer.get_unique_id():
+				_clear_lobby()
 			_add_lobby_player(pi),
 	)
 	Global.menu_manager.player_disconnected.connect(

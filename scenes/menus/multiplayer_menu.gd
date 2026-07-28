@@ -67,6 +67,7 @@ func _on_hosted():
 
 func _on_leave():
 	multiplayer.multiplayer_peer = ENetMultiplayerPeer.new()
+	SignalBus.leave_requested.emit()
 	waiting_screen.end_anim()
 	loading_screen.start_anim()
 
