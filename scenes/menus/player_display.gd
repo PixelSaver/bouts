@@ -5,7 +5,7 @@ extends MarginContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	player.set_disable(Player.DisableMode.FROZEN)
+	player.set_disable(Player.DisableMode.NOTHING)
 	SignalBus.player_info_changed.connect(_on_pi_changed)
 
 

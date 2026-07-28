@@ -2,6 +2,7 @@ extends Weapon
 class_name GenericSword
 
 @export var hit_cooldown := 0.3
+@export var player: Player
 var _hit_cooldown := 0.3
 
 
@@ -12,6 +13,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_hit_cooldown -= delta
+	if player.is_syncing_state == false:
+		return
 	if multiplayer.is_server():
 		_sync_state.rpc(global_position, global_rotation, linear_velocity, angular_velocity)
 

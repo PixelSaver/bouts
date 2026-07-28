@@ -12,11 +12,13 @@ class_name MultiplayerMenu
 @export var waiting_screen: PixelMenu
 @export var waiting_color: ColorPickerButton
 @export var waiting_start_game_button: DefaultButton
+@export var waiting_leave_button: DefaultButton
 
 
 func _ready() -> void:
 	loading_host_button.pressed.connect(_on_host_button_pressed)
 	loading_join_button.pressed.connect(_on_join.bind(loading_ip.text))
+	waiting_leave_button.pressed.connect(_on_leave)
 	name_ip.text_changed.connect(
 		func(_n: String):
 			_update_player_info(),
@@ -61,6 +63,12 @@ func _on_host_button_pressed() -> void:
 func _on_hosted():
 	loading_screen.end_anim()
 	waiting_screen.start_anim()
+
+
+func _on_leave():
+	multiplayer.multiplayer_peer = ENetMultiplayerPeer.new()
+	waiting_screen.end_anim()
+	loading_screen.start_anim()
 
 
 func _on_join(_ip: String) -> void:

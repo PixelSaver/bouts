@@ -35,9 +35,14 @@ var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
 var _disabled := DisableMode.FREE
 enum DisableMode {
+	## Active ragdoll, physics, input, and state syncing
 	FREE,
+	## Passive ragdoll, physics, input, and state syncing
 	PHYSICS,
+	## No ragdoll, no physics, no input, and state syncing
 	FROZEN,
+	## No ragdoll, no physics, no input, and no state syncing
+	NOTHING,
 }
 
 signal died
@@ -47,6 +52,7 @@ var input_jump := false
 var input_motion := Vector2.ZERO
 var _mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
+var is_syncing_state := true
 
 
 func _ready() -> void:
@@ -73,22 +79,30 @@ func _ready() -> void:
 
 
 func set_disable(disabled: DisableMode) -> void:
-	if _disabled == disabled:
-		return
+	Log.pr("Setting player state: %s" % DisableMode.keys()[disabled])
 	_disabled = disabled
 	match disabled:
 		DisableMode.FREE:
 			for part in ragdoll_parts:
 				part.disabled = false
 				part.freeze = false
+			is_syncing_state = true
 		DisableMode.PHYSICS:
 			for part in ragdoll_parts:
 				part.disabled = true
 				part.freeze = false
+			is_syncing_state = true
 		DisableMode.FROZEN:
 			for part in ragdoll_parts:
 				part.disabled = true
 				part.freeze = true
+			is_syncing_state = true
+		DisableMode.NOTHING:
+			Log.pr("Setting player to do nothing")
+			for part in ragdoll_parts:
+				part.disabled = true
+				part.freeze = true
+			is_syncing_state = false
 
 
 func get_cam_follow_node() -> Node2D:
@@ -147,6 +161,8 @@ func _ik_two_seg(
 
 
 func _physics_process(delta: float) -> void:
+	if not multiplayer.multiplayer_peer:
+		return
 	_handle_input()
 	if not multiplayer.is_server():
 		return
@@ -163,16 +179,21 @@ func _update_can_jump() -> void:
 
 
 func _handle_input():
+	if not multiplayer.multiplayer_peer:
+		return
 	if not is_multiplayer_authority():
 		#_gun.position = Vector2.RIGHT.rotated(_gun_angle) * gun_radius
 		return # only client controls client player
-	if _disabled == DisableMode.FROZEN:
+	if _disabled == DisableMode.FROZEN or _disabled == DisableMode.NOTHING:
 		return
 
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
 	var motion = mouse_motion
 	mouse_motion = Vector2.ZERO
+
+	if is_syncing_state == false:
+		return
 
 	if multiplayer.is_server():
 		input_dir = dir
@@ -270,12 +291,14 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 
 	#var err = target.distance_to(r_hand_marker.global_position)
 	#print("Hand error: %s" % err)
+	if is_syncing_state == false:
+		return
 	if multiplayer.is_server():
 		sync_state.rpc(get_state())
 
 
 func _input(event: InputEvent) -> void:
-	if _disabled == DisableMode.FROZEN:
+	if _disabled == DisableMode.FROZEN or _disabled == DisableMode.NOTHING:
 		return
 
 	if Input.is_action_just_pressed("l_click"):
