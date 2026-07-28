@@ -2,6 +2,7 @@ extends PixelMenu
 class_name WaitingScreen
 
 @export var player_lobby_cont: Control
+@export var start_game: DefaultButton
 const PLAYER_LOBBY_ROW = preload("res://scenes/menus/player_lobby_row.tscn")
 
 
@@ -40,10 +41,13 @@ func _update_player_list() -> void:
 func _add_lobby_player(player_info: PlayerInfo) -> void:
 	var inst := PLAYER_LOBBY_ROW.instantiate() as PlayerLobbyRow
 	player_lobby_cont.add_child(inst)
+	inst.set_multiplayer_authority(player_info.id)
 	inst.load_player(player_info)
 
 
 func start_anim() -> void:
+	start_game.visible = multiplayer.is_server()
+
 	show()
 
 

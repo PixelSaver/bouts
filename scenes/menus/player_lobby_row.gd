@@ -13,6 +13,13 @@ func _ready() -> void:
 	kick_button.pressed.connect(_on_kick)
 	_box = panel_color.get_theme_stylebox("panel").duplicate() as StyleBoxFancy
 	panel_color.add_theme_stylebox_override("panel", _box)
+	SignalBus.player_info_changed.connect(_on_pi_changed)
+
+
+func _on_pi_changed(id: int, pi: PlayerInfo):
+	if id != get_multiplayer_authority():
+		return
+	_box.color = pi.color
 
 
 func _on_kick() -> void:
