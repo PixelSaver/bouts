@@ -1,9 +1,9 @@
 extends PixelMenuManager
 class_name MultiplayerManager
 
-const PORT = 7000
-const DEFAULT_SERVER_IP = "127.0.0.1"
-const MAX_CONNECTIONS = 6
+#const PORT = 7000
+#const DEFAULT_SERVER_IP = "127.0.0.1"
+#const MAX_CONNECTIONS = 6
 
 var players: Dictionary[int, PlayerInfo] = { }
 @onready var player_info := PlayerInfo.new("Name")
@@ -17,24 +17,19 @@ func _ready() -> void:
 	super()
 	#Global.multiplayer_manager = self
 	# Connect all the callbacks related to networking.
-	multiplayer.peer_connected.connect(_peer_connected)
-	multiplayer.peer_disconnected.connect(_peer_disconnected)
-	multiplayer.connected_to_server.connect(_server_connected)
-	multiplayer.connection_failed.connect(_server_connection_failed)
-	multiplayer.server_disconnected.connect(_server_disconnected)
-	SignalBus.host.connect(init_server)
-	SignalBus.join.connect(join_server)
-	SignalBus.leave_requested.connect(_on_leave_requested)
+	GDSync.connected.connect(_on_connected)
+	GDSync.connected.connect(_on_connection_failed)
+	GDSync.lobby_created.connect(_on_lobby_created)
+	#multiplayer.peer_connected.connect(_peer_connected)
+	#multiplayer.peer_disconnected.connect(_peer_disconnected)
+	#multiplayer.connected_to_server.connect(_server_connected)
+	#multiplayer.connection_failed.connect(_server_connection_failed)
+	#multiplayer.server_disconnected.connect(_server_disconnected)
+	#SignalBus.host.connect(init_server)
+	#SignalBus.join.connect(join_server)
+	#SignalBus.leave_requested.connect(_on_leave_requested)
 
-	## On disconnect, reset
-	#self.server_disconnected.connect(func():
-	#self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER))
-	#)
 	#TODO Make disconnection work with 4 players, checking if you're the last person in lobby
-	#self.player_disconnected.connect(
-	#func(_id: int):
-	#self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)),
-	#)
 	_randomize_color()
 
 
@@ -45,25 +40,37 @@ func _randomize_color() -> void:
 # Callback from SceneTree.
 
 ## WHen one player connects, send data over as server
-func _peer_connected(_id: int) -> void:
-	if not multiplayer.is_server():
-		return
-	# Sending server data to peer
-	_register_player.rpc_id(_id, player_info.to_dict())
-	print("Player Connected: ", _id)
+#func _peer_connected(_id: int) -> void:
+#if not multiplayer.is_server():
+#return
+## Sending server data to peer
+#_register_player.rpc_id(_id, player_info.to_dict())
+#print("Player Connected: ", _id)
+#
+#
+#func _peer_disconnected(_id: int) -> void:
+#push_warning("Peer %s disconnected" % _id)
+#players.erase(_id)
+#player_disconnected.emit(_id)
+#
+#if multiplayer.is_server():
+##_end_game("Client disconnected.")
+#pass
+#else:
+##_end_game("Server disconnected.")
+#pass
 
 
-func _peer_disconnected(_id: int) -> void:
-	push_warning("Peer %s disconnected" % _id)
-	players.erase(_id)
-	player_disconnected.emit(_id)
+func _on_connected() -> void:
+	print("Connected to GDSync")
 
-	if multiplayer.is_server():
-		#_end_game("Client disconnected.")
-		pass
-	else:
-		#_end_game("Server disconnected.")
-		pass
+
+func _on_connection_failed() -> void:
+	match (error):
+		ENUMS.CONNECTION_FAILED.INVALID_PUBLIC_KEY:
+			push_error("The public or private key you entered were invalid.")
+		ENUMS.CONNECTION_FAILED.TIMEOUT:
+			push_error("Unable to connect, please check your internet connection.")
 
 
 ## client connected to host
