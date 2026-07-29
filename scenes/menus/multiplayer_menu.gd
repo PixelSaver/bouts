@@ -102,7 +102,7 @@ class_name MultiplayerMenu
 
 func start_anim() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	loading_screen.start_anim()
+	#loading_screen.start_anim()
 
 
 func end_anim() -> void:

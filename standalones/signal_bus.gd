@@ -1,8 +1,6 @@
 extends Node
 
 @warning_ignore("unused_signal")
-signal test(test: bool)
-@warning_ignore("unused_signal")
 signal join(ip_address: String)
 @warning_ignore("unused_signal")
 signal host
@@ -17,3 +15,5 @@ signal player_info_changed(id: int, p_info: PlayerInfo)
 signal kick_player_requested(id: int)
 @warning_ignore("unused_signal")
 signal leave_requested()
+@warning_ignore("unused_signal")
+signal refresh_lobbies_requested()

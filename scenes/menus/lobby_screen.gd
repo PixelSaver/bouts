@@ -15,10 +15,15 @@ func end_anim():
 
 func _ready() -> void:
 	GDSync.lobbies_received.connect(_on_lobbies_received)
+	SignalBus.refresh_lobbies_requested.connect(_on_refresh)
 
 
 func _on_lobbies_received(lobbies: Array):
 	print("Lobbies received: %s" % str(lobbies))
+
+
+func _on_refresh() -> void:
+	last_refresh = 0.
 
 
 func _process(_delta):
