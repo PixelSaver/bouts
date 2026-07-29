@@ -42,7 +42,7 @@ width = 1
 [node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component", "_win_number_label", "r_hand_marker")]
 script = ExtResource("1_dnie3")
 sensitivity = 1500.0
-power = 1000
+power = 5000
 head = NodePath("Head")
 torso = NodePath("Torso")
 r_pelvis = NodePath("Torso/PelvisRight")

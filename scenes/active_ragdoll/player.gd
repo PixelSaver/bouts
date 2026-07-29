@@ -46,6 +46,10 @@ enum DisableMode {
 }
 
 signal died
+## Flag to make sure only jump once per contact
+var _jump_armed := true
+var _jump_buffer := 0.0
+var max_jump_buffer := 0.2
 var can_jump := false
 var input_dir := Vector2()
 var input_jump := false
@@ -174,6 +178,8 @@ func _update_can_jump() -> void:
 	can_jump = false
 	for part in ragdoll_parts:
 		can_jump = can_jump or part.is_touching_ground
+	if not can_jump:
+		_jump_armed = true
 	#if is_multiplayer_authority() and multiplayer.is_server():
 	#print("Can jump? %s" % can_jump)
 
@@ -239,6 +245,7 @@ func get_state() -> Array:
 	return state
 #endregion
 func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
+	_jump_buffer -= delta
 	var target = r_hand_marker.global_position + _mouse_motion
 	#mouse_pivot.global_position = look_pos
 	_ik_two_seg(
@@ -249,8 +256,11 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 		target,
 	)
 
-	if can_jump and (jump):
+	if can_jump and _jump_armed and (jump or _jump_buffer > 0.):
+		_jump_armed = false
 		torso.apply_central_impulse(Vector2.UP * 1300.)
+	elif jump:
+		_jump_buffer = max_jump_buffer
 	if dir.x < 0:
 		torso.apply_force(Vector2.LEFT * power)
 		_walk_cycle += delta * 5.
