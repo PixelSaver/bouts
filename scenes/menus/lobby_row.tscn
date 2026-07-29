@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://bevonhaaa3nw3"]
+
+[ext_resource type="Script" path="res://scenes/menus/auth/shadowed_button.gd" id="1_fcis5"]
+[ext_resource type="Script" uid="uid://65i7iwwt0sn2" path="res://scenes/menus/lobby_row.gd" id="1_udyw3"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="2_udyw3"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="3_iewnf"]
+
+[sub_resource type="StyleBox" id="StyleBox_bdp31"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("3_iewnf")
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[node name="LobbyRow" type="Panel" unique_id=2080622358 node_paths=PackedStringArray("_name_label", "_player_count_label", "_password_protection_label", "_open_label", "_join_button")]
+custom_minimum_size = Vector2(0, 60)
+script = ExtResource("1_udyw3")
+_name_label = NodePath("MarginContainer/HBoxContainer/Name")
+_player_count_label = NodePath("MarginContainer/HBoxContainer/PlayerCount")
+_password_protection_label = NodePath("MarginContainer/HBoxContainer/PasswordProtected")
+_open_label = NodePath("MarginContainer/HBoxContainer/Open")
+_join_button = NodePath("MarginContainer/HBoxContainer/ShadowedButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=732570190]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=577382707]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Name" type="RichTextLabel" parent="MarginContainer/HBoxContainer" unique_id=1880798443]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "LobbyName"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="PlayerCount" type="RichTextLabel" parent="MarginContainer/HBoxContainer" unique_id=44209739]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "PlayerCount"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="PasswordProtected" type="RichTextLabel" parent="MarginContainer/HBoxContainer" unique_id=933210670]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "PasswordProtect"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="Open" type="RichTextLabel" parent="MarginContainer/HBoxContainer" unique_id=967248869]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Open"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="ShadowedButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=487008057]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+script = ExtResource("1_fcis5")
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/ShadowedButton" unique_id=335979375]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_bdp31")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="MarginContainer/HBoxContainer/ShadowedButton" unique_id=555330310]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Join"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1

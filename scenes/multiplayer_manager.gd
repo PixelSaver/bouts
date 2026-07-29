@@ -18,14 +18,16 @@ func _ready() -> void:
 	#Global.multiplayer_manager = self
 	# Connect all the callbacks related to networking.
 	GDSync.connected.connect(_on_connected)
-	GDSync.connected.connect(_on_connection_failed)
-	GDSync.lobby_created.connect(_on_lobby_created)
+	GDSync.connection_failed.connect(_on_connection_failed)
+	GDSync.start_multiplayer()
 	#multiplayer.peer_connected.connect(_peer_connected)
 	#multiplayer.peer_disconnected.connect(_peer_disconnected)
 	#multiplayer.connected_to_server.connect(_server_connected)
 	#multiplayer.connection_failed.connect(_server_connection_failed)
 	#multiplayer.server_disconnected.connect(_server_disconnected)
-	#SignalBus.host.connect(init_server)
+	SignalBus.host.connect(create_lobby)
+	GDSync.lobby_created.connect(lobby_created)
+	GDSync.lobby_creation_failed.connect(lobby_creation_failed)
 	#SignalBus.join.connect(join_server)
 	#SignalBus.leave_requested.connect(_on_leave_requested)
 
@@ -37,6 +39,7 @@ func _randomize_color() -> void:
 	print("Randomizing color")
 	player_info.color = Color(randf(), randf(), randf())
 #region Network callbacks from SceneTree
+#region old_colde
 # Callback from SceneTree.
 
 ## WHen one player connects, send data over as server
@@ -60,38 +63,38 @@ func _randomize_color() -> void:
 ##_end_game("Server disconnected.")
 #pass
 
+### client connected to host
+#func _server_connected() -> void:
+#print("_server_connected")
+#player_info.id = multiplayer.get_unique_id()
+#_register_player.rpc_id(1, player_info.to_dict())
+#
+#
+### Host connection failed
+#func _server_connection_failed() -> void:
+#multiplayer.set_multiplayer_peer(null) # Remove peer.
+#printerr("Server connection failed")
+#
+#
+### Remove all info from server on disconnect
+#func _server_disconnected() -> void:
+#push_warning("Server disconnected")
+#multiplayer.multiplayer_peer = null
+#players.clear()
+#server_disconnected.emit()
+#endregion
 
 func _on_connected() -> void:
 	print("Connected to GDSync")
 
 
-func _on_connection_failed() -> void:
+func _on_connection_failed(error: int) -> void:
 	match (error):
 		ENUMS.CONNECTION_FAILED.INVALID_PUBLIC_KEY:
 			push_error("The public or private key you entered were invalid.")
 		ENUMS.CONNECTION_FAILED.TIMEOUT:
 			push_error("Unable to connect, please check your internet connection.")
 
-
-## client connected to host
-func _server_connected() -> void:
-	print("_server_connected")
-	player_info.id = multiplayer.get_unique_id()
-	_register_player.rpc_id(1, player_info.to_dict())
-
-
-## Host connection failed
-func _server_connection_failed() -> void:
-	multiplayer.set_multiplayer_peer(null) # Remove peer.
-	printerr("Server connection failed")
-
-
-## Remove all info from server on disconnect
-func _server_disconnected() -> void:
-	push_warning("Server disconnected")
-	multiplayer.multiplayer_peer = null
-	players.clear()
-	server_disconnected.emit()
 #endregion
 
 ## called on everyone
@@ -102,29 +105,28 @@ func _register_player(_player_info_dict: Dictionary):
 	player_connected.emit(_player_info.id, _player_info)
 	print("Player Registered on client %s: %s" % [multiplayer.get_unique_id(), _player_info])
 
+#func join_server(_address: String):
+#if _address.is_empty():
+#_address = DEFAULT_SERVER_IP
+#
+#var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
+#var error = peer.create_client(_address, PORT)
+#if error:
+#push_error("JOIN GAME FAILED: ", error)
+#return
+#multiplayer.multiplayer_peer = peer
+#player_info.id = multiplayer.get_unique_id()
+#_register_player(player_info.to_dict())
+#print("Connected!")
 
-func join_server(_address: String):
-	if _address.is_empty():
-		_address = DEFAULT_SERVER_IP
 
-	var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-	var error = peer.create_client(_address, PORT)
-	if error:
-		push_error("JOIN GAME FAILED: ", error)
-		return
-	multiplayer.multiplayer_peer = peer
-	player_info.id = multiplayer.get_unique_id()
-	_register_player(player_info.to_dict())
-	print("Connected!")
-
-
-func init_server() -> void:
-	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(PORT, MAX_CONNECTIONS)
-	if error:
-		push_error("CREATE GAME FAILED: ", error)
-		return
-	multiplayer.multiplayer_peer = peer
+func create_lobby(
+	lobby_name: String,
+	password: String,
+	public: bool,
+	playerlimit: int,
+	tags: Dictionary,
+) -> void:
 	print("Server initiated")
 
 	var id := multiplayer.get_unique_id() # Should be 1
@@ -132,6 +134,28 @@ func init_server() -> void:
 	_register_player(player_info.to_dict())
 
 	SignalBus.hosted.emit()
+
+
+func lobby_created(lobby_name: String) -> void:
+	print("Lobby of name <%s> made!" % lobby_name)
+
+
+func lobby_creation_failed(lobby_name: String, error: int):
+	match (error):
+		ENUMS.LOBBY_CREATION_ERROR.LOBBY_ALREADY_EXISTS:
+			push_error("A lobby with the name " + lobby_name + " already exists.")
+		ENUMS.LOBBY_CREATION_ERROR.NAME_TOO_SHORT:
+			push_error(lobby_name + " is too short.")
+		ENUMS.LOBBY_CREATION_ERROR.NAME_TOO_LONG:
+			push_error(lobby_name + " is too long.")
+		ENUMS.LOBBY_CREATION_ERROR.PASSWORD_TOO_LONG:
+			push_error("The password for " + lobby_name + " is too long.")
+		ENUMS.LOBBY_CREATION_ERROR.TAGS_TOO_LARGE:
+			push_error("The tags have exceeded the 2048 byte limit.")
+		ENUMS.LOBBY_CREATION_ERROR.DATA_TOO_LARGE:
+			push_error("The data have exceeded the 2048 byte limit.")
+		ENUMS.LOBBY_CREATION_ERROR.ON_COOLDOWN:
+			push_error("Please wait a few seconds before creating another lobby.")
 
 
 func _on_leave_requested() -> void:
