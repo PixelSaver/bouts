@@ -1,16 +1,19 @@
 extends PixelMenu
-class_name LobbyScreen
+class_name LobbiesScreen
 
 const LOBBY_ROW := preload("res://scenes/menus/lobby_row.tscn")
+@export var scan_cont: LobbyScanContainer
 var last_refresh := 0.
 
 #region Fluff
 func start_anim():
-	pass
+	scan_cont.is_scanning = true
+	show()
 
 
 func end_anim():
-	pass
+	scan_cont.is_scanning = false
+	hide()
 #endregion
 
 func _ready() -> void:

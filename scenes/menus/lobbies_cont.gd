@@ -1,4 +1,5 @@
 extends HBoxContainer
+class_name LobbyScanContainer
 
 const LOBBY_ROW = preload("res://scenes/menus/lobby_row.tscn")
 
@@ -6,6 +7,7 @@ signal join_lobby_requested
 @export_group("Nodes", "_")
 @export var _lobby_cont: Control
 
+var is_scanning := false
 var last_refresh: float = 0
 
 
@@ -14,6 +16,8 @@ func _ready() -> void:
 
 
 func _process(_delta):
+	if not is_scanning:
+		return
 	#	Refresh the lobby list every 5 seconds
 	var current_time: float = Time.get_unix_time_from_system()
 	if current_time - last_refresh >= 5:

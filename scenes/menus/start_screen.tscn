@@ -1,15 +1,85 @@
 [gd_scene format=3 uid="uid://ntda7takqfc0"]
 
 [ext_resource type="Script" uid="uid://cj4pcxg1uy6" path="res://scenes/menus/start_menu.gd" id="1_tx5wa"]
-[ext_resource type="Script" uid="uid://gtw2dsp5utam" path="res://utilities/ui/menus/shadowed_button.gd" id="2_njl8u"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="2_m2pa2"]
+[ext_resource type="Script" uid="uid://bbevr0r82fs0i" path="res://utilities/ui/menus/shadowed_button.gd" id="2_njl8u"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="3_4awvq"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gkedh"]
-bg_color = Color(0, 0, 0, 1)
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_plx5h"]
+blend_mode = 3
+
+[sub_resource type="StyleBox" id="StyleBox_gkedh"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("3_4awvq")
+color = Color(0.26666668, 0.26666668, 0.26666668, 0.78431374)
+material = SubResource("CanvasItemMaterial_plx5h")
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_0u4mh"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("3_4awvq")
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_m2pa2"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("3_4awvq")
+color = Color(0.8509804, 0.6392157, 0.8039216, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_4awvq"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("3_4awvq")
+color = Color(0.92156863, 0.7647059, 0.654902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
 [node name="StartMenu" type="Control" unique_id=44145697 node_paths=PackedStringArray("buttons")]
 layout_mode = 3
@@ -20,7 +90,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_tx5wa")
-buttons = [NodePath("VBoxContainer/MarginContainer/VBoxContainer/Play")]
+buttons = [NodePath("VBoxContainer/Play"), NodePath("VBoxContainer/Settings"), NodePath("VBoxContainer/Quit")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=589094818]
 layout_mode = 1
@@ -30,6 +100,7 @@ anchor_right = 0.8
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="Title" type="RichTextLabel" parent="VBoxContainer" unique_id=1528641817]
@@ -42,21 +113,20 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=1523707269]
-layout_mode = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=226414497]
+[node name="Control" type="Control" parent="VBoxContainer" unique_id=1021611772]
 layout_mode = 2
 
-[node name="Play" type="Button" parent="VBoxContainer/MarginContainer/VBoxContainer" unique_id=899641483]
-custom_minimum_size = Vector2(150, 80)
+[node name="Play" type="Button" parent="VBoxContainer" unique_id=1825555375]
+custom_minimum_size = Vector2(0, 60)
+custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
+mouse_filter = 1
+theme_override_styles/disabled = SubResource("StyleBox_gkedh")
+disabled = true
 script = ExtResource("2_njl8u")
-metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
-[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer/VBoxContainer/Play" unique_id=301983209]
+[node name="Panel" type="Panel" parent="VBoxContainer/Play" unique_id=532884670]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,9 +134,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_gkedh")
+theme_override_styles/panel = SubResource("StyleBox_0u4mh")
 
-[node name="@RichTextLabel@98832" type="RichTextLabel" parent="VBoxContainer/MarginContainer/VBoxContainer/Play" unique_id=2120989588]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="VBoxContainer/Play" unique_id=1369239846]
+show_behind_parent = true
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -74,9 +145,83 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
-text = "[font_size=50]Play"
+text = "Connecting to servers..."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="Button" parent="VBoxContainer" unique_id=413717662]
+custom_minimum_size = Vector2(0, 60)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("2_njl8u")
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Settings" unique_id=5397833]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_m2pa2")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="VBoxContainer/Settings" unique_id=2102784694]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Settings"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit" type="Button" parent="VBoxContainer" unique_id=1971386481]
+custom_minimum_size = Vector2(0, 60)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("2_njl8u")
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Quit" unique_id=1098189731]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_4awvq")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="VBoxContainer/Quit" unique_id=1628237050]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Quit"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false

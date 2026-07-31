@@ -16,6 +16,7 @@ class_name MultiplayerMenu
 @export var waiting_start_game_button: DefaultButton
 @export var waiting_leave_button: DefaultButton
 
+
 #func _ready() -> void:
 #loading_host_button.pressed.connect(_on_host_button_pressed)
 #loading_join_button.pressed.connect(_on_join.bind(loading_ip.text))
@@ -99,6 +100,20 @@ class_name MultiplayerMenu
 #Global.menu_manager.players.set(id, pi)
 #SignalBus.player_info_changed.emit(id, pi)
 #endregion
+@export_category("New")
+@export var lobbies_screen: LobbiesScreen
+
+
+func _ready() -> void:
+	SignalBus.joined.connect(_on_joined)
+	lobbies_screen.start_anim()
+#Global.menu_manager.gdsync_lobby_responded
+
+
+func _on_joined(_lobby_name: String) -> void:
+	waiting_screen.start_anim()
+	lobbies_screen.end_anim()
+
 
 func start_anim() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

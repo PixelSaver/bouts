@@ -35,6 +35,6 @@ func _body_entered(body: Node) -> void:
 		hit_player(par as Player)
 
 
-func hit_player(player: Player):
-	player.damage(_get_attack())
+func hit_player(_player: Player):
+	_player.damage(_get_attack())
 	_hit_cooldown = hit_cooldown

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bevonhaaa3nw3"]
 
-[ext_resource type="Script" path="res://scenes/menus/auth/shadowed_button.gd" id="1_fcis5"]
 [ext_resource type="Script" uid="uid://65i7iwwt0sn2" path="res://scenes/menus/lobby_row.gd" id="1_udyw3"]
+[ext_resource type="Script" uid="uid://bbevr0r82fs0i" path="res://utilities/ui/menus/shadowed_button.gd" id="2_iewnf"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="2_udyw3"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="3_iewnf"]
 
@@ -93,7 +93,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(100, 0)
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
-script = ExtResource("1_fcis5")
+script = ExtResource("2_iewnf")
 
 [node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/ShadowedButton" unique_id=335979375]
 layout_mode = 1

@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://bq17fmc2pxh2f"]
 
 [ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/multiplayer_menu.gd" id="1_elvy3"]
-[ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/loading_screen.gd" id="2_ftwoh"]
-[ext_resource type="Script" path="res://scenes/menus/auth/shadowed_button.gd" id="3_livv6"]
+[ext_resource type="Script" uid="uid://bbevr0r82fs0i" path="res://utilities/ui/menus/shadowed_button.gd" id="3_igtkl"]
 [ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_sb6po"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_4kuv5"]
@@ -10,49 +9,10 @@
 [ext_resource type="Script" uid="uid://di384elvmfody" path="res://scenes/menus/player_display.gd" id="8_0jrml"]
 [ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="8_jxd0g"]
 [ext_resource type="PackedScene" uid="uid://t4eelh8k41jw" path="res://scenes/active_ragdoll/player.tscn" id="9_0haww"]
-[ext_resource type="Script" uid="uid://dqlbdyibxomuh" path="res://scenes/menus/lobby_screen.gd" id="11_5jciy"]
+[ext_resource type="Script" uid="uid://dqlbdyibxomuh" path="res://scenes/menus/lobbies_screen.gd" id="11_5jciy"]
 [ext_resource type="Script" uid="uid://cg7undgju3pjo" path="res://scenes/menus/lobbies_cont.gd" id="12_0lu5u"]
-[ext_resource type="PackedScene" uid="uid://bevonhaaa3nw3" path="res://scenes/menus/lobby_row.tscn" id="12_ykd5h"]
 [ext_resource type="Script" uid="uid://blmm825dbb2nn" path="res://scenes/menus/new_lobby_cont.gd" id="13_ykd5h"]
 [ext_resource type="Script" uid="uid://sv03afbfe5mi" path="res://scenes/menus/publicCont.gd" id="14_xcpy6"]
-
-[sub_resource type="StyleBox" id="StyleBox_sb6po"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = -1.0
-content_margin_top = -1.0
-content_margin_right = -1.0
-content_margin_bottom = -1.0
-script = ExtResource("5_4kuv5")
-color = Color(0.92156863, 0.7647059, 0.654902, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_enabled = true
-shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
-shadow_blur = 0
-shadow_offset = Vector2(5, 5)
-metadata/_custom_type_script = "uid://bkl6g25jwb47h"
-
-[sub_resource type="StyleBox" id="StyleBox_4kuv5"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = -1.0
-content_margin_top = -1.0
-content_margin_right = -1.0
-content_margin_bottom = -1.0
-script = ExtResource("5_4kuv5")
-color = Color(0.6392157, 0.81960785, 0.6862745, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_enabled = true
-shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
-shadow_blur = 0
-shadow_offset = Vector2(5, 5)
-metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
 [sub_resource type="Resource" id="Resource_gkedh"]
 script = ExtResource("4_sb6po")
@@ -179,7 +139,7 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_color", "waiting_start_game_button", "waiting_leave_button")]
+[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_color", "waiting_start_game_button", "waiting_leave_button", "lobbies_screen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -188,178 +148,18 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_elvy3")
-loading_screen = NodePath("LoadingScreen")
-name_ip = NodePath("LoadingScreen/VBoxContainer/HBoxContainer/Name")
-color_ip = NodePath("LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer/MarginContainer/ColorPicker")
-loading_ip = NodePath("LoadingScreen/VBoxContainer/IPInput")
-loading_host_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton")
-loading_join_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton")
+loading_screen = NodePath("")
+name_ip = NodePath("")
+color_ip = NodePath("")
+loading_ip = NodePath("")
+loading_host_button = NodePath("")
+loading_join_button = NodePath("")
 waiting_screen = NodePath("WaitingScreen")
 waiting_color = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/ColorPickerButton")
 waiting_start_game_button = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame")
 waiting_leave_button = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/Leave")
+lobbies_screen = NodePath("LobbiesScreen")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
-
-[node name="LoadingScreen" type="Control" parent="." unique_id=1846798797]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-script = ExtResource("2_ftwoh")
-metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LoadingScreen" unique_id=861428574]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.2
-anchor_right = 0.8
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="Title" type="RichTextLabel" parent="LoadingScreen/VBoxContainer" unique_id=1286963850]
-layout_mode = 2
-mouse_filter = 1
-bbcode_enabled = true
-text = "[font_size=100]Bouts"
-fit_content = true
-scroll_active = false
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=1784142041]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="Name" type="LineEdit" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1547209254]
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "player name"
-
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1367602326]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel" unique_id=1464235866]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=915812846]
-layout_mode = 2
-text = " Color"
-
-[node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=1641163226]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 5
-
-[node name="ColorPicker" type="ColorPickerButton" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer/MarginContainer" unique_id=619973256]
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(1, 1, 1, 1)
-edit_alpha = false
-edit_intensity = false
-
-[node name="IPInput" type="LineEdit" parent="LoadingScreen/VBoxContainer" unique_id=227558515]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-placeholder_text = "ip address"
-
-[node name="ButtonContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=558283635]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/ButtonContainer" unique_id=1680235105]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HostButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer" unique_id=1363817932]
-custom_minimum_size = Vector2(150, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("3_livv6")
-
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=168535097]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBox_sb6po")
-
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=1807359543]
-clip_contents = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-theme_override_font_sizes/normal_font_size = 30
-bbcode_enabled = true
-text = "Host"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MarginContainer2" type="MarginContainer" parent="LoadingScreen/VBoxContainer/ButtonContainer" unique_id=1852426843]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="JoinButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2" unique_id=1768478903]
-custom_minimum_size = Vector2(150, 60)
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("3_livv6")
-
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1267245097]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBox_4kuv5")
-
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1141828527]
-clip_contents = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-theme_override_font_sizes/normal_font_size = 30
-bbcode_enabled = true
-text = "Join"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game")]
 visible = false
@@ -468,7 +268,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
 theme = ExtResource("8_jxd0g")
-script = ExtResource("3_livv6")
+script = ExtResource("3_igtkl")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
 [node name="Panel" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/Leave" unique_id=39226499]
@@ -510,7 +310,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
 theme = ExtResource("8_jxd0g")
-script = ExtResource("3_livv6")
+script = ExtResource("3_igtkl")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
 [node name="Panel" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame" unique_id=862787937]
@@ -542,7 +342,8 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LobbyScreen" type="Control" parent="." unique_id=356956171]
+[node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -550,9 +351,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("11_5jciy")
+scan_cont = NodePath("MarginContainer/VBoxContainer/LobbiesCont")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
-[node name="MarginContainer" type="MarginContainer" parent="LobbyScreen" unique_id=55909135]
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen" unique_id=55909135]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -560,21 +362,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LobbyScreen/MarginContainer" unique_id=948950626]
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/MarginContainer" unique_id=948950626]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="LobbiesCont" type="HBoxContainer" parent="LobbyScreen/MarginContainer/VBoxContainer" unique_id=99811213 node_paths=PackedStringArray("_lobby_cont")]
+[node name="LobbiesCont" type="HBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer" unique_id=99811213 node_paths=PackedStringArray("_lobby_cont")]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("12_0lu5u")
 _lobby_cont = NodePath("VBoxContainer/LobbyCont")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LobbyScreen/MarginContainer/VBoxContainer/LobbiesCont" unique_id=788529091]
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/LobbiesCont" unique_id=788529091]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Title" type="RichTextLabel" parent="LobbyScreen/MarginContainer/VBoxContainer/LobbiesCont/VBoxContainer" unique_id=716023254]
+[node name="Title" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/LobbiesCont/VBoxContainer" unique_id=716023254]
 layout_mode = 2
 mouse_filter = 1
 theme_override_font_sizes/normal_font_size = 40
@@ -582,14 +384,11 @@ text = "Bouts Lobbies"
 fit_content = true
 scroll_active = false
 
-[node name="LobbyCont" type="VBoxContainer" parent="LobbyScreen/MarginContainer/VBoxContainer/LobbiesCont/VBoxContainer" unique_id=908088610]
+[node name="LobbyCont" type="VBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/LobbiesCont/VBoxContainer" unique_id=908088610]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LobbyRow" parent="LobbyScreen/MarginContainer/VBoxContainer/LobbiesCont/VBoxContainer/LobbyCont" unique_id=2080622358 instance=ExtResource("12_ykd5h")]
-layout_mode = 2
-
-[node name="NewLobbyCont" type="Panel" parent="LobbyScreen/MarginContainer/VBoxContainer" unique_id=537959460 node_paths=PackedStringArray("_name_edit", "_player_count_edit", "_password_edit", "_public_edit", "_create_lobby_button")]
+[node name="NewLobbyCont" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer" unique_id=537959460 node_paths=PackedStringArray("_name_edit", "_player_count_edit", "_password_edit", "_public_edit", "_create_lobby_button")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 1
@@ -601,7 +400,7 @@ _password_edit = NodePath("MarginContainer/HBoxContainer/Password")
 _public_edit = NodePath("MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer/PublicCheckBox")
 _create_lobby_button = NodePath("MarginContainer/HBoxContainer/ShadowedButton")
 
-[node name="MarginContainer" type="MarginContainer" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont" unique_id=1522733924]
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont" unique_id=1522733924]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -613,11 +412,11 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer" unique_id=607883053]
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer" unique_id=607883053]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Name" type="LineEdit" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1597744805]
+[node name="Name" type="LineEdit" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1597744805]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Name of the lobby, used to identify the lobby too."
@@ -625,7 +424,7 @@ mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBox_ykd5h")
 placeholder_text = "Lobby Name"
 
-[node name="PlayerCount" type="LineEdit" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=2019154626]
+[node name="PlayerCount" type="LineEdit" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=2019154626]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Max players. Only a max of 2 for now, but 4 is planned :3"
@@ -633,7 +432,7 @@ mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBox_ykd5h")
 placeholder_text = "Max Players (2-4)"
 
-[node name="Password" type="LineEdit" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1842027629]
+[node name="Password" type="LineEdit" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1842027629]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "If left blank, no password is needed. Otherwise, this password will be needed to enter the lobby."
@@ -641,7 +440,7 @@ mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBox_ykd5h")
 placeholder_text = "Password (blank if public)"
 
-[node name="Public" type="Panel" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1782404400 node_paths=PackedStringArray("check_box")]
+[node name="Public" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1782404400 node_paths=PackedStringArray("check_box")]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 tooltip_text = "Being public means it is searchable by anyone. If not public, someone has to know the name (and password) to join."
@@ -650,7 +449,7 @@ theme_override_styles/panel = SubResource("StyleBox_ykd5h")
 script = ExtResource("14_xcpy6")
 check_box = NodePath("MarginContainer/HBoxContainer/PublicCheckBox")
 
-[node name="MarginContainer" type="MarginContainer" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public" unique_id=463555792]
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public" unique_id=463555792]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -662,10 +461,10 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer" unique_id=1440115778]
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer" unique_id=1440115778]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer" unique_id=1177984429]
+[node name="RichTextLabel" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer" unique_id=1177984429]
 layout_mode = 2
 mouse_filter = 1
 text = "Public?"
@@ -675,19 +474,19 @@ autowrap_mode = 0
 shortcut_keys_enabled = false
 vertical_alignment = 1
 
-[node name="PublicCheckBox" type="CheckBox" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer" unique_id=855075553]
+[node name="PublicCheckBox" type="CheckBox" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer" unique_id=855075553]
 layout_mode = 2
 mouse_filter = 2
 button_pressed = true
 
-[node name="ShadowedButton" type="Button" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1417296485]
+[node name="ShadowedButton" type="Button" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1417296485]
 custom_minimum_size = Vector2(100, 0)
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
 mouse_filter = 1
-script = ExtResource("3_livv6")
+script = ExtResource("3_igtkl")
 
-[node name="Panel" type="Panel" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/ShadowedButton" unique_id=700213941]
+[node name="Panel" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/ShadowedButton" unique_id=700213941]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -697,7 +496,7 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBox_0lu5u")
 
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbyScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/ShadowedButton" unique_id=746110578]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/ShadowedButton" unique_id=746110578]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15

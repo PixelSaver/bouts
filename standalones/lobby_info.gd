@@ -12,6 +12,8 @@ class_name LobbyInfo
 @export var lobby_web_only: bool = false
 #@export var lobby_host: RefCounted = null
 
+#static func from_params()
+
 
 static func from_dict(dict: Dictionary) -> LobbyInfo:
 	var lobby = LobbyInfo.new()

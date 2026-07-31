@@ -26,7 +26,13 @@ func _on_create_lobby_pressed() -> void:
 		return
 	var is_public = _public_edit.button_pressed
 
-	GDSync.lobby_create(_name_edit.text, _password_edit.text, is_public, player_limit)
+	Global.menu_manager.create_lobby(
+		_name_edit.text,
+		_password_edit.text,
+		is_public,
+		player_limit,
+		{ },
+	)
 	#HACK Waiting two frames for lobby to be seen
 	await get_tree().process_frame
 	await get_tree().process_frame

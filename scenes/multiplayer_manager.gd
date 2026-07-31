@@ -7,6 +7,16 @@ class_name MultiplayerManager
 
 var players: Dictionary[int, PlayerInfo] = { }
 @onready var player_info := PlayerInfo.new("Name")
+signal gdsync_connection_changed(is_connected: bool)
+signal gdsync_lobby_responded(lobby_name: String, error: int)
+var is_gdsync_connected := false:
+	set(val):
+		if val == is_gdsync_connected:
+			return
+
+		is_gdsync_connected = val
+		gdsync_connection_changed.emit(val)
+var _created_lobby_password := ""
 
 signal player_connected(_peerID: int, _player_info: PlayerInfo)
 signal player_disconnected(_peerID: int)
@@ -19,13 +29,14 @@ func _ready() -> void:
 	# Connect all the callbacks related to networking.
 	GDSync.connected.connect(_on_connected)
 	GDSync.connection_failed.connect(_on_connection_failed)
+	GDSync.disconnected.connect(_on_disconnected)
 	GDSync.start_multiplayer()
 	#multiplayer.peer_connected.connect(_peer_connected)
 	#multiplayer.peer_disconnected.connect(_peer_disconnected)
 	#multiplayer.connected_to_server.connect(_server_connected)
 	#multiplayer.connection_failed.connect(_server_connection_failed)
 	#multiplayer.server_disconnected.connect(_server_disconnected)
-	SignalBus.host.connect(create_lobby)
+	#SignalBus.host.connect(create_lobby)
 	GDSync.lobby_created.connect(lobby_created)
 	GDSync.lobby_creation_failed.connect(lobby_creation_failed)
 	#SignalBus.join.connect(join_server)
@@ -85,6 +96,7 @@ func _randomize_color() -> void:
 #endregion
 
 func _on_connected() -> void:
+	is_gdsync_connected = true
 	print("Connected to GDSync")
 
 
@@ -94,6 +106,10 @@ func _on_connection_failed(error: int) -> void:
 			push_error("The public or private key you entered were invalid.")
 		ENUMS.CONNECTION_FAILED.TIMEOUT:
 			push_error("Unable to connect, please check your internet connection.")
+
+
+func _on_disconnected() -> void:
+	is_gdsync_connected = false
 
 #endregion
 
@@ -125,37 +141,50 @@ func create_lobby(
 	password: String,
 	public: bool,
 	playerlimit: int,
-	tags: Dictionary,
+	tags: Dictionary = { },
+	data: Dictionary = { },
 ) -> void:
-	print("Server initiated")
+	_created_lobby_password = password
+	GDSync.lobby_create(lobby_name, password, public, playerlimit, tags, data)
 
 	var id := multiplayer.get_unique_id() # Should be 1
 	player_info.id = id
 	_register_player(player_info.to_dict())
 
-	SignalBus.hosted.emit()
+	SignalBus.hosted.emit(lobby_name, password, public, playerlimit, tags, data)
+
+
+func try_join_lobby(lobby_name: String, password: String = "") -> void:
+	GDSync.lobby_join(lobby_name, password)
 
 
 func lobby_created(lobby_name: String) -> void:
+	gdsync_lobby_responded.emit(lobby_name, -1)
+	SignalBus.joined.emit(lobby_name)
+	try_join_lobby(lobby_name, _created_lobby_password)
 	print("Lobby of name <%s> made!" % lobby_name)
 
 
 func lobby_creation_failed(lobby_name: String, error: int):
+	var error_str = ""
 	match (error):
 		ENUMS.LOBBY_CREATION_ERROR.LOBBY_ALREADY_EXISTS:
-			push_error("A lobby with the name " + lobby_name + " already exists.")
+			error_str = ("A lobby with the name " + lobby_name + " already exists.")
 		ENUMS.LOBBY_CREATION_ERROR.NAME_TOO_SHORT:
-			push_error(lobby_name + " is too short.")
+			error_str = (lobby_name + " is too short.")
 		ENUMS.LOBBY_CREATION_ERROR.NAME_TOO_LONG:
-			push_error(lobby_name + " is too long.")
+			error_str = (lobby_name + " is too long.")
 		ENUMS.LOBBY_CREATION_ERROR.PASSWORD_TOO_LONG:
-			push_error("The password for " + lobby_name + " is too long.")
+			error_str = ("The password for " + lobby_name + " is too long.")
 		ENUMS.LOBBY_CREATION_ERROR.TAGS_TOO_LARGE:
-			push_error("The tags have exceeded the 2048 byte limit.")
+			error_str = ("The tags have exceeded the 2048 byte limit.")
 		ENUMS.LOBBY_CREATION_ERROR.DATA_TOO_LARGE:
-			push_error("The data have exceeded the 2048 byte limit.")
+			error_str = ("The data have exceeded the 2048 byte limit.")
 		ENUMS.LOBBY_CREATION_ERROR.ON_COOLDOWN:
-			push_error("Please wait a few seconds before creating another lobby.")
+			error_str = ("Please wait a few seconds before creating another lobby.")
+	gdsync_lobby_responded.emit(lobby_name, error_str)
+	if not error_str.is_empty():
+		push_warning(error_str)
 
 
 func _on_leave_requested() -> void:
