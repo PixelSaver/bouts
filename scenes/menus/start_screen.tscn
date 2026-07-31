@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ntda7takqfc0"]
 
 [ext_resource type="Script" uid="uid://cj4pcxg1uy6" path="res://scenes/menus/start_menu.gd" id="1_tx5wa"]
-[ext_resource type="Script" uid="uid://crut4r5gwigu0" path="res://utilities/ui/menus/default_button.gd" id="2_xm27e"]
+[ext_resource type="Script" uid="uid://gtw2dsp5utam" path="res://utilities/ui/menus/shadowed_button.gd" id="2_njl8u"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gkedh"]
 bg_color = Color(0, 0, 0, 1)
@@ -53,7 +53,7 @@ layout_mode = 2
 [node name="Play" type="Button" parent="VBoxContainer/MarginContainer/VBoxContainer" unique_id=899641483]
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
-script = ExtResource("2_xm27e")
+script = ExtResource("2_njl8u")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
 [node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer/VBoxContainer/Play" unique_id=301983209]
