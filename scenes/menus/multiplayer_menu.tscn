@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://di384elvmfody" path="res://scenes/menus/player_display.gd" id="8_0jrml"]
 [ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="8_jxd0g"]
 [ext_resource type="PackedScene" uid="uid://t4eelh8k41jw" path="res://scenes/active_ragdoll/player.tscn" id="9_0haww"]
+[ext_resource type="Script" uid="uid://doncweywmgs0e" path="res://scenes/menus/password_popup.gd" id="9_xcpy6"]
+[ext_resource type="Script" path="res://scenes/menus/auth/secret_toggle.gd" id="10_0lu5u"]
 [ext_resource type="Script" uid="uid://dqlbdyibxomuh" path="res://scenes/menus/lobbies_screen.gd" id="11_5jciy"]
 [ext_resource type="Script" uid="uid://cg7undgju3pjo" path="res://scenes/menus/lobbies_cont.gd" id="12_0lu5u"]
 [ext_resource type="Script" uid="uid://blmm825dbb2nn" path="res://scenes/menus/new_lobby_cont.gd" id="13_ykd5h"]
@@ -74,17 +76,7 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[sub_resource type="Resource" id="Resource_gkedh"]
-script = ExtResource("4_sb6po")
-color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-blend = true
-width_left = 10
-width_top = 10
-width_right = 10
-width_bottom = 10
-metadata/_custom_type_script = "uid://cjmmhbp1b5312"
-
-[sub_resource type="StyleBox" id="StyleBox_5jciy"]
+[sub_resource type="StyleBox" id="StyleBox_igtkl"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = 4.0
@@ -92,14 +84,49 @@ content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
 script = ExtResource("5_4kuv5")
-color = Color(0, 0, 0, 1)
-draw_center = false
-borders = Array[ExtResource("4_sb6po")]([SubResource("Resource_gkedh")])
+color = Color(0.44313726, 0.49803922, 0.6901961, 0.3372549)
 corner_detail = 5
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBox" id="StyleBox_1t6t3"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_4kuv5")
+color = Color(0.44313726, 0.49803922, 0.6901961, 0.5803922)
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Resource" id="Resource_qlib5"]
+script = ExtResource("4_sb6po")
+color = Color(0.26932546, 0.25951993, 0.38099545, 1)
+width_bottom = 2
+
+[sub_resource type="StyleBox" id="StyleBox_gcn8l"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_4kuv5")
+color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+borders = Array[ExtResource("4_sb6po")]([SubResource("Resource_qlib5")])
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_right = 40.0
 
 [sub_resource type="StyleBox" id="StyleBox_0haww"]
 resource_local_to_scene = false
@@ -139,6 +166,33 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
+[sub_resource type="Resource" id="Resource_gkedh"]
+script = ExtResource("4_sb6po")
+color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+blend = true
+width_left = 10
+width_top = 10
+width_right = 10
+width_bottom = 10
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="StyleBox" id="StyleBox_5jciy"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_4kuv5")
+color = Color(0, 0, 0, 1)
+draw_center = false
+borders = Array[ExtResource("4_sb6po")]([SubResource("Resource_gkedh")])
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("waiting_screen", "lobbies_screen")]
 layout_mode = 3
 anchors_preset = 15
@@ -152,8 +206,7 @@ waiting_screen = NodePath("WaitingScreen")
 lobbies_screen = NodePath("LobbiesScreen")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
-[node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont")]
-visible = false
+[node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont", "lobby_popup")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -162,6 +215,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("11_5jciy")
 scan_cont = NodePath("MarginContainer/VBoxContainer/LobbiesCont")
+lobby_popup = NodePath("PasswordPopup")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen" unique_id=55909135]
@@ -326,7 +380,218 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PasswordPopup" type="Control" parent="LobbiesScreen" unique_id=619148929]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("9_xcpy6")
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
+
+[node name="BG" type="Panel" parent="LobbiesScreen/PasswordPopup" unique_id=408099206]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_igtkl")
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/PasswordPopup" unique_id=2142141587]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/PasswordPopup/Panel" unique_id=692295246]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer" unique_id=1871680889]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer" unique_id=1248645448]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "Lobby Password Needed"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Panel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer" unique_id=1904978517]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_1t6t3")
+
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control" unique_id=312167659]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer" unique_id=1634768611]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=238509151]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "Lobby Name"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="LineEdit" type="LineEdit" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1555580109]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Lobby Name"
+
+[node name="HSeparator" type="HSeparator" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1479660293]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1259728411]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "Password"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=345632245]
+layout_mode = 2
+alignment = 1
+
+[node name="Password" type="LineEdit" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=37189460]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBox_gcn8l")
+placeholder_text = "Password"
+max_length = 80
+expand_to_text_length = true
+secret = true
+
+[node name="CheckButton" type="CheckButton" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=447734301 node_paths=PackedStringArray("password")]
+layout_mode = 2
+mouse_filter = 1
+button_pressed = true
+script = ExtResource("10_0lu5u")
+password = NodePath("../Password")
+
+[node name="Control" type="Control" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=288367921]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer" unique_id=674399206]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer" unique_id=1244737937]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Cancel" type="Button" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=631251914]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme = ExtResource("8_jxd0g")
+script = ExtResource("3_igtkl")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Cancel" unique_id=706290956]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_0haww")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Cancel" unique_id=1660122911]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+bbcode_enabled = true
+text = "Cancel"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Submit" type="Button" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=271414441]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme = ExtResource("8_jxd0g")
+script = ExtResource("3_igtkl")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Submit" unique_id=475946398]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_0jrml")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Submit" unique_id=380209796]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+bbcode_enabled = true
+text = "Submit"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

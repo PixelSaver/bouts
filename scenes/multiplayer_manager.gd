@@ -46,6 +46,8 @@ func _ready() -> void:
 	#SignalBus.host.connect(create_lobby)
 	GDSync.lobby_created.connect(lobby_created)
 	GDSync.lobby_creation_failed.connect(lobby_creation_failed)
+	GDSync.lobby_joined.connect(_on_lobby_joined)
+	GDSync.lobby_join_failed.connect(_on_lobby_join_failed)
 	GDSync.player_data_changed.connect(_on_pi_changed)
 	#SignalBus.join.connect(join_server)
 	#SignalBus.leave_requested.connect(_on_leave_requested)
@@ -167,6 +169,7 @@ func _on_pi_changed(client_id: int, key: String, value) -> void:
 	SignalBus.player_info_changed.emit(client_id, pi)
 #endregion
 
+#region Lobby stuff
 func create_lobby(
 	lobby_name: String,
 	password: String,
@@ -214,6 +217,15 @@ func lobby_creation_failed(lobby_name: String, error: int):
 		push_warning(error_str)
 
 
+func _on_lobby_joined(lobby_name: String) -> void:
+	pass
+
+
+func _on_lobby_join_failed(lobby_name: String, error: int) -> void:
+	var error_str = ENUMS.LOBBY_JOIN_ERROR.keys()[error]
+	Log.err("Failed to join %s, because of: %s" % [lobby_name, error_str])
+
+#endregion
 func _on_leave_requested() -> void:
 	free_networking()
 	players.clear()

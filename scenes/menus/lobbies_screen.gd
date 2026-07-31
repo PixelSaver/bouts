@@ -3,6 +3,7 @@ class_name LobbiesScreen
 
 const LOBBY_ROW := preload("res://scenes/menus/lobby_row.tscn")
 @export var scan_cont: LobbyScanContainer
+@export var lobby_popup: PasswordPopup
 var last_refresh := 0.
 
 #region Fluff
@@ -19,6 +20,26 @@ func end_anim():
 func _ready() -> void:
 	GDSync.lobbies_received.connect(_on_lobbies_received)
 	SignalBus.refresh_lobbies_requested.connect(_on_refresh)
+	scan_cont.join_lobby_requested.connect(_on_join_lobby_requested)
+	lobby_popup.lobby_canceled.connect(_on_lobby_join_canceled)
+	lobby_popup.lobby_submitted.connect(_on_join_lobby_requested_with_password)
+
+
+func _on_lobby_join_canceled() -> void:
+	lobby_popup.end_anim()
+
+
+func _on_join_lobby_requested_with_password(lobby_name: String, password: String) -> void:
+	GDSync.lobby_join(lobby_name, password)
+	lobby_popup.end_anim()
+
+
+func _on_join_lobby_requested(lobby_name: String, has_password: bool) -> void:
+	Log.pr("Join lobby reqested")
+	if has_password:
+		lobby_popup.start_anim()
+	else:
+		GDSync.lobby_join(lobby_name)
 
 
 func _on_lobbies_received(lobbies: Array):
