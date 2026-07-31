@@ -2,19 +2,19 @@ extends PixelMenu
 class_name MultiplayerMenu
 
 #region old code
-@export_group("Loading", "loading_")
-@export var loading_screen: PixelMenu
-#@export var status_text: RichTextLabel
-@export var name_ip: LineEdit
-@export var color_ip: ColorPickerButton
-@export var loading_ip: LineEdit
-@export var loading_host_button: Button
-@export var loading_join_button: Button
-@export_group("Waiting", "waiting_")
-@export var waiting_screen: PixelMenu
-@export var waiting_color: ColorPickerButton
-@export var waiting_start_game_button: DefaultButton
-@export var waiting_leave_button: DefaultButton
+#@export_group("Loading", "loading_")
+#@export var loading_screen: PixelMenu
+##@export var status_text: RichTextLabel
+#@export var name_ip: LineEdit
+#@export var color_ip: ColorPickerButton
+#@export var loading_ip: LineEdit
+#@export var loading_host_button: Button
+#@export var loading_join_button: Button
+#@export_group("Waiting", "waiting_")
+#@export var waiting_screen: PixelMenu
+#@export var waiting_color: ColorPickerButton
+#@export var waiting_start_game_button: DefaultButton
+#@export var waiting_leave_button: DefaultButton
 
 
 #func _ready() -> void:
@@ -101,6 +101,7 @@ class_name MultiplayerMenu
 #SignalBus.player_info_changed.emit(id, pi)
 #endregion
 @export_category("New")
+@export var waiting_screen: PixelMenu
 @export var lobbies_screen: LobbiesScreen
 
 

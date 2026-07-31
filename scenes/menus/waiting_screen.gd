@@ -5,6 +5,7 @@ class_name WaitingScreen
 @export var start_game: DefaultButton
 const PLAYER_LOBBY_ROW = preload("res://scenes/menus/player_lobby_row.tscn")
 
+var _enabled := false
 #region old code
 #func _ready() -> void:
 #_clear_lobby()
@@ -48,16 +49,6 @@ const PLAYER_LOBBY_ROW = preload("res://scenes/menus/player_lobby_row.tscn")
 #endregion
 func _ready() -> void:
 	_clear_lobby()
-	#Global.menu_manager.player_connected.connect(
-	#func(_x, pi: PlayerInfo):
-	#if pi.id == multiplayer.get_unique_id():
-	#_clear_lobby()
-	#_add_lobby_player(pi),
-	#)
-	#Global.menu_manager.player_disconnected.connect(
-	#func(_x):
-	#_update_player_list(),
-	#)
 
 
 func _clear_lobby() -> void:
@@ -66,9 +57,11 @@ func _clear_lobby() -> void:
 
 
 func start_anim() -> void:
+	_enabled = true
 	#start_game.visible = multiplayer.is_server()
 	show()
 
 
 func end_anim() -> void:
+	_enabled = false
 	hide()

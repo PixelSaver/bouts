@@ -6,7 +6,7 @@ class_name MultiplayerManager
 #const MAX_CONNECTIONS = 6
 
 var players: Dictionary[int, PlayerInfo] = { }
-@onready var player_info := PlayerInfo.new("Name")
+@onready var player_info := PlayerInfo.new("%.5f" % randf())
 signal gdsync_connection_changed(is_connected: bool)
 signal gdsync_lobby_responded(lobby_name: String, error: int)
 var is_gdsync_connected := false:
@@ -20,7 +20,6 @@ var _created_lobby_password := ""
 
 signal player_connected(_peerID: int, _player_info: PlayerInfo)
 signal player_disconnected(_peerID: int)
-signal server_disconnected
 
 
 func _ready() -> void:
@@ -31,6 +30,9 @@ func _ready() -> void:
 	GDSync.connection_failed.connect(_on_connection_failed)
 	GDSync.disconnected.connect(_on_disconnected)
 	GDSync.start_multiplayer()
+
+	GDSync.client_joined.connect(_peer_connected)
+	GDSync.client_left.connect(_peer_disconnected)
 	#multiplayer.peer_connected.connect(_peer_connected)
 	#multiplayer.peer_disconnected.connect(_peer_disconnected)
 	#multiplayer.connected_to_server.connect(_server_connected)
@@ -95,6 +97,7 @@ func _randomize_color() -> void:
 #server_disconnected.emit()
 #endregion
 
+#region GDSync connection
 func _on_connected() -> void:
 	is_gdsync_connected = true
 	print("Connected to GDSync")
@@ -111,6 +114,14 @@ func _on_connection_failed(error: int) -> void:
 func _on_disconnected() -> void:
 	is_gdsync_connected = false
 
+#endregion
+#region Client connection and disconnetion
+func _peer_connected(id: int) -> void:
+	player_connected.emit(id)
+
+
+func _peer_disconnected(id: int) -> void:
+	player_disconnected.emit(id)
 #endregion
 
 ## called on everyone
