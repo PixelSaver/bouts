@@ -153,6 +153,7 @@ lobbies_screen = NodePath("LobbiesScreen")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -326,7 +327,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

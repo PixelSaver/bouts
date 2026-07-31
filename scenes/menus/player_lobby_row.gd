@@ -5,6 +5,7 @@ class_name PlayerLobbyRow
 @export var panel_color: Panel
 @export var player_name: RichTextLabel
 @export var kick_button: DefaultButton
+var _client_id: int = -1
 var _player_info: PlayerInfo
 var _box: StyleBoxFancy
 
@@ -16,8 +17,14 @@ func _ready() -> void:
 	SignalBus.player_info_changed.connect(_on_pi_changed)
 
 
+func track_player_id(id: int) -> void:
+	_client_id = id
+	var pi = GDSync.player_get_data(id, "player_info")
+	load_player(pi)
+
+
 func _on_pi_changed(id: int, pi: PlayerInfo):
-	if id != get_multiplayer_authority():
+	if id != _client_id or _client_id == -1:
 		return
 	_box.color = pi.color
 

@@ -6,7 +6,12 @@ class_name MultiplayerManager
 #const MAX_CONNECTIONS = 6
 
 var players: Dictionary[int, PlayerInfo] = { }
-@onready var player_info := PlayerInfo.new("%.5f" % randf())
+@onready var player_info := PlayerInfo.new("%.5f" % randf()):
+	set(val):
+		player_info = val
+		if not GDSync.is_active():
+			return
+		GDSync.player_set_data("player_info", player_info.to_dict())
 signal gdsync_connection_changed(is_connected: bool)
 signal gdsync_lobby_responded(lobby_name: String, error: int)
 var is_gdsync_connected := false:
@@ -18,7 +23,7 @@ var is_gdsync_connected := false:
 		gdsync_connection_changed.emit(val)
 var _created_lobby_password := ""
 
-signal player_connected(_peerID: int, _player_info: PlayerInfo)
+signal player_connected(_peerID: int)
 signal player_disconnected(_peerID: int)
 
 
@@ -41,6 +46,7 @@ func _ready() -> void:
 	#SignalBus.host.connect(create_lobby)
 	GDSync.lobby_created.connect(lobby_created)
 	GDSync.lobby_creation_failed.connect(lobby_creation_failed)
+	GDSync.player_data_changed.connect(_on_pi_changed)
 	#SignalBus.join.connect(join_server)
 	#SignalBus.leave_requested.connect(_on_leave_requested)
 
@@ -51,6 +57,7 @@ func _ready() -> void:
 func _randomize_color() -> void:
 	print("Randomizing color")
 	player_info.color = Color(randf(), randf(), randf())
+
 #region Network callbacks from SceneTree
 #region old_colde
 # Callback from SceneTree.
@@ -95,10 +102,33 @@ func _randomize_color() -> void:
 #multiplayer.multiplayer_peer = null
 #players.clear()
 #server_disconnected.emit()
+
+### called on everyone
+#@rpc("any_peer", "reliable")
+#func _register_player(_player_info_dict: Dictionary):
+#var _player_info := PlayerInfo.from_dict(_player_info_dict)
+#players.set(_player_info.id, _player_info)
+#player_connected.emit(_player_info.id, _player_info)
+#print("Player Registered on client %s: %s" % [multiplayer.get_unique_id(), _player_info])
+
+#func join_server(_address: String):
+#if _address.is_empty():
+#_address = DEFAULT_SERVER_IP
+#
+#var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
+#var error = peer.create_client(_address, PORT)
+#if error:
+#push_error("JOIN GAME FAILED: ", error)
+#return
+#multiplayer.multiplayer_peer = peer
+#player_info.id = multiplayer.get_unique_id()
+#_register_player(player_info.to_dict())
+#print("Connected!")
 #endregion
 
 #region GDSync connection
 func _on_connected() -> void:
+	GDSync.player_set_data("player_info", player_info)
 	is_gdsync_connected = true
 	print("Connected to GDSync")
 
@@ -124,28 +154,18 @@ func _peer_disconnected(id: int) -> void:
 	player_disconnected.emit(id)
 #endregion
 
-## called on everyone
-@rpc("any_peer", "reliable")
-func _register_player(_player_info_dict: Dictionary):
-	var _player_info := PlayerInfo.from_dict(_player_info_dict)
-	players.set(_player_info.id, _player_info)
-	player_connected.emit(_player_info.id, _player_info)
-	print("Player Registered on client %s: %s" % [multiplayer.get_unique_id(), _player_info])
-
-#func join_server(_address: String):
-#if _address.is_empty():
-#_address = DEFAULT_SERVER_IP
-#
-#var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-#var error = peer.create_client(_address, PORT)
-#if error:
-#push_error("JOIN GAME FAILED: ", error)
-#return
-#multiplayer.multiplayer_peer = peer
-#player_info.id = multiplayer.get_unique_id()
-#_register_player(player_info.to_dict())
-#print("Connected!")
-
+#region PLayer data
+func _on_pi_changed(client_id: int, key: String, value) -> void:
+	if key != "player_info" or value is not Dictionary:
+		Log.pr("Player info is %s: %s" % [key, value])
+		return
+	var pi = PlayerInfo.from_dict(value)
+	pi.id = client_id
+	if not pi:
+		return
+	players.set(client_id, pi)
+	SignalBus.player_info_changed.emit(client_id, pi)
+#endregion
 
 func create_lobby(
 	lobby_name: String,
@@ -157,10 +177,6 @@ func create_lobby(
 ) -> void:
 	_created_lobby_password = password
 	GDSync.lobby_create(lobby_name, password, public, playerlimit, tags, data)
-
-	var id := multiplayer.get_unique_id() # Should be 1
-	player_info.id = id
-	_register_player(player_info.to_dict())
 
 	SignalBus.hosted.emit(lobby_name, password, public, playerlimit, tags, data)
 
