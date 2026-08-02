@@ -62,8 +62,7 @@ var _game_info: GameInfo
 
 func _ready() -> void:
 	GDSync.expose_func(submit_input)
-	GDSync.expose_func(sync_state)
-
+	#GDSync.expose_func(sync_state)
 	_health_component.death.connect(
 		func():
 			died.emit(),
@@ -122,6 +121,8 @@ func begin_round(game_info: GameInfo) -> void:
 	var wins = game_info.get_wins(GDSync.get_client_id())
 	_win_number_label.flash_wins(wins)
 	$DebugLabel.text = str(GDSync.get_gdsync_owner(self))
+	for body in ragdoll_parts:
+		GDSync.set_gdsync_owner(body, GDSync.get_gdsync_owner(self))
 
 
 func _ik_two_seg(
@@ -315,9 +316,9 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	#print("Hand error: %s" % err)
 	if is_syncing_state == false:
 		return
-	if GDSync.is_host():
-		#sync_state.rpc(get_state())
-		GDSync.call_func(sync_state, get_state())
+	#if GDSync.is_host():
+	##sync_state.rpc(get_state())
+	#GDSync.call_func(sync_state, get_state())
 
 
 func _input(event: InputEvent) -> void:

@@ -14,12 +14,16 @@ var is_touching_ground := false
 var is_touching_wall := false
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if disabled:
 		return
 	var diff = angle_difference(self.global_rotation, target_angle)
 	var torque: float = diff * power - angular_velocity * damping
-	self.apply_torque_synced(torque)
+	if GDSync.is_active():
+		self.apply_torque_synced(torque)
+	else:
+		self.apply_torque(torque)
+	super(delta)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
