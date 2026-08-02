@@ -122,7 +122,9 @@ func begin_round(game_info: GameInfo) -> void:
 	_win_number_label.flash_wins(wins)
 	$DebugLabel.text = str(GDSync.get_gdsync_owner(self))
 	for body in ragdoll_parts:
-		GDSync.set_gdsync_owner(body, GDSync.get_gdsync_owner(self))
+		GDSync.set_gdsync_owner(body, GDSync.get_host())
+		GDSync.set_gdsync_owner(body, GDSync.get_host())
+		#GDSync.set_gdsync_owner(body, GDSync.get_gdsync_owner(self))
 
 
 func _ik_two_seg(
