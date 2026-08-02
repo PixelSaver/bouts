@@ -62,7 +62,7 @@ l_arm_fore = NodePath("LeftForeArm")
 l_elbow = NodePath("LeftUpperArm/LeftElbowJoint")
 l_arm_upper = NodePath("LeftUpperArm")
 _health_component = NodePath("HealthComponent")
-_win_number_label = NodePath("RichTextLabel")
+_win_number_label = NodePath("WinLabel")
 r_hand_marker = NodePath("RightForeArm/RightHandMarker")
 metadata/_custom_type_script = "uid://wler21gs1eif"
 
@@ -453,7 +453,7 @@ script = ExtResource("9_mlfyp")
 follow_target = NodePath("../Torso")
 metadata/_custom_type_script = "uid://1k8bpr23sn6k"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1433324906 node_paths=PackedStringArray("follow_target")]
+[node name="WinLabel" type="RichTextLabel" parent="." unique_id=1433324906 node_paths=PackedStringArray("follow_target")]
 offset_top = -45.0
 offset_right = 40.0
 offset_bottom = -5.0
@@ -465,5 +465,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("9_6w5i6")
 follow_target = NodePath("../Torso")
+
+[node name="DebugLabel" type="RichTextLabel" parent="." unique_id=1230572078]
+offset_right = 40.0
+offset_bottom = 40.0
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [connection signal="health_changed" from="HealthComponent" to="HPBar" method="_on_health_component_health_changed"]

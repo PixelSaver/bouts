@@ -57,9 +57,13 @@ var input_motion := Vector2.ZERO
 var _mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
 var is_syncing_state := true
+var _game_info: GameInfo
 
 
 func _ready() -> void:
+	GDSync.expose_func(submit_input)
+	GDSync.expose_func(sync_state)
+
 	_health_component.death.connect(
 		func():
 			died.emit(),
@@ -81,7 +85,7 @@ func _ready() -> void:
 			body.add_collision_exception_with(part)
 	ragdoll_parts = bodies
 
-
+#region Ragdoll
 func set_disable(disabled: DisableMode) -> void:
 	Log.pr("Setting player state: %s" % DisableMode.keys()[disabled])
 	_disabled = disabled
@@ -113,8 +117,11 @@ func get_cam_follow_node() -> Node2D:
 	return torso
 
 
-func begin_round(wins: int) -> void:
+func begin_round(game_info: GameInfo) -> void:
+	_game_info = game_info
+	var wins = game_info.get_wins(GDSync.get_client_id())
 	_win_number_label.flash_wins(wins)
+	$DebugLabel.text = str(GDSync.get_gdsync_owner(self))
 
 
 func _ik_two_seg(
@@ -172,8 +179,8 @@ func _physics_process(delta: float) -> void:
 		return
 	_update_can_jump()
 	_process_movement(input_dir, input_jump, input_motion, delta)
-
-
+#endregion
+#region Input
 func _update_can_jump() -> void:
 	can_jump = false
 	for part in ragdoll_parts:
@@ -185,9 +192,9 @@ func _update_can_jump() -> void:
 
 
 func _handle_input():
-	if not multiplayer.multiplayer_peer:
-		return
-	if not is_multiplayer_authority():
+	#if not multiplayer.multiplayer_peer:
+	#return
+	if not GDSync.is_gdsync_owner(self):
 		#_gun.position = Vector2.RIGHT.rotated(_gun_angle) * gun_radius
 		return # only client controls client player
 	if _disabled == DisableMode.FROZEN or _disabled == DisableMode.NOTHING:
@@ -205,20 +212,25 @@ func _handle_input():
 		input_dir = dir
 		input_jump = jump
 		input_motion = motion
+	elif _game_info != null:
+		#submit_input.rpc(dir, jump, motion)
+		GDSync.call_func_on(_game_info.get_host_id(), submit_input, dir, jump, motion)
+		pass
 	else:
-		submit_input.rpc(dir, jump, motion)
+		Log.err("Game info is null for player!")
 
 
-@rpc("any_peer", "unreliable")
+#@rpc("any_peer", "unreliable")
 ## Sending input from client to server
 func submit_input(dir: Vector2, jump: bool, _mouse_motion: Vector2) -> void:
+	#if not GDSync.is_host():
+	#return
 	input_dir = dir
 	input_jump = jump
 	input_motion = _mouse_motion
-
+#endregion
 #region Syncing state
 
-@rpc("any_peer", "unreliable")
 ## Server processing and then sending back
 func sync_state(state: Array) -> void:
 	if GDSync.is_host():
@@ -304,7 +316,8 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	if is_syncing_state == false:
 		return
 	if GDSync.is_host():
-		sync_state.rpc(get_state())
+		#sync_state.rpc(get_state())
+		GDSync.call_func(sync_state, get_state())
 
 
 func _input(event: InputEvent) -> void:

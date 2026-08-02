@@ -109,9 +109,10 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	inst.name = "Player_%d" % id
 	inst.set_color(pi.color)
 	inst.global_position = pos
-	inst.set_multiplayer_authority(id)
+	GDSync.set_gdsync_owner(inst, id)
+	#inst.set_multiplayer_authority(id)
 	camera.append_follow_targets(inst.get_cam_follow_node())
-	inst.begin_round(_game_info.get_wins(id))
+	inst.begin_round(_game_info)
 	player_manager.register_player_in_game(id, inst)
 
 #@rpc("any_peer", "reliable", "call_remote")

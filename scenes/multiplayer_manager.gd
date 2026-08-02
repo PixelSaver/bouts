@@ -8,14 +8,7 @@ class_name MultiplayerManager
 signal game_start_requested(game_info_dict: Dictionary)
 var game_info: GameInfo = GameInfo.new()
 #var players: Dictionary[int, PlayerInfo] = { }
-@onready var player_info := PlayerInfo.new("%.5f" % randf()):
-	set(val):
-		player_info = val
-		SignalBus.player_info_changed.emit(-1, player_info)
-		if not GDSync.is_active():
-			return
-			#TODO Queue callback for when gdsync is active to set the color
-		GDSync.player_set_data("player_info", player_info.to_dict())
+@onready var player_info := PlayerInfo.new("%.5f" % randf())
 signal gdsync_connection_changed(is_connected: bool)
 signal gdsync_lobby_responded(lobby_name: String, error: int)
 var is_gdsync_connected := false:
@@ -50,6 +43,17 @@ func _ready() -> void:
 
 	GDSync.expose_signal(game_start_requested)
 	game_start_requested.connect(_on_game_start)
+
+	player_info.info_changed.connect(
+		func(new_info: PlayerInfo):
+			Log.pr("Should change data")
+			SignalBus.player_info_changed.emit(-1, new_info)
+			if not GDSync.is_active():
+				return
+				#TODO Queue callback for when gdsync is active to set the color
+			GDSync.player_set_data("player_info", new_info.to_dict())
+			Log.pr("All data: %s" % GDSync.player_get_all_data(GDSync.get_client_id())),
+	)
 
 	#TODO Make disconnection work with 4 players, checking if you're the last person in lobby
 	_randomize_color()
@@ -129,6 +133,7 @@ func _randomize_color() -> void:
 
 #region GDSync connection
 func _on_connected() -> void:
+	player_info.is_host = GDSync.is_host()
 	GDSync.player_set_data("player_info", player_info.to_dict())
 	GDSync.player_set_username(str(GDSync.get_client_id()))
 	is_gdsync_connected = true
@@ -186,7 +191,7 @@ func create_lobby(
 ) -> void:
 	_created_lobby_password = password
 	GDSync.lobby_create(lobby_name, password, public, playerlimit, tags, data)
-
+	self.player_info.is_host = true
 	SignalBus.hosted.emit(lobby_name, password, public, playerlimit, tags, data)
 
 
@@ -224,6 +229,7 @@ func lobby_creation_failed(lobby_name: String, error: int):
 
 
 func _on_lobby_joined(lobby_name: String) -> void:
+	player_info.force_update_host()
 	SignalBus.joined.emit(lobby_name)
 
 

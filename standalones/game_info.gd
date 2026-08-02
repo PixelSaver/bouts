@@ -58,6 +58,18 @@ func get_wins(id: int) -> int:
 	return win_history.count(id)
 
 
+func get_host() -> PlayerInfo:
+	var out: Array[PlayerInfo] = []
+	for p in players.values():
+		if p.is_host:
+			out.append(p)
+	return out[0]
+
+
+func get_host_id() -> int:
+	return get_host().id
+
+
 func _to_string() -> String:
 	return "%s" % self.player_states
 

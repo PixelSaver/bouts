@@ -1,7 +1,7 @@
-extends RigidBody2D
+extends SynchronizedRigidBody2D
 class_name TargetAngleRigidBody2D
 
-@export var target_angle := 0.0 :
+@export var target_angle := 0.0:
 	set(val):
 		var diff = angle_difference(target_angle, val)
 		var max_step = max_angular_speed * get_physics_process_delta_time()
@@ -13,11 +13,13 @@ class_name TargetAngleRigidBody2D
 var is_touching_ground := false
 var is_touching_wall := false
 
+
 func _physics_process(_delta: float) -> void:
-	if disabled: return
+	if disabled:
+		return
 	var diff = angle_difference(self.global_rotation, target_angle)
 	var torque: float = diff * power - angular_velocity * damping
-	self.apply_torque(torque)
+	self.apply_torque_synced(torque)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
