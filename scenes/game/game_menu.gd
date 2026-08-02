@@ -10,10 +10,13 @@ const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
 @onready var players: Node2D = $Players
 @onready var player_manager: PlayerManager = $Players
 var t: Tween
+var _game_info: GameInfo
 
 
 func _ready() -> void:
-	if multiplayer.is_server():
+	GDSync.expose_func(spawn_player)
+
+	if GDSync.is_host():
 		player_manager.player_won.connect(
 			func(id: int):
 				#var ups = UpgradeManager.get_random_upgrades(5)
@@ -37,8 +40,15 @@ func _ready() -> void:
 		tw.modulate_parent.a = 1.0
 
 
+func pass_game_info(game_info: GameInfo) -> void:
+	_game_info = game_info
+	start_anim()
+
+
 func start_anim() -> void:
-	var keys = Global.menu_manager.players.keys()
+	if not _game_info:
+		return
+	var keys = _game_info.players.keys()
 
 	# animation
 	var all_ts = get_all_tweenables(self)
@@ -56,10 +66,7 @@ func start_anim() -> void:
 	await t.finished
 
 	# text
-	await text_cont.animate(
-		Global.round_state.get_wins(keys[0]),
-		Global.round_state.get_wins(keys[1]),
-	)
+	await text_cont.animate(_game_info.get_wins(keys[0]), _game_info.get_wins(keys[1]))
 
 	# bounce
 	t = default_tween().set_parallel(false).set_trans(Tween.TRANS_CIRC)
@@ -72,7 +79,7 @@ func start_anim() -> void:
 	for tw in all_ts:
 		t.tween_property(tw, "tween_value", 1.0, 0.7)
 		t.tween_property(tw, "modulate_parent:a", 0.0, 0.7)
-	if not multiplayer.is_server():
+	if not GDSync.is_host():
 		return
 
 	var spawns = map_man.get_spawn_points()
@@ -84,14 +91,15 @@ func start_anim() -> void:
 		return
 	for i in range(keys.size()):
 		var key = keys[i]
-		var player_info: PlayerInfo = Global.menu_manager.players.get(key)
+		var player_info: PlayerInfo = _game_info.players.get(key)
 		if not player_info:
 			printerr("Player info not readable as PlayerInfo")
 			continue
-		spawn_player.rpc(key, spawns[i], player_info.to_dict())
+		#GDSync.multiplayer_instantiate(PLAYER, player_manager, true, [], true)
+		GDSync.call_func_all(spawn_player, key, spawns[i], player_info.to_dict())
 
 
-@rpc("authority", "reliable", "call_local")
+#@rpc("authority", "reliable", "call_local")
 func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	var pi = PlayerInfo.from_dict(_pi)
 	var inst = PLAYER.instantiate() as Player
@@ -103,7 +111,7 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	inst.global_position = pos
 	inst.set_multiplayer_authority(id)
 	camera.append_follow_targets(inst.get_cam_follow_node())
-	inst.begin_round(Global.round_state.get_wins(id))
+	inst.begin_round(_game_info.get_wins(id))
 	player_manager.register_player_in_game(id, inst)
 
 #@rpc("any_peer", "reliable", "call_remote")
@@ -115,7 +123,6 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 #Global.round_state.set_player_upgrades(Global.get_losers().front(), upgrades)
 
 
-@rpc("authority", "call_local", "reliable")
 func player_won(id: int) -> void:
 	player_manager.stop_player_sync()
 	Global.set_winner(id)
@@ -126,7 +133,7 @@ func player_won(id: int) -> void:
 		# tie
 		pass
 	else:
-		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
+		Global.menu_manager.request_start_game()
 
 
 func end_anim() -> void:

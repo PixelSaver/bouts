@@ -108,7 +108,15 @@ class_name MultiplayerMenu
 func _ready() -> void:
 	SignalBus.joined.connect(_on_joined)
 	lobbies_screen.start_anim()
+	#waiting_screen.leave_requested.connect(_on_leave_requested)
+	waiting_screen.start_game_requested.connect(_on_start_game_requested)
 #Global.menu_manager.gdsync_lobby_responded
+
+
+func _on_start_game_requested() -> void:
+	if not GDSync.is_host():
+		return
+	Global.menu_manager.request_start_game()
 
 
 func _on_joined(_lobby_name: String) -> void:

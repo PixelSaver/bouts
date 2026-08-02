@@ -168,7 +168,7 @@ func _physics_process(delta: float) -> void:
 	if not multiplayer.multiplayer_peer:
 		return
 	_handle_input()
-	if not multiplayer.is_server():
+	if not GDSync.is_host():
 		return
 	_update_can_jump()
 	_process_movement(input_dir, input_jump, input_motion, delta)
@@ -180,7 +180,7 @@ func _update_can_jump() -> void:
 		can_jump = can_jump or part.is_touching_ground
 	if not can_jump:
 		_jump_armed = true
-	#if is_multiplayer_authority() and multiplayer.is_server():
+	#if is_multiplayer_authority() and GDSync.is_host():
 	#print("Can jump? %s" % can_jump)
 
 
@@ -201,7 +201,7 @@ func _handle_input():
 	if is_syncing_state == false:
 		return
 
-	if multiplayer.is_server():
+	if GDSync.is_host():
 		input_dir = dir
 		input_jump = jump
 		input_motion = motion
@@ -221,7 +221,7 @@ func submit_input(dir: Vector2, jump: bool, _mouse_motion: Vector2) -> void:
 @rpc("any_peer", "unreliable")
 ## Server processing and then sending back
 func sync_state(state: Array) -> void:
-	if multiplayer.is_server():
+	if GDSync.is_host():
 		return # don't overwrite server's local player
 	for i in range(min(state.size(), ragdoll_parts.size())):
 		var body := ragdoll_parts[i]
@@ -303,7 +303,7 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	#print("Hand error: %s" % err)
 	if is_syncing_state == false:
 		return
-	if multiplayer.is_server():
+	if GDSync.is_host():
 		sync_state.rpc(get_state())
 
 

@@ -15,6 +15,7 @@ func _ready() -> void:
 		if but.name.to_lower() == "play":
 			_play_but = but
 	Global.menu_manager.gdsync_connection_changed.connect(_on_gdsync_connection_changed)
+	SignalBus.player_info_changed.connect(_update_col)
 	if Global.menu_manager.is_gdsync_connected:
 		_on_gdsync_connection_changed(true)
 
@@ -26,6 +27,12 @@ func _ready() -> void:
 		func(_x):
 			_update_player_info(),
 	)
+
+
+func _update_col(id: int, player_info: PlayerInfo) -> void:
+	if id != -1:
+		return
+	input_color.color = player_info.color
 
 
 func _update_player_info() -> void:

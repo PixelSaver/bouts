@@ -42,4 +42,4 @@ func load_player(pi: PlayerInfo):
 	_player_info = pi
 	_box.color = pi.color
 	player_name.text = pi.player_name
-	kick_button.visible = (pi.id == multiplayer.get_unique_id() and multiplayer.is_server())
+	kick_button.visible = (pi.id == multiplayer.get_unique_id() and GDSync.is_host())

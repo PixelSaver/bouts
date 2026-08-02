@@ -1,13 +1,25 @@
 extends PixelMenu
 class_name WaitingScreen
 
+signal leave_requested
+signal start_game_requested
 @export var player_lobby_cont: Control
 @export var start_game: DefaultButton
+@export var leave_but: DefaultButton
 const PLAYER_LOBBY_ROW = preload("res://scenes/menus/player_lobby_row.tscn")
 
 var _enabled := false
 #region old code
 func _ready() -> void:
+	start_game.pressed.connect(
+		func():
+			start_game_requested.emit(),
+	)
+	leave_but.pressed.connect(
+		func():
+			leave_requested.emit(),
+	)
+
 	_clear_lobby()
 	#_update_player_list()
 	Global.menu_manager.player_connected.connect(
@@ -27,10 +39,10 @@ func _clear_lobby() -> void:
 
 func _update_player_list() -> void:
 	_clear_lobby()
-	var keys = Global.menu_manager.players.keys()
+	var keys = Global.menu_manager.game_info.players.keys()
 	for i in range(keys.size()):
 		var key = keys[i]
-		var player_info: PlayerInfo = Global.menu_manager.players.get(key)
+		var player_info: PlayerInfo = Global.menu_manager.game_info.players.get(key)
 		if not player_info:
 			printerr("Player info not readable as PlayerInfo")
 			continue
@@ -47,7 +59,7 @@ func _add_lobby_player(id: int) -> void:
 
 func start_anim() -> void:
 	_enabled = true
-	#start_game.visible = multiplayer.is_server()
+	#start_game.visible = GDSync.is_host()
 	show()
 
 

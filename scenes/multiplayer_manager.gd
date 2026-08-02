@@ -5,12 +5,16 @@ class_name MultiplayerManager
 #const DEFAULT_SERVER_IP = "127.0.0.1"
 #const MAX_CONNECTIONS = 6
 
-var players: Dictionary[int, PlayerInfo] = { }
+signal game_start_requested(game_info_dict: Dictionary)
+var game_info: GameInfo = GameInfo.new()
+#var players: Dictionary[int, PlayerInfo] = { }
 @onready var player_info := PlayerInfo.new("%.5f" % randf()):
 	set(val):
 		player_info = val
+		SignalBus.player_info_changed.emit(-1, player_info)
 		if not GDSync.is_active():
 			return
+			#TODO Queue callback for when gdsync is active to set the color
 		GDSync.player_set_data("player_info", player_info.to_dict())
 signal gdsync_connection_changed(is_connected: bool)
 signal gdsync_lobby_responded(lobby_name: String, error: int)
@@ -29,8 +33,6 @@ signal player_disconnected(_peerID: int)
 
 func _ready() -> void:
 	super()
-	#Global.multiplayer_manager = self
-	# Connect all the callbacks related to networking.
 	GDSync.connected.connect(_on_connected)
 	GDSync.connection_failed.connect(_on_connection_failed)
 	GDSync.disconnected.connect(_on_disconnected)
@@ -38,19 +40,16 @@ func _ready() -> void:
 
 	GDSync.client_joined.connect(_peer_connected)
 	GDSync.client_left.connect(_peer_disconnected)
-	#multiplayer.peer_connected.connect(_peer_connected)
-	#multiplayer.peer_disconnected.connect(_peer_disconnected)
-	#multiplayer.connected_to_server.connect(_server_connected)
-	#multiplayer.connection_failed.connect(_server_connection_failed)
-	#multiplayer.server_disconnected.connect(_server_disconnected)
-	#SignalBus.host.connect(create_lobby)
 	GDSync.lobby_created.connect(lobby_created)
 	GDSync.lobby_creation_failed.connect(lobby_creation_failed)
 	GDSync.lobby_joined.connect(_on_lobby_joined)
 	GDSync.lobby_join_failed.connect(_on_lobby_join_failed)
 	GDSync.player_data_changed.connect(_on_pi_changed)
-	#SignalBus.join.connect(join_server)
-	#SignalBus.leave_requested.connect(_on_leave_requested)
+
+	self.player_connected.connect(_on_player_connected)
+
+	GDSync.expose_signal(game_start_requested)
+	game_start_requested.connect(_on_game_start)
 
 	#TODO Make disconnection work with 4 players, checking if you're the last person in lobby
 	_randomize_color()
@@ -66,7 +65,7 @@ func _randomize_color() -> void:
 
 ## WHen one player connects, send data over as server
 #func _peer_connected(_id: int) -> void:
-#if not multiplayer.is_server():
+#if not GDSync.is_host():
 #return
 ## Sending server data to peer
 #_register_player.rpc_id(_id, player_info.to_dict())
@@ -78,7 +77,7 @@ func _randomize_color() -> void:
 #players.erase(_id)
 #player_disconnected.emit(_id)
 #
-#if multiplayer.is_server():
+#if GDSync.is_host():
 ##_end_game("Client disconnected.")
 #pass
 #else:
@@ -158,6 +157,12 @@ func _peer_disconnected(id: int) -> void:
 #endregion
 
 #region PLayer data
+func _on_player_connected(id: int) -> void:
+	var pi_dict = GDSync.player_get_data(id, "player_info")
+	var pi = PlayerInfo.from_dict(pi_dict)
+	game_info.players.set(id, pi)
+
+
 func _on_pi_changed(client_id: int, key: String, value) -> void:
 	if key != "player_info" or value is not Dictionary:
 		Log.pr("Player info is %s: %s" % [key, value])
@@ -166,7 +171,7 @@ func _on_pi_changed(client_id: int, key: String, value) -> void:
 	pi.id = client_id
 	if not pi:
 		return
-	players.set(client_id, pi)
+	game_info.players.set(client_id, pi)
 	SignalBus.player_info_changed.emit(client_id, pi)
 #endregion
 
@@ -229,8 +234,25 @@ func _on_lobby_join_failed(lobby_name: String, error: int) -> void:
 #endregion
 func _on_leave_requested() -> void:
 	free_networking()
-	players.clear()
+	game_info.players.clear()
 
 
 func free_networking() -> void:
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+
+#region Game start
+func request_start_game() -> void:
+	if not GDSync.is_host():
+		#TODO Write host logic for showing and transferring
+		return
+	GDSync.emit_signal_remote_all(game_start_requested, game_info.to_dict())
+
+
+func _on_game_start(game_info_dict: Dictionary) -> void:
+	var gi = GameInfo.from_dict(game_info_dict)
+	if not gi:
+		Log.err("Game info not parsed correctly")
+		return
+	self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
+	var game = current_scene as GameMenu
+	game.pass_game_info(game_info)

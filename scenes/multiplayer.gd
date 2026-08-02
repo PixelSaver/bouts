@@ -32,7 +32,7 @@ extends Node
 #
 #
 #func _player_disconnected(_id: int) -> void:
-	#if multiplayer.is_server():
+	#if GDSync.is_host():
 		#_end_game("Client disconnected.")
 	#else:
 		#_end_game("Server disconnected.")

@@ -590,7 +590,7 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game")]
+[node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game", "leave_but")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -602,6 +602,7 @@ mouse_filter = 1
 script = ExtResource("4_ftwoh")
 player_lobby_cont = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/PlayerLobbyCont")
 start_game = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StartGame")
+leave_but = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Leave")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="MarginContainer" type="MarginContainer" parent="WaitingScreen" unique_id=346364770]

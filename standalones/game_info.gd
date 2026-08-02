@@ -1,0 +1,77 @@
+extends RefCounted
+class_name GameInfo
+
+signal data_changed(data: Dictionary)
+@export var players: Dictionary[int, PlayerInfo] = { }:
+	set(val):
+		if players == val:
+			return
+		players = val
+		_emit_data()
+@export var win_history: Array[int] = []:
+	set(val):
+		if win_history == val:
+			return
+		win_history = val
+		_emit_data()
+@export var next_map: int = 0:
+	set(val):
+		if next_map == val:
+			return
+		next_map = val
+		_emit_data()
+@export var map_history: Array[int] = []:
+	set(val):
+		if map_history == val:
+			return
+		map_history = val
+		_emit_data()
+
+
+func reset() -> void:
+	players = { }
+	win_history = []
+	next_map = 0
+	map_history = []
+
+
+func to_dict() -> Dictionary:
+	var players_dict: Dictionary[int, Dictionary] = { }
+	for key in players.keys():
+		var pi = players[key]
+		players_dict.set(key, pi.to_dict())
+
+	return {
+		"players": players_dict,
+		"win_history": win_history,
+		"next_map": next_map,
+		"map_history": map_history,
+	}
+
+
+func add_player_win(id: int):
+	win_history.append(id)
+	_emit_data()
+
+
+func get_wins(id: int) -> int:
+	return win_history.count(id)
+
+
+func _to_string() -> String:
+	return "%s" % self.player_states
+
+
+func _emit_data() -> void:
+	data_changed.emit(self.to_dict())
+
+
+static func from_dict(dict: Dictionary) -> GameInfo:
+	var info = GameInfo.new()
+	var players_dict = dict.get("players", { })
+	for key in players_dict.keys():
+		info.players[key] = PlayerInfo.from_dict(players_dict[key])
+	info.win_history = dict.get("win_history", [])
+	info.next_map = dict.get("next_map", 0)
+	info.map_history = dict.get("map_history", [])
+	return info

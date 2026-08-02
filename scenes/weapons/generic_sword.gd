@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 	_hit_cooldown -= delta
 	if player.is_syncing_state == false:
 		return
-	if multiplayer.is_server():
+	if GDSync.is_host():
 		_sync_state.rpc(global_position, global_rotation, linear_velocity, angular_velocity)
 
 

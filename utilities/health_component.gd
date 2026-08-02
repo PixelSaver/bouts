@@ -38,14 +38,14 @@ func _ready() -> void:
 		push_error("Health component couldn't find target.")
 
 func damage(atk: Attack):
-	if not multiplayer.is_server(): return
+	if not GDSync.is_host(): return
 	_pending_atks.append(atk)
 	if not _processing:
 		_processing = true
 		call_deferred("_process_pending_damage")
 
 func _process_pending_damage() -> void:
-	if not multiplayer.is_server(): return
+	if not GDSync.is_host(): return
 	var tot_damage := 0.0
 	for atk in _pending_atks:
 		tot_damage += atk.damage
