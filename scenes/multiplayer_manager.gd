@@ -130,7 +130,8 @@ func _randomize_color() -> void:
 
 #region GDSync connection
 func _on_connected() -> void:
-	GDSync.player_set_data("player_info", player_info)
+	GDSync.player_set_data("player_info", player_info.to_dict())
+	GDSync.player_set_username(str(GDSync.get_client_id()))
 	is_gdsync_connected = true
 	print("Connected to GDSync")
 
@@ -218,7 +219,7 @@ func lobby_creation_failed(lobby_name: String, error: int):
 
 
 func _on_lobby_joined(lobby_name: String) -> void:
-	pass
+	SignalBus.joined.emit(lobby_name)
 
 
 func _on_lobby_join_failed(lobby_name: String, error: int) -> void:

@@ -43,7 +43,8 @@ func _on_join_lobby_requested(lobby_name: String, has_password: bool) -> void:
 
 
 func _on_lobbies_received(lobbies: Array):
-	print("Lobbies received: %s" % str(lobbies))
+	#print("Lobbies received: %s" % str(lobbies))
+	pass
 
 
 func _on_refresh() -> void:

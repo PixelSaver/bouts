@@ -19,7 +19,11 @@ func _ready() -> void:
 
 func track_player_id(id: int) -> void:
 	_client_id = id
-	var pi = GDSync.player_get_data(id, "player_info")
+	var pi_dict = GDSync.player_get_data(id, "player_info")
+	var pi = PlayerInfo.from_dict(pi_dict)
+	if not pi:
+		Log.err("Player info from GDSync did not convert to PlayerInfo well. %s" % pi_dict)
+		return
 	load_player(pi)
 
 
