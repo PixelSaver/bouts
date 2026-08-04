@@ -33,44 +33,44 @@ class_name SynchronizedRigidBody2D
 
 func apply_central_impulse_synced(impulse: Vector2 = Vector2.ZERO) -> void:
 	super.apply_central_impulse(impulse)
-	await get_tree().physics_frame
-	if !GDSync.is_gdsync_owner(self):
-		GDSync.set_gdsync_owner(self, GDSync.get_client_id())
+	#await get_tree().physics_frame
+	#if !GDSync.is_gdsync_owner(self):
+	#GDSync.set_gdsync_owner(self, GDSync.get_client_id())
 
 
 func apply_central_force_synced(force: Vector2) -> void:
 	super.apply_central_force(force)
-	await get_tree().physics_frame
-	if !GDSync.is_gdsync_owner(self):
-		GDSync.set_gdsync_owner(self, GDSync.get_client_id())
+	#await get_tree().physics_frame
+	#if !GDSync.is_gdsync_owner(self):
+	#GDSync.set_gdsync_owner(self, GDSync.get_client_id())
 
 
 func apply_impulse_synced(impulse: Vector2, position: Vector2 = Vector2(0, 0)) -> void:
 	super.apply_impulse(impulse, position)
-	await get_tree().physics_frame
-	if !GDSync.is_gdsync_owner(self):
-		GDSync.set_gdsync_owner(self, GDSync.get_client_id())
+	#await get_tree().physics_frame
+	#if !GDSync.is_gdsync_owner(self):
+	#GDSync.set_gdsync_owner(self, GDSync.get_client_id())
 
 
 func apply_force_synced(force: Vector2, position: Vector2 = Vector2(0, 0)) -> void:
 	super.apply_force(force, position)
-	await get_tree().physics_frame
-	if !GDSync.is_gdsync_owner(self):
-		GDSync.set_gdsync_owner(self, GDSync.get_client_id())
+	#await get_tree().physics_frame
+	#if !GDSync.is_gdsync_owner(self):
+	#GDSync.set_gdsync_owner(self, GDSync.get_client_id())
 
 
 func apply_torque_synced(torque: float) -> void:
 	super.apply_torque(torque)
-	await get_tree().physics_frame
-	if !GDSync.is_gdsync_owner(self):
-		GDSync.set_gdsync_owner(self, GDSync.get_client_id())
+	#await get_tree().physics_frame
+	#if !GDSync.is_gdsync_owner(self):
+	#GDSync.set_gdsync_owner(self, GDSync.get_client_id())
 
 
 func apply_torque_impulse_synced(impulse: float) -> void:
 	super.apply_torque_impulse(impulse)
-	await get_tree().physics_frame
-	if !GDSync.is_gdsync_owner(self):
-		GDSync.set_gdsync_owner(self, GDSync.get_client_id())
+	#await get_tree().physics_frame
+	#if !GDSync.is_gdsync_owner(self):
+	#GDSync.set_gdsync_owner(self, GDSync.get_client_id())
 
 #Private functions ----------------------------------------------------------------------
 
@@ -215,7 +215,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 
 func _sync_received(time: float, lv: Vector2, av: float, pos: Vector2, rotation: float) -> void:
-	print("sync_received on", get_instance_id(), "owner=", GDSync.get_gdsync_owner(self))
+	#print("sync_received on", get_instance_id(), "owner=", GDSync.get_gdsync_owner(self))
 	var delta: float = min(GDSync.get_multiplayer_time() - time, 0.3)
 	_remote_linear_velocity = lv
 	_remote_angular_velocity = av
@@ -249,8 +249,7 @@ func _update_sync_mode() -> void:
 	var is_host: bool = GDSync.is_host()
 	var is_owner: bool = GDSync.is_gdsync_owner(self)
 	var valid_owner: bool = GDSync.lobby_get_all_clients().has(_last_owner)
-	_should_broadcast = (is_host and !valid_owner) || (valid_owner)
-	#and _last_owner == GDSync.get_client_id())
+	_should_broadcast = ((is_host and !valid_owner) or (_last_owner == GDSync.get_client_id()))
 
 
 func _get_configuration_warnings() -> PackedStringArray:

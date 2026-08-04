@@ -1,4 +1,4 @@
-extends SynchronizedRigidBody2D
+extends RigidBody2D
 class_name TargetAngleRigidBody2D
 
 @export var target_angle := 0.0:
@@ -13,21 +13,20 @@ class_name TargetAngleRigidBody2D
 var is_touching_ground := false
 var is_touching_wall := false
 
+var target_state: Array = []
 
-func _physics_process(delta: float) -> void:
+
+func set_target_state(state: Array) -> void:
+	target_state = state
+
+
+func _physics_process(_delta: float) -> void:
 	if disabled:
-		return
-	if not GDSync.is_gdsync_owner(self):
-		super(delta)
 		return
 	var diff = angle_difference(self.global_rotation, target_angle)
 	var torque: float = diff * power - angular_velocity * damping
 
-	if GDSync.is_active():
-		self.apply_torque_synced(torque)
-	else:
-		self.apply_torque(torque)
-	super(delta)
+	self.apply_torque(torque)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:

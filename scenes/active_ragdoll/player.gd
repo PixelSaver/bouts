@@ -4,6 +4,7 @@ class_name Player
 @export var sensitivity := 1.0
 @export var power := 100
 @export var torque := 1000
+@export var sync_rate := 30
 @export_group("Ragdoll Pieces")
 @export var head: TargetAngleRigidBody2D
 @export var torso: RigidBody2D
@@ -62,7 +63,8 @@ var _game_info: GameInfo
 
 func _ready() -> void:
 	GDSync.expose_func(submit_input)
-	#GDSync.expose_func(sync_state)
+	GDSync.expose_func(sync_state)
+
 	_health_component.death.connect(
 		func():
 			died.emit(),
@@ -217,7 +219,7 @@ func _handle_input():
 		input_motion = motion
 	elif _game_info != null:
 		#submit_input.rpc(dir, jump, motion)
-		GDSync.call_func_on(_game_info.get_host_id(), submit_input, dir, jump, motion)
+		GDSync.call_func(submit_input, dir, jump, motion)
 		pass
 	else:
 		Log.err("Game info is null for player!")
@@ -226,8 +228,8 @@ func _handle_input():
 #@rpc("any_peer", "unreliable")
 ## Sending input from client to server
 func submit_input(dir: Vector2, jump: bool, _mouse_motion: Vector2) -> void:
-	#if not GDSync.is_host():
-	#return
+	if not GDSync.is_host():
+		return
 	input_dir = dir
 	input_jump = jump
 	input_motion = _mouse_motion
@@ -240,23 +242,13 @@ func sync_state(state: Array) -> void:
 		return # don't overwrite server's local player
 	for i in range(min(state.size(), ragdoll_parts.size())):
 		var body := ragdoll_parts[i]
-		body.global_position = state[i]["pos"]
-		body.global_rotation = state[i]["rot"]
-		body.linear_velocity = state[i]["vel"]
-		body.angular_velocity = state[i]["ang_vel"]
+		RigidBody2DState.set_state(state[i], body)
 
 
 func get_state() -> Array:
 	var state := []
 	for body in ragdoll_parts:
-		state.append(
-			{
-				"pos": body.global_position,
-				"rot": body.global_rotation,
-				"vel": body.linear_velocity,
-				"ang_vel": body.angular_velocity,
-			}
-		)
+		state.append(RigidBody2DState.get_state(body))
 	return state
 #endregion
 func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
@@ -318,9 +310,9 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	#print("Hand error: %s" % err)
 	if is_syncing_state == false:
 		return
-	#if GDSync.is_host():
-	##sync_state.rpc(get_state())
-	#GDSync.call_func(sync_state, get_state())
+	if GDSync.is_host():
+		#sync_state.rpc(get_state())
+		GDSync.call_func(sync_state, get_state())
 
 
 func _input(event: InputEvent) -> void:
