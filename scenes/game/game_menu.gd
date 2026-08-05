@@ -42,7 +42,9 @@ func _ready() -> void:
 
 
 func pass_game_info(game_info: GameInfo) -> void:
+	Log.pr("Client %s started game" % GDSync.get_client_id())
 	_game_info = game_info
+	player_manager.game_ended = false
 	start_anim()
 
 
