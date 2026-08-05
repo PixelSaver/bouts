@@ -1,24 +1,30 @@
 extends Node2D
 class_name PlayerManager
 
-signal player_won(id:int)
+signal player_won(id: int)
 signal tie
-var players_alive: Dictionary[int, Player] = {}
+var players_alive: Dictionary[int, Player] = { }
 
-func register_player_in_game(id:int, player:Player):
-	if players_alive.keys().has(id): return
+
+func register_player_in_game(id: int, player: Player):
+	if players_alive.keys().has(id):
+		return
 	players_alive.set(id, player)
 	player.died.connect(_on_player_died.bind(id))
+
 
 func stop_player_sync() -> void:
 	for child in get_children():
 		if child is Player:
-			child.process_mode = Node.PROCESS_MODE_DISABLED
+			var player = child as Player
+			player.set_disable(Player.DisableMode.NOTHING)
 
-func _on_player_died(id:int) -> void:
+
+func _on_player_died(id: int) -> void:
 	print("Player died: %s" % id)
 	players_alive.erase(id)
 	_check_win()
+
 
 func _check_win() -> void:
 	if players_alive.size() == 1:

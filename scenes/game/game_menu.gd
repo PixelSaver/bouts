@@ -15,6 +15,7 @@ var _game_info: GameInfo
 
 func _ready() -> void:
 	GDSync.expose_func(spawn_player)
+	GDSync.expose_func(player_won)
 
 	if GDSync.is_host():
 		player_manager.player_won.connect(
@@ -28,11 +29,11 @@ func _ready() -> void:
 				#for _id in Global.menu_manager.players.keys():
 				#if _id == 1: continue
 				#receive_upgrades.rpc_id(_id, id, ups)
-				player_won.rpc(id),
+				GDSync.call_func_all(player_won, id),
 		)
 		player_manager.tie.connect(
 			func():
-				player_won.rpc(-1),
+				GDSync.call_func_all(player_won, -1),
 		)
 	var banner_ts = get_all_tweenables(banners_cont)
 	for tw in banner_ts:
@@ -125,9 +126,12 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 
 
 func player_won(id: int) -> void:
+	Log.pr("Client %s sees %s win" % [GDSync.get_client_id(), id])
 	player_manager.stop_player_sync()
 	Global.set_winner(id)
 	print("Client %s sees %s won" % [self.multiplayer.get_unique_id(), id])
+	if not GDSync.is_host():
+		return
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if id == -1:

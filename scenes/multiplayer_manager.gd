@@ -255,6 +255,7 @@ func request_start_game() -> void:
 
 
 func _on_game_start(game_info_dict: Dictionary) -> void:
+	Log.pr("Client %s is going to new game" % GDSync.get_client_id())
 	var gi = GameInfo.from_dict(game_info_dict)
 	if not gi:
 		Log.err("Game info not parsed correctly")
@@ -262,3 +263,4 @@ func _on_game_start(game_info_dict: Dictionary) -> void:
 	self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
 	var game = current_scene as GameMenu
 	game.pass_game_info(game_info)
+#endregion
