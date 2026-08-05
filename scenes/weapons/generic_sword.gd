@@ -5,6 +5,8 @@ class_name GenericSword
 @export var player: Player
 var _hit_cooldown := 0.3
 
+var target_state: Array = []
+
 
 func _ready() -> void:
 	self.set_meta("is_weapon", true)
@@ -15,16 +17,30 @@ func _physics_process(delta: float) -> void:
 	_hit_cooldown -= delta
 	if player.is_syncing_state == false:
 		return
-	if GDSync.is_host():
-		_sync_state.rpc(global_position, global_rotation, linear_velocity, angular_velocity)
 
 
-@rpc("any_peer", "unreliable", "call_remote")
-func _sync_state(pos: Vector2, rot: float, vel: Vector2, ang_vel: float) -> void:
-	self.global_position = pos
-	self.global_rotation = rot
-	self.linear_velocity = vel
-	self.angular_velocity = ang_vel
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	if target_state.size() > 0:
+		var target_pos: Vector2 = target_state[RigidBody2DState.StateType.POS]
+		var target_rot: float = target_state[RigidBody2DState.StateType.ROT]
+		var target_vel: Vector2 = target_state[RigidBody2DState.StateType.LIN_VEL]
+		var target_ang_vel: float = target_state[RigidBody2DState.StateType.ANG_VEL]
+
+		var pos_error = target_pos - state.transform.origin
+		var rot_error = angle_difference(state.transform.get_rotation(), target_rot)
+
+		const POS_GAIN := 15.0
+		const ROT_GAIN := 15.0
+
+		var alpha = 1.0 - exp(-12. * get_physics_process_delta_time())
+
+		state.linear_velocity = state.linear_velocity.lerp(target_vel + pos_error * POS_GAIN, alpha)
+
+		state.angular_velocity = lerp(
+			state.angular_velocity,
+			target_ang_vel + rot_error * ROT_GAIN,
+			alpha,
+		)
 
 
 func _body_entered(body: Node) -> void:

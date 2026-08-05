@@ -31,6 +31,7 @@ class_name Player
 @export_group("Nodes", "_")
 @export var _health_component: HealthComponent
 @export var _win_number_label: WinNumberLabel
+@export var weapon: Weapon
 @export var r_hand_marker: Marker2D
 var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
@@ -240,15 +241,17 @@ func submit_input(dir: Vector2, jump: bool, _mouse_motion: Vector2) -> void:
 func sync_state(state: Array) -> void:
 	if GDSync.is_host():
 		return # don't overwrite server's local player
-	for i in range(min(state.size(), ragdoll_parts.size())):
+	for i in range(min(state.size() - 1, ragdoll_parts.size())):
 		var body := ragdoll_parts[i]
 		RigidBody2DState.set_state(state[i], body)
+	RigidBody2DState.set_state(state[state.size() - 1], weapon)
 
 
 func get_state() -> Array:
 	var state := []
 	for body in ragdoll_parts:
 		state.append(RigidBody2DState.get_state(body))
+	state.append(RigidBody2DState.get_state(weapon))
 	return state
 #endregion
 func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
@@ -311,7 +314,7 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	if is_syncing_state == false:
 		return
 	if GDSync.is_host():
-		#sync_state.rpc(get_state())
+		#sync_state.rpc(get_state())z
 		GDSync.call_func(sync_state, get_state())
 
 
