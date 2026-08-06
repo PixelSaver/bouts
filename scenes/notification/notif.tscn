@@ -69,6 +69,7 @@ bbcode_enabled = true
 text = "Title"
 fit_content = true
 scroll_active = false
+autowrap_mode = 0
 
 [node name="Desc" type="RichTextLabel" parent="Panel/MarginContainer/VBoxContainer" unique_id=1892995893]
 layout_mode = 2

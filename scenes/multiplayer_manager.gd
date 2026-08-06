@@ -62,7 +62,6 @@ func _randomize_color() -> void:
 	print("Randomizing color")
 	player_info.color = Color(randf(), randf(), randf())
 
-#region Network callbacks from SceneTree
 #region old_colde
 # Callback from SceneTree.
 
@@ -140,11 +139,13 @@ func _on_connected() -> void:
 
 
 func _on_connection_failed(error: int) -> void:
+	var error_str: String
 	match (error):
 		ENUMS.CONNECTION_FAILED.INVALID_PUBLIC_KEY:
-			push_error("The public or private key you entered were invalid.")
+			error_str = ("The public or private key you entered were invalid.")
 		ENUMS.CONNECTION_FAILED.TIMEOUT:
-			push_error("Unable to connect, please check your internet connection.")
+			error_str = ("Unable to connect, please check your internet connection.")
+	Global.notif_manager.create_notification("Connection Error", error_str)
 
 
 func _on_disconnected() -> void:
@@ -223,6 +224,7 @@ func lobby_creation_failed(lobby_name: String, error: int):
 		ENUMS.LOBBY_CREATION_ERROR.ON_COOLDOWN:
 			error_str = ("Please wait a few seconds before creating another lobby.")
 	gdsync_lobby_responded.emit(lobby_name, error_str)
+	Global.notif_manager.create_notification("Lobby Creation Error", error_str)
 	if not error_str.is_empty():
 		push_warning(error_str)
 

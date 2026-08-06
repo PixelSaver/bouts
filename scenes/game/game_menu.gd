@@ -94,7 +94,7 @@ func start_anim() -> void:
 		var key = keys[i]
 		var player_info: PlayerInfo = _game_info.players.get(key)
 		if not player_info:
-			printerr("Player info not readable as PlayerInfo")
+			Log.warn("Player info not readable as PlayerInfo")
 			continue
 		#GDSync.multiplayer_instantiate(PLAYER, player_manager, true, [], true)
 		GDSync.call_func_all(spawn_player, key, spawns[i], player_info.to_dict())

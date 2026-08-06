@@ -6,6 +6,7 @@ enum States {
 var state: States = States.START
 
 var menu_manager: MultiplayerManager
+var notif_manager: NotificationManager
 #var multiplayer_manager: MultiplayerManager
 
 var win_history: Array[int] = []

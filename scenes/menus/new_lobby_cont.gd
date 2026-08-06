@@ -22,6 +22,10 @@ func _on_create_lobby_pressed() -> void:
 		return
 	var player_limit: int = int(_player_count_edit.text)
 	if player_limit == null or player_limit != clampi(player_limit, 2, 4):
+		Global.notif_manager.create_notification(
+			"Lobby Creation Error",
+			"Player Limit isn't 2-4, its %s" % player_limit,
+		)
 		Log.pr("Player Limit isn't 2-4, its %s" % player_limit)
 		return
 	var is_public = _public_edit.button_pressed
