@@ -86,7 +86,7 @@ func _ready() -> void:
 
 #region Ragdoll
 func set_disable(disabled: DisableMode) -> void:
-	Log.pr("Setting player state: %s" % DisableMode.keys()[disabled])
+	#Log.pr("Setting player state: %s" % DisableMode.keys()[disabled])
 	_disabled = disabled
 	match disabled:
 		DisableMode.FREE:

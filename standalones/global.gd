@@ -16,7 +16,6 @@ func set_winner(id: int) -> bool:
 	player_won_id = id
 	if id == -1 or id == 0:
 		return false
-	print("Adding win: %s" % id)
 	return menu_manager.game_info.add_player_win(id)
 
 #func get_losers() -> Array[int]:

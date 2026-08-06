@@ -23,6 +23,10 @@ func _ready() -> void:
 
 
 func prompt_lobby_input(initial_lobby_name: String = "") -> void:
+	if initial_lobby_name.is_empty():
+		input_name.grab_focus()
+	else:
+		input_password.grab_focus()
 	input_name.text = initial_lobby_name
 	input_password.clear()
 	start_anim()

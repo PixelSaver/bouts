@@ -19,7 +19,7 @@ content_margin_top = -1.0
 content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("5_y2var")
-color = Color(0.8509804, 0.6392157, 0.8039216, 0.9019608)
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
 skew = Vector2(1, 0)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
