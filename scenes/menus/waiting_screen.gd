@@ -59,7 +59,7 @@ func _add_lobby_player(id: int) -> void:
 
 func start_anim() -> void:
 	_enabled = true
-	#start_game.visible = GDSync.is_host()
+	start_game.visible = GDSync.is_host()
 	show()
 
 

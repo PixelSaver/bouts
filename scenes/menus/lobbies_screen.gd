@@ -37,7 +37,7 @@ func _on_join_lobby_requested_with_password(lobby_name: String, password: String
 func _on_join_lobby_requested(lobby_name: String, has_password: bool) -> void:
 	Log.pr("Join lobby reqested")
 	if has_password:
-		lobby_popup.start_anim()
+		lobby_popup.prompt_lobby_input(lobby_name)
 	else:
 		GDSync.lobby_join(lobby_name)
 

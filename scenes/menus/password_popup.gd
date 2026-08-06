@@ -14,6 +14,9 @@ var t: Tween
 
 func _ready() -> void:
 	self.hide()
+	popup_cont.offset_transform_enabled = true
+	popup_cont.pivot_offset_ratio = Vector2.ONE * 0.5
+	popup_cont.offset_transform_pivot_ratio = Vector2.ONE * 0.5
 	all_t = get_all_tweenables(self)
 	for but in buttons:
 		but.pressed.connect(_on_button_pressed.bind(but.name))

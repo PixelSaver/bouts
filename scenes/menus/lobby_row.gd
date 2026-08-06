@@ -25,4 +25,4 @@ func load_lobby_info(li: LobbyInfo) -> void:
 
 func _on_join_button_pressed() -> void:
 	#TODO Add the password thing
-	join_pressed.emit(_name_label.text, false)
+	join_pressed.emit(_name_label.text, _has_password)
