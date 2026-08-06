@@ -19,10 +19,12 @@ signal death()
 		if val != max_health:
 			max_health = val
 			health_changed.emit(health, max_health)
+@export var emit_death_after_death := false
 ## The node (player/enemy) to own this health bar. If this is
 ## not set, the node will automatically use it's direct parent
 ## if it's a Player
 @export var target: Player
+var _has_died := false
 var _target: Player
 
 var _pending_atks: Array[Attack] = []
@@ -62,8 +64,10 @@ func _process_pending_damage() -> void:
 	health -= tot_damage
 	GDSync.sync_var(self, "health")
 	GDSync.sync_var(self, "max_health")
-	if health <= 0 or is_equal_approx(health, 0.0):
-		death.emit()
+	if (health <= 0):
+		if _has_died == false or emit_death_after_death:
+			_has_died = true
+			death.emit()
 
 
 ## Applies knockback unless target has the 'get_knockback_resistance' function

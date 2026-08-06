@@ -26,6 +26,12 @@ signal data_changed(data: Dictionary)
 			return
 		map_history = val
 		_emit_data()
+@export var current_round := -1:
+	set(val):
+		if current_round == val:
+			return
+		current_round = val
+		_emit_data()
 
 
 func reset() -> void:
@@ -33,6 +39,12 @@ func reset() -> void:
 	win_history = []
 	next_map = 0
 	map_history = []
+
+
+func start_new_round() -> void:
+	current_round += 1
+	if win_history.size() - 1 > current_round:
+		Log.err("For some reason current round exceeds win history")
 
 
 func to_dict() -> Dictionary:
@@ -46,12 +58,19 @@ func to_dict() -> Dictionary:
 		"win_history": win_history,
 		"next_map": next_map,
 		"map_history": map_history,
+		"current_round": current_round,
 	}
 
 
-func add_player_win(id: int):
+func add_player_win(id: int) -> bool:
+	if win_history.size() > current_round and current_round != -1:
+		Log.warn(
+			"Round #%s has already been won by %s" % [current_round + 1, win_history[current_round]]
+		)
+		return false
 	win_history.append(id)
 	_emit_data()
+	return true
 
 
 func get_wins(id: int) -> int:
@@ -86,4 +105,5 @@ static func from_dict(dict: Dictionary) -> GameInfo:
 	info.win_history = dict.get("win_history", [])
 	info.next_map = dict.get("next_map", 0)
 	info.map_history = dict.get("map_history", [])
+	info.current_round = dict.get("current_round", -1)
 	return info

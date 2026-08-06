@@ -4,7 +4,6 @@ class_name PlayerManager
 signal player_won(id: int)
 signal tie
 var players_alive: Dictionary[int, Player] = { }
-var game_ended := false
 
 
 func register_player_in_game(id: int, player: Player):
@@ -28,13 +27,11 @@ func _on_player_died(id: int) -> void:
 
 
 func _check_win() -> void:
-	if game_ended:
-		return
 	if players_alive.size() == 1:
 		var winner_id = players_alive.keys().front()
 		print("Player won: %s on client %s" % [winner_id, multiplayer.get_unique_id()])
 		player_won.emit(winner_id)
-		game_ended = true
 	elif players_alive.size() == 0:
 		tie.emit()
-		game_ended = true
+	else:
+		Log.err("Multiple players won??!?!?! %s" % str(players_alive))

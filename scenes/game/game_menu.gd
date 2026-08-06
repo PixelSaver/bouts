@@ -44,7 +44,6 @@ func _ready() -> void:
 func pass_game_info(game_info: GameInfo) -> void:
 	Log.pr("Client %s started game" % GDSync.get_client_id())
 	_game_info = game_info
-	player_manager.game_ended = false
 	start_anim()
 
 
@@ -130,8 +129,10 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 func player_won(id: int) -> void:
 	Log.pr("Client %s sees %s win" % [GDSync.get_client_id(), id])
 	player_manager.stop_player_sync()
-	Global.set_winner(id)
-	print("Client %s sees %s won" % [self.multiplayer.get_unique_id(), id])
+	var true_win = Global.set_winner(id)
+	if not true_win:
+		return
+
 	if not GDSync.is_host():
 		return
 	await get_tree().process_frame

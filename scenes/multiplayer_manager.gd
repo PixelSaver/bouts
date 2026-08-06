@@ -46,13 +46,11 @@ func _ready() -> void:
 
 	player_info.info_changed.connect(
 		func(new_info: PlayerInfo):
-			Log.pr("Should change data")
 			SignalBus.player_info_changed.emit(-1, new_info)
 			if not GDSync.is_active():
 				return
 				#TODO Queue callback for when gdsync is active to set the color
-			GDSync.player_set_data("player_info", new_info.to_dict())
-			Log.pr("All data: %s" % GDSync.player_get_all_data(GDSync.get_client_id())),
+			GDSync.player_set_data("player_info", new_info.to_dict()),
 	)
 
 	#TODO Make disconnection work with 4 players, checking if you're the last person in lobby
@@ -251,6 +249,7 @@ func request_start_game() -> void:
 	if not GDSync.is_host():
 		#TODO Write host logic for showing and transferring
 		return
+	game_info.start_new_round()
 	GDSync.emit_signal_remote_all(game_start_requested, game_info.to_dict())
 
 
@@ -260,6 +259,7 @@ func _on_game_start(game_info_dict: Dictionary) -> void:
 	if not gi:
 		Log.err("Game info not parsed correctly")
 		return
+	game_info = gi
 	self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
 	var game = current_scene as GameMenu
 	game.pass_game_info(game_info)

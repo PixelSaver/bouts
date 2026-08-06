@@ -72,10 +72,7 @@ func _ready() -> void:
 	)
 
 	var bodies: Array[TargetAngleRigidBody2D] = []
-	var weapon: Weapon
 	for child in get_children():
-		if child is Weapon:
-			weapon = child
 		if child is not TargetAngleRigidBody2D:
 			continue
 		bodies.append(child)
@@ -108,7 +105,6 @@ func set_disable(disabled: DisableMode) -> void:
 				part.freeze = true
 			is_syncing_state = true
 		DisableMode.NOTHING:
-			Log.pr("Setting player to do nothing")
 			for part in ragdoll_parts:
 				part.disabled = true
 				part.freeze = true
@@ -121,7 +117,7 @@ func get_cam_follow_node() -> Node2D:
 
 func begin_round(game_info: GameInfo) -> void:
 	_game_info = game_info
-	var wins = game_info.get_wins(GDSync.get_client_id())
+	var wins = game_info.get_wins(GDSync.get_gdsync_owner(self))
 	_win_number_label.flash_wins(wins)
 	$DebugLabel.text = str(GDSync.get_gdsync_owner(self))
 	for body in ragdoll_parts:
