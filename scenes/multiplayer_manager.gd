@@ -264,7 +264,7 @@ func _on_game_start(game_info_dict: Dictionary) -> void:
 		Log.err("Game info not parsed correctly")
 		return
 	game_info = gi
-	self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
+	self.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME), true)
 	var game = current_scene as GameMenu
 	game.pass_game_info(game_info)
 #endregion

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ng8x4jpda7ic"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://w2lebln4ho1x" path="res://assets/ragdoll_physics_material.tres" id="1_xp0f5"]
+[ext_resource type="Script" uid="uid://b6ewgxfuv3c4g" path="res://scenes/weapons/generic_sword.gd" id="2_6linq"]
+
+[node name="Sword" type="RigidBody2D" unique_id=1006290758]
+collision_layer = 3
+collision_mask = 2
+mass = 0.1
+physics_material_override = ExtResource("1_xp0f5")
+inertia = 100.0
+can_sleep = false
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("2_6linq")
+weapon_name = "Generic Sword"
+weapon_description = "Just a sword"
+metadata/_custom_type_script = "uid://b6ewgxfuv3c4g"
+
+[node name="Line2D" type="Line2D" parent="." unique_id=633370630]
+visible = false
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=470547925]
+polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 4, 71, 0, 86, -4, 71, -7, 6, -31, 0, -7, -9, -7, -41)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2049141650]
+polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 4, 71, 0, 86, -4, 71, -7, 6, -31, 0, -7, -9, -7, -41)

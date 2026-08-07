@@ -80,6 +80,8 @@ func start_anim() -> void:
 	for tw in all_ts:
 		t.tween_property(tw, "tween_value", 1.0, 0.7)
 		t.tween_property(tw, "modulate_parent:a", 0.0, 0.7)
+
+	Log.pr("Client %s is about to spawn players, name is %s" % [GDSync.get_client_id(), self.name])
 	if not GDSync.is_host():
 		return
 
@@ -96,12 +98,12 @@ func start_anim() -> void:
 		if not player_info:
 			Log.warn("Player info not readable as PlayerInfo")
 			continue
-		#GDSync.multiplayer_instantiate(PLAYER, player_manager, true, [], true)
 		GDSync.call_func_all(spawn_player, key, spawns[i], player_info.to_dict())
 
 
 #@rpc("authority", "reliable", "call_local")
 func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
+	Log.pr("Player spawned for client %s" % GDSync.get_client_id())
 	var pi = PlayerInfo.from_dict(_pi)
 	var inst = PLAYER.instantiate() as Player
 	players.add_child(inst)
