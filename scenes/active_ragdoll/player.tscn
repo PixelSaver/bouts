@@ -36,7 +36,7 @@ colors = PackedColorArray(1, 1, 1, 1)
 gradient = SubResource("Gradient_mlfyp")
 width = 1
 
-[node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "_health_component", "_win_number_label", "weapon", "r_hand_marker")]
+[node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "r_hand_marker", "r_hand_groove_joint", "r_hand_pin_joint", "_health_component", "_win_number_label", "weapon")]
 script = ExtResource("1_dnie3")
 sensitivity = 1500.0
 power = 5000
@@ -58,10 +58,12 @@ l_shoulder = NodePath("Torso/ShoulderLeft")
 l_arm_fore = NodePath("LeftForeArm")
 l_elbow = NodePath("LeftUpperArm/LeftElbowJoint")
 l_arm_upper = NodePath("LeftUpperArm")
+r_hand_marker = NodePath("RightForeArm/RightHandMarker")
+r_hand_groove_joint = NodePath("RightForeArm/GrooveJoint2D")
+r_hand_pin_joint = NodePath("RightForeArm/PinJoint2D")
 _health_component = NodePath("HealthComponent")
 _win_number_label = NodePath("WinLabel")
 weapon = NodePath("Sword")
-r_hand_marker = NodePath("RightForeArm/RightHandMarker")
 metadata/_custom_type_script = "uid://wler21gs1eif"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1625169633 node_paths=PackedStringArray("target")]

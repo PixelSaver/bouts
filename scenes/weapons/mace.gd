@@ -2,7 +2,6 @@ extends Weapon
 class_name Mace
 
 @export var hit_cooldown := 0.3
-@export var player: Player
 var _hit_cooldown := 0.3
 
 var target_state: Array = []
@@ -44,13 +43,6 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 
 func _body_entered(body: Node) -> void:
-	var par = body.get_parent()
-	if par is not Player:
-		return
 	if _hit_cooldown <= 0:
-		hit_player(par as Player)
-
-
-func hit_player(_player: Player):
-	_player.damage(_get_attack())
-	_hit_cooldown = hit_cooldown
+		Player.try_damage_player_body_part(_get_attack(), body)
+		_hit_cooldown = hit_cooldown

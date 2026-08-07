@@ -112,6 +112,7 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	inst.name = "Player_%d" % id
 	inst.set_color(pi.color)
 	inst.global_position = pos
+	inst.bind_weapon(pi.weapon)
 	GDSync.set_gdsync_owner(inst, id)
 	#inst.set_multiplayer_authority(id)
 	camera.append_follow_targets(inst.get_cam_follow_node())

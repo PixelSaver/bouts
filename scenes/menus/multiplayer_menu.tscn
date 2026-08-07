@@ -207,6 +207,7 @@ lobbies_screen = NodePath("LobbiesScreen")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont", "lobby_popup")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -605,7 +606,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game", "leave_but")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -655,7 +655,7 @@ size_flags_vertical = 3
 layout_mode = 2
 mouse_filter = 1
 
-[node name="PlayerDisplay" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=131712649 node_paths=PackedStringArray("player")]
+[node name="PlayerDisplay" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=131712649 node_paths=PackedStringArray("player", "color_picker_button", "weapon_button")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -664,6 +664,8 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 script = ExtResource("8_0jrml")
 player = NodePath("Control/Control/Player")
+color_picker_button = NodePath("Panel/MarginContainer/Control/PlayerCustomization/ColorPickerButton")
+weapon_button = NodePath("Panel/MarginContainer/Control/PlayerCustomization/WeaponButton")
 
 [node name="Control" type="CenterContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay" unique_id=1267115641]
 layout_mode = 2
@@ -691,15 +693,35 @@ grow_vertical = 2
 layout_mode = 2
 mouse_filter = 1
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control" unique_id=529634187]
+[node name="PlayerCustomization" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control" unique_id=1651877519]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.7
 anchor_top = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=2039548735]
+layout_mode = 2
+bbcode_enabled = true
+text = "Weapon:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WeaponButton" type="OptionButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=1932704682]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=1150842495]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=529634187]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
 mouse_filter = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=1810043665]

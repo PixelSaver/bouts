@@ -28,11 +28,14 @@ class_name Player
 @export var l_arm_fore: TargetAngleRigidBody2D
 @export var l_elbow: PinJoint2D
 @export var l_arm_upper: TargetAngleRigidBody2D
+@export_group("Hand stuff")
+@export var r_hand_marker: Marker2D
+@export var r_hand_groove_joint: GrooveJoint2D
+@export var r_hand_pin_joint: PinJoint2D
 @export_group("Nodes", "_")
 @export var _health_component: HealthComponent
 @export var _win_number_label: WinNumberLabel
 @export var weapon: Weapon
-@export var r_hand_marker: Marker2D
 var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
 var _disabled := DisableMode.FREE
@@ -250,6 +253,7 @@ func get_state() -> Array:
 	state.append(RigidBody2DState.get_state(weapon))
 	return state
 #endregion
+#region Movement and input
 func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
 	_jump_buffer -= delta
 	var target = r_hand_marker.global_position + _mouse_motion
@@ -329,11 +333,36 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouse_motion += event.relative * sensitivity
 
+#endregion
 
 func set_color(col: Color) -> void:
 	for part in ragdoll_parts:
 		part.modulate = col
 
 
+func bind_weapon(wt: WeaponManager.WeaponType):
+	var w = WeaponManager.get_weapon(wt).instantiate() as Weapon
+	self.add_child(w)
+	w.player = self
+	if weapon:
+		weapon.queue_free()
+	weapon = w
+	var path = weapon.get_path()
+	for part in ragdoll_parts:
+		weapon.add_collision_exception_with(part)
+	weapon.global_transform = r_hand_marker.global_transform
+	r_hand_groove_joint.node_b = path
+	r_hand_pin_joint.node_b = path
+
+
 func damage(atk: Attack):
 	_health_component.damage(atk)
+
+
+static func try_damage_player_body_part(attack: Attack, body: Node) -> bool:
+	var par = body.get_parent()
+	if body is Weapon or par is not Player:
+		return false
+	var player = par as Player
+	player.damage(attack)
+	return true

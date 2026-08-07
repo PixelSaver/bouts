@@ -1,9 +1,117 @@
 [gd_scene format=3 uid="uid://c87gdgbqejm2c"]
 
+[ext_resource type="PhysicsMaterial" uid="uid://w2lebln4ho1x" path="res://assets/ragdoll_physics_material.tres" id="1_7gkdb"]
 [ext_resource type="Script" uid="uid://cad07x38v684" path="res://scenes/weapons/mace.gd" id="1_435wj"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="3_v312f"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="4_fq0n8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkedh"]
+height = 118.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
+radius = 21.023796
+
+[sub_resource type="StyleBox" id="StyleBox_h20du"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("4_fq0n8")
+corner_detail = 10
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="Mace" type="RigidBody2D" unique_id=732501787]
+collision_layer = 3
+collision_mask = 2
+mass = 0.1
+physics_material_override = ExtResource("1_7gkdb")
+linear_damp = 1.0
 script = ExtResource("1_435wj")
+weapon_name = "Mace"
+weapon_description = "Go out swinging"
 metadata/_custom_type_script = "uid://nmdiqm41qym0"
 
-[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=154916891]
+[node name="Line2D" type="Line2D" parent="." unique_id=74626658]
+points = PackedVector2Array(0, 0, 0, 100)
+width = 18.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=722654596]
+position = Vector2(0, 45)
+shape = SubResource("CapsuleShape2D_gkedh")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=439829843]
+position = Vector2(0, 101)
+node_a = NodePath("..")
+node_b = NodePath("../chain1")
+
+[node name="chain1" type="RigidBody2D" parent="." unique_id=154916891]
+position = Vector2(1, 104)
+disable_mode = 2
+collision_layer = 0
+collision_mask = 0
+mass = 0.1
+physics_material_override = ExtResource("1_7gkdb")
+can_sleep = false
+linear_damp = 1.0
+
+[node name="Line2D" type="Line2D" parent="chain1" unique_id=369659115]
+points = PackedVector2Array(0, 0, 0, 100)
+width = 18.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain1" unique_id=1088152609]
+position = Vector2(0, 45)
+shape = SubResource("CapsuleShape2D_gkedh")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="chain1" unique_id=1422616085]
+position = Vector2(-2, 100)
+node_a = NodePath("..")
+node_b = NodePath("../../chain2")
+
+[node name="chain2" type="RigidBody2D" parent="." unique_id=2143065081]
+position = Vector2(1, 209)
+disable_mode = 2
+collision_layer = 0
+collision_mask = 0
+mass = 0.1
+physics_material_override = ExtResource("1_7gkdb")
+can_sleep = false
+linear_damp = 1.0
+
+[node name="Line2D" type="Line2D" parent="chain2" unique_id=392485120]
+points = PackedVector2Array(0, 0, 0, 100)
+width = 18.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain2" unique_id=594123855]
+position = Vector2(0, 45)
+shape = SubResource("CapsuleShape2D_gkedh")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="chain2" unique_id=1313902764]
+position = Vector2(-2, 100)
+node_a = NodePath("..")
+node_b = NodePath("../../Ball")
+
+[node name="Ball" type="RigidBody2D" parent="." unique_id=1162598713]
+position = Vector2(2, 309)
+disable_mode = 2
+collision_layer = 3
+collision_mask = 2
+mass = 0.1
+physics_material_override = ExtResource("1_7gkdb")
+can_sleep = false
+linear_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=2143947073]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_gkedh")
+
+[node name="Panel" type="Panel" parent="Ball" unique_id=691983040]
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
+theme_override_styles/panel = SubResource("StyleBox_h20du")

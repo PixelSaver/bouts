@@ -14,6 +14,10 @@ signal info_changed(new_info: PlayerInfo)
 	set(val):
 		color = val
 		info_changed.emit(self)
+@export var weapon: WeaponManager.WeaponType = WeaponManager.WeaponType.SWORD:
+	set(val):
+		weapon = val
+		info_changed.emit(self)
 @export var is_host := false:
 	set(val):
 		is_host = val
@@ -34,7 +38,13 @@ func _on_host_changed(new_is_host: bool, _new_host_id: int) -> void:
 
 
 func to_dict() -> Dictionary:
-	return { "player_name": player_name, "color": color, "id": id, "is_host": is_host }
+	return {
+		"player_name": player_name,
+		"color": color,
+		"id": id,
+		"weapon": weapon,
+		"is_host": is_host,
+	}
 
 
 static func from_dict(d: Dictionary) -> PlayerInfo:
@@ -42,6 +52,7 @@ static func from_dict(d: Dictionary) -> PlayerInfo:
 	p.player_name = d.get("player_name", "PlayerName")
 	p.color = d.get("color", Color.WHITE)
 	p.id = d.get("id", 0)
+	p.weapon = d.get("weapon", WeaponManager.WeaponType.SWORD)
 	p.is_host = d.get("is_host", false)
 	return p
 
