@@ -24,7 +24,8 @@ func _ready() -> void:
 	#_update_player_list()
 	Global.menu_manager.player_connected.connect(
 		func(id: int):
-			_add_lobby_player(id),
+			_add_lobby_player(id)
+			_update_player_list(),
 	)
 	Global.menu_manager.player_disconnected.connect(
 		func(_x):

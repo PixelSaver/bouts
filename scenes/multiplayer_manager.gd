@@ -239,13 +239,15 @@ func _on_lobby_join_failed(lobby_name: String, error: int) -> void:
 	Log.err("Failed to join %s, because of: %s" % [lobby_name, error_str])
 
 #endregion
-func _on_leave_requested() -> void:
-	free_networking()
-	game_info.players.clear()
-
 
 func free_networking() -> void:
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+
+#region Leave Lobby
+func request_leave_lobby() -> void:
+	GDSync.lobby_leave()
+	game_info.players.clear()
+#endregion
 
 #region Game start
 func request_start_game() -> void:

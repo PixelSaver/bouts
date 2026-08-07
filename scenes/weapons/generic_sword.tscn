@@ -26,7 +26,9 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=470547925]
+position = Vector2(-0.19999695, 45.600006)
 polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 4, 71, 0, 86, -4, 71, -7, 6, -31, 0, -7, -9, -7, -41)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2049141650]
+position = Vector2(-0.19999695, 45.600006)
 polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 4, 71, 0, 86, -4, 71, -7, 6, -31, 0, -7, -9, -7, -41)

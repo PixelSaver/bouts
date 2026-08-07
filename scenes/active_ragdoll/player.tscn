@@ -311,16 +311,6 @@ metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightForeArm" unique_id=1682250458]
 shape = SubResource("RectangleShape2D_c4p01")
 
-[node name="PinJoint2D" type="PinJoint2D" parent="RightForeArm" unique_id=69178001]
-position = Vector2(0, 26.870062)
-node_a = NodePath("..")
-node_b = NodePath("../../Sword")
-
-[node name="PinJoint2D2" type="PinJoint2D" parent="RightForeArm" unique_id=2136750669]
-position = Vector2(0.70710707, 38.89088)
-node_a = NodePath("..")
-node_b = NodePath("../../Sword")
-
 [node name="Line2D" type="Line2D" parent="RightForeArm" unique_id=621809011]
 points = PackedVector2Array(0, -27, 0, 27)
 width = 20.0
@@ -329,6 +319,17 @@ end_cap_mode = 2
 
 [node name="RightHandMarker" type="Marker2D" parent="RightForeArm" unique_id=211320700]
 position = Vector2(2.861023e-06, 26.87006)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RightForeArm" unique_id=69178001]
+position = Vector2(-3.8146973e-06, 26.870068)
+node_a = NodePath("..")
+node_b = NodePath("../../Sword")
+
+[node name="GrooveJoint2D" type="GrooveJoint2D" parent="RightForeArm" unique_id=355512965]
+node_a = NodePath("..")
+node_b = NodePath("../../Sword")
+length = 1.0
+initial_offset = 1.0
 
 [node name="Torso" type="RigidBody2D" parent="." unique_id=1868651906]
 position = Vector2(0, -14)
@@ -410,7 +411,7 @@ offset_transform_position_ratio = Vector2(-0.5, -0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_h3ani")
 
 [node name="Sword" parent="." unique_id=1006290758 node_paths=PackedStringArray("player") instance=ExtResource("5_04ies")]
-position = Vector2(110, 63)
+position = Vector2(81.000015, 35.000004)
 rotation = -0.7853982
 player = NodePath("..")
 

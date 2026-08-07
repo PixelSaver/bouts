@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c87gdgbqejm2c"]
+
+[ext_resource type="Script" uid="uid://cad07x38v684" path="res://scenes/weapons/mace.gd" id="1_435wj"]
+
+[node name="Mace" type="RigidBody2D" unique_id=732501787]
+script = ExtResource("1_435wj")
+metadata/_custom_type_script = "uid://nmdiqm41qym0"
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=154916891]
