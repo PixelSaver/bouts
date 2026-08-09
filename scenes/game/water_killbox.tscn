@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dblelrhrnny1c"]
+
+[ext_resource type="Script" uid="uid://bp1yjqkb2ahku" path="res://scenes/game/water_killbox.gd" id="1_8yvq6"]
+[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_aflja"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gkedh"]
+
+[node name="WaterKillbox" type="Area2D" unique_id=263105909]
+script = ExtResource("1_8yvq6")
+throw_force = 5000
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1328907051]
+shape = SubResource("WorldBoundaryShape2D_gkedh")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=372762678]
+offset_right = 2000.0
+offset_bottom = 1000.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, 0)
+texture = ExtResource("2_aflja")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

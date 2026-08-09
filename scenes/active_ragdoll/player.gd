@@ -357,6 +357,7 @@ func bind_weapon(wt: WeaponManager.WeaponType):
 
 func damage(atk: Attack):
 	_health_component.damage(atk)
+	torso.apply_central_impulse(atk.knockback)
 
 
 static func try_damage_player_body_part(attack: Attack, body: Node, owner_player: Player = null) -> bool:

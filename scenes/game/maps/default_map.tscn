@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dfxmrhw0omh5f" path="res://scenes/game/map.gd" id="1_w1j3m"]
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_jpcr1"]
-[ext_resource type="Script" uid="uid://ba4c7uqum13as" path="res://scenes/game/maps/killbox.gd" id="3_7qh56"]
+[ext_resource type="PackedScene" uid="uid://dblelrhrnny1c" path="res://scenes/game/water_killbox.tscn" id="3_7qh56"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7qh56"]
 size = Vector2(1126, 20)
@@ -29,13 +29,5 @@ shape = SubResource("RectangleShape2D_7qh56")
 scale = Vector2(8.796875, 0.171875)
 texture = ExtResource("2_jpcr1")
 
-[node name="Killbox" type="Area2D" parent="." unique_id=1063746277]
-position = Vector2(554, 0)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("3_7qh56")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Killbox" unique_id=717786179]
-polygon = PackedVector2Array(-800, -1000, -800, 811, 800, 800, 800, -1000, -800, -1000, -900, -1100, 920, -1100, 900, 900, -900, 900, -900, -1100)
-
-[connection signal="body_entered" from="Killbox" to="Killbox" method="_on_body_entered"]
+[node name="WaterKillbox" parent="." unique_id=263105909 instance=ExtResource("3_7qh56")]
+position = Vector2(553, 599)
