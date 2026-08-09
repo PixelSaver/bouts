@@ -359,10 +359,12 @@ func damage(atk: Attack):
 	_health_component.damage(atk)
 
 
-static func try_damage_player_body_part(attack: Attack, body: Node) -> bool:
+static func try_damage_player_body_part(attack: Attack, body: Node, owner_player: Player = null) -> bool:
 	var par = body.get_parent()
 	if body is Weapon or par is not Player:
 		return false
 	var player = par as Player
+	if player == owner_player:
+		return false
 	player.damage(attack)
 	return true

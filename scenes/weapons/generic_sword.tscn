@@ -14,7 +14,9 @@ continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("2_6linq")
+hit_cooldown = null
 weapon_name = "Generic Sword"
+weapon_damage = null
 weapon_description = "Just a sword"
 metadata/_custom_type_script = "uid://b6ewgxfuv3c4g"
 

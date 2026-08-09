@@ -1,6 +1,7 @@
 extends Weapon
 class_name Mace
 
+@export var colliding_bodies: Array[RigidBody2D]
 @export var hit_cooldown := 0.3
 var _hit_cooldown := 0.3
 
@@ -9,7 +10,8 @@ var target_state: Array = []
 
 func _ready() -> void:
 	self.set_meta("is_weapon", true)
-	self.body_entered.connect(_body_entered)
+	for body in colliding_bodies:
+		body.body_entered.connect(_body_entered)
 
 
 func _physics_process(delta: float) -> void:
@@ -43,6 +45,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 
 func _body_entered(body: Node) -> void:
+	print("Got a body, parent name is  %s" % body.get_parent().name)
 	if _hit_cooldown <= 0:
 		Player.try_damage_player_body_part(_get_attack(), body)
 		_hit_cooldown = hit_cooldown

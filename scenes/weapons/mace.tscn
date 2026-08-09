@@ -8,8 +8,11 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkedh"]
 height = 118.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v312f"]
+height = 34.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
-radius = 21.023796
+radius = 50.0
 
 [sub_resource type="StyleBox" id="StyleBox_h20du"]
 resource_local_to_scene = false
@@ -20,18 +23,19 @@ content_margin_right = 4.0
 content_margin_bottom = 4.0
 script = ExtResource("4_fq0n8")
 corner_detail = 10
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
-[node name="Mace" type="RigidBody2D" unique_id=732501787]
+[node name="Mace" type="RigidBody2D" unique_id=732501787 node_paths=PackedStringArray("colliding_bodies")]
 collision_layer = 3
 collision_mask = 2
-mass = 0.1
+mass = 0.03
 physics_material_override = ExtResource("1_7gkdb")
 linear_damp = 1.0
 script = ExtResource("1_435wj")
+colliding_bodies = [NodePath("Ball")]
 weapon_name = "Mace"
 weapon_description = "Go out swinging"
 metadata/_custom_type_script = "uid://nmdiqm41qym0"
@@ -54,64 +58,87 @@ position = Vector2(1, 104)
 disable_mode = 2
 collision_layer = 0
 collision_mask = 0
-mass = 0.1
+mass = 0.01
 physics_material_override = ExtResource("1_7gkdb")
 can_sleep = false
 linear_damp = 1.0
 
 [node name="Line2D" type="Line2D" parent="chain1" unique_id=369659115]
-points = PackedVector2Array(0, 0, 0, 100)
+points = PackedVector2Array(0, 0, 0, 29)
 width = 18.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="chain1" unique_id=1088152609]
-position = Vector2(0, 45)
-shape = SubResource("CapsuleShape2D_gkedh")
+position = Vector2(0, 15)
+shape = SubResource("CapsuleShape2D_v312f")
 
 [node name="PinJoint2D2" type="PinJoint2D" parent="chain1" unique_id=1422616085]
-position = Vector2(-2, 100)
+position = Vector2(-1, 28)
 node_a = NodePath("..")
 node_b = NodePath("../../chain2")
 
-[node name="chain2" type="RigidBody2D" parent="." unique_id=2143065081]
-position = Vector2(1, 209)
+[node name="chain2" type="RigidBody2D" parent="." unique_id=527516607]
+position = Vector2(0, 138)
 disable_mode = 2
 collision_layer = 0
 collision_mask = 0
-mass = 0.1
+mass = 0.01
 physics_material_override = ExtResource("1_7gkdb")
 can_sleep = false
 linear_damp = 1.0
 
-[node name="Line2D" type="Line2D" parent="chain2" unique_id=392485120]
-points = PackedVector2Array(0, 0, 0, 100)
+[node name="Line2D" type="Line2D" parent="chain2" unique_id=2141563435]
+points = PackedVector2Array(0, 0, 0, 29)
 width = 18.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="chain2" unique_id=594123855]
-position = Vector2(0, 45)
-shape = SubResource("CapsuleShape2D_gkedh")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain2" unique_id=228618124]
+position = Vector2(0, 15)
+shape = SubResource("CapsuleShape2D_v312f")
 
-[node name="PinJoint2D2" type="PinJoint2D" parent="chain2" unique_id=1313902764]
-position = Vector2(-2, 100)
+[node name="PinJoint2D2" type="PinJoint2D" parent="chain2" unique_id=1048280755]
+position = Vector2(-1, 28)
 node_a = NodePath("..")
-node_b = NodePath("../../Ball")
+node_b = NodePath("../../chain3")
+
+[node name="chain3" type="RigidBody2D" parent="." unique_id=337391760]
+position = Vector2(0, 175)
+disable_mode = 2
+collision_layer = 0
+collision_mask = 0
+mass = 0.01
+physics_material_override = ExtResource("1_7gkdb")
+can_sleep = false
+linear_damp = 1.0
+
+[node name="Line2D" type="Line2D" parent="chain3" unique_id=2021702182]
+points = PackedVector2Array(0, 0, 0, 29)
+width = 18.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain3" unique_id=1611254940]
+position = Vector2(0, 15)
+shape = SubResource("CapsuleShape2D_v312f")
 
 [node name="Ball" type="RigidBody2D" parent="." unique_id=1162598713]
-position = Vector2(2, 309)
+position = Vector2(0, 257)
 disable_mode = 2
 collision_layer = 3
 collision_mask = 2
-mass = 0.1
+mass = 0.05
 physics_material_override = ExtResource("1_7gkdb")
 can_sleep = false
+contact_monitor = true
+max_contacts_reported = 3
 linear_damp = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=2143947073]
-position = Vector2(2, 0)
 shape = SubResource("CircleShape2D_gkedh")
 
 [node name="Panel" type="Panel" parent="Ball" unique_id=691983040]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 100.0
+offset_bottom = 100.0
 offset_transform_enabled = true
 offset_transform_position_ratio = Vector2(-0.5, -0.5)
 theme_override_styles/panel = SubResource("StyleBox_h20du")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Ball" unique_id=1233500965]
+node_a = NodePath("../../chain3")
+node_b = NodePath("..")

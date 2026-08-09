@@ -44,5 +44,5 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 func _body_entered(body: Node) -> void:
 	if _hit_cooldown <= 0:
-		Player.try_damage_player_body_part(_get_attack(), body)
+		Player.try_damage_player_body_part(_get_attack(), body, player)
 		_hit_cooldown = hit_cooldown
