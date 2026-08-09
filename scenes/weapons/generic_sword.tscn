@@ -14,9 +14,7 @@ continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("2_6linq")
-hit_cooldown = null
 weapon_name = "Generic Sword"
-weapon_damage = null
 weapon_description = "Just a sword"
 metadata/_custom_type_script = "uid://b6ewgxfuv3c4g"
 
@@ -29,8 +27,8 @@ end_cap_mode = 2
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=470547925]
 position = Vector2(-0.19999695, 45.600006)
-polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 4, 71, 0, 86, -4, 71, -7, 6, -31, 0, -7, -9, -7, -41)
+polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 5.199997, 78.399994, 0, 86, -4.800003, 78.399994, -7, 6, -31, 0, -7, -9, -7, -41)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2049141650]
 position = Vector2(-0.19999695, 45.600006)
-polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 4, 71, 0, 86, -4, 71, -7, 6, -31, 0, -7, -9, -7, -41)
+polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 7, 6, 5.199997, 78.399994, 0, 86, -4.800003, 78.399994, -7, 6, -7, -9, -7, -41)

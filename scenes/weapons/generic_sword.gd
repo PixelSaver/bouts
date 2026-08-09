@@ -42,6 +42,11 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		)
 
 
+func set_body_collision_exceptions(bodies: Array[RigidBody2D]) -> void:
+	for part in bodies:
+		self.add_collision_exception_with(part)
+
+
 func _body_entered(body: Node) -> void:
 	if _hit_cooldown <= 0:
 		Player.try_damage_player_body_part(_get_attack(), body, player)

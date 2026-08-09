@@ -1,22 +1,12 @@
 [gd_scene format=3 uid="uid://b02vhx7d8yw8b"]
 
 [ext_resource type="PackedScene" uid="uid://t4eelh8k41jw" path="res://scenes/active_ragdoll/player.tscn" id="1_utvop"]
-[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_1qogj"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcco8"]
-size = Vector2(1126, 20)
+[ext_resource type="PackedScene" uid="uid://cpdx3wny0t6im" path="res://scenes/game/maps/default_map.tscn" id="2_utvop"]
 
 [node name="PlayerTest" type="Node2D" unique_id=844564207]
 
+[node name="Map" parent="." unique_id=895377889 instance=ExtResource("2_utvop")]
+
 [node name="Player" parent="." unique_id=1098918678 instance=ExtResource("1_utvop")]
 position = Vector2(572, 189)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=553476841]
-position = Vector2(554, 553)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1700341307]
-shape = SubResource("RectangleShape2D_vcco8")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=382717352]
-scale = Vector2(8.796875, 0.171875)
-texture = ExtResource("2_1qogj")
+test_weapon = 1

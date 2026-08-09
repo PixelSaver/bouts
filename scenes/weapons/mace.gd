@@ -16,8 +16,15 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_hit_cooldown -= delta
-	if player.is_syncing_state == false:
+	if player and player.is_syncing_state == false:
 		return
+
+
+func set_body_collision_exceptions(bodies: Array[RigidBody2D]) -> void:
+	for body in bodies:
+		for weapon_body in colliding_bodies:
+			weapon_body.add_collision_exception_with(body)
+			body.add_collision_exception_with(weapon_body)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
@@ -45,7 +52,6 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 
 func _body_entered(body: Node) -> void:
-	print("Got a body, parent name is  %s" % body.get_parent().name)
 	if _hit_cooldown <= 0:
-		Player.try_damage_player_body_part(_get_attack(), body)
+		Player.try_damage_player_body_part(_get_attack(), body, player if player else null)
 		_hit_cooldown = hit_cooldown

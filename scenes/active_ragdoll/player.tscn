@@ -148,8 +148,9 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 linear_damp = 2.0
+angular_damp = 1.0
 script = ExtResource("3_h3ani")
-power = 0.0
+power = 40000.0
 damping = 0.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 
@@ -182,8 +183,9 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 linear_damp = 2.0
+angular_damp = 1.0
 script = ExtResource("3_h3ani")
-power = 0.0
+power = 40000.0
 damping = 0.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 
@@ -272,8 +274,9 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 linear_damp = 2.0
+angular_damp = 1.0
 script = ExtResource("3_h3ani")
-power = 30000.0
+power = 40000.0
 damping = 3000.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 
@@ -305,8 +308,9 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3
 linear_damp = 2.0
+angular_damp = 1.0
 script = ExtResource("3_h3ani")
-power = 30000.0
+power = 40000.0
 damping = 3000.0
 metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
 

@@ -12,3 +12,7 @@ func _get_attack() -> Attack:
 	var atk = Attack.new()
 	atk.damage = weapon_damage
 	return atk
+
+
+func set_body_collision_exceptions(_bodies: Array[RigidBody2D]) -> void:
+	pass

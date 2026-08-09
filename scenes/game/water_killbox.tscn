@@ -7,7 +7,6 @@
 
 [node name="WaterKillbox" type="Area2D" unique_id=263105909]
 script = ExtResource("1_8yvq6")
-throw_force = 5000
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1328907051]
 shape = SubResource("WorldBoundaryShape2D_gkedh")

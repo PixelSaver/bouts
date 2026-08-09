@@ -1,6 +1,7 @@
 extends Node2D
 class_name Player
 
+@export var test_weapon: WeaponManager.WeaponType
 @export var sensitivity := 1.0
 @export var power := 100
 @export var torque := 1000
@@ -68,6 +69,8 @@ var _game_info: GameInfo
 func _ready() -> void:
 	GDSync.expose_func(submit_input)
 	GDSync.expose_func(sync_state)
+	if OS.is_debug_build() and test_weapon:
+		self.bind_weapon(test_weapon)
 
 	_health_component.death.connect(
 		func():
@@ -348,8 +351,10 @@ func bind_weapon(wt: WeaponManager.WeaponType):
 		weapon.queue_free()
 	weapon = w
 	var path = weapon.get_path()
+	var bodies: Array[RigidBody2D] = []
 	for part in ragdoll_parts:
-		weapon.add_collision_exception_with(part)
+		bodies.append(part)
+	weapon.set_body_collision_exceptions(bodies)
 	weapon.global_transform = r_hand_marker.global_transform
 	r_hand_groove_joint.node_b = path
 	r_hand_pin_joint.node_b = path
