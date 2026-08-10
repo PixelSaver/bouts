@@ -165,7 +165,7 @@ func _peer_disconnected(id: int) -> void:
 func _on_player_connected(id: int) -> void:
 	var pi_dict = GDSync.player_get_data(id, "player_info")
 	var pi = PlayerInfo.from_dict(pi_dict)
-	game_info.players.set(id, pi)
+	game_info.add_or_change_pi(id, pi, false)
 
 
 func _on_pi_changed(client_id: int, key: String, value) -> void:
@@ -174,10 +174,9 @@ func _on_pi_changed(client_id: int, key: String, value) -> void:
 		return
 	var pi = PlayerInfo.from_dict(value)
 	pi.id = client_id
-	if not pi:
+	if not pi or client_id != GDSync.get_client_id():
 		return
-	game_info.players.set(client_id, pi)
-	SignalBus.player_info_changed.emit(client_id, pi)
+	game_info.add_or_change_pi(client_id, pi, false)
 #endregion
 
 #region Lobby stuff
@@ -246,7 +245,7 @@ func free_networking() -> void:
 #region Leave Lobby
 func request_leave_lobby() -> void:
 	GDSync.lobby_leave()
-	game_info.players.clear()
+	game_info.clear_players()
 #endregion
 
 #region Game start

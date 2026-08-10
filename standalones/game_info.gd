@@ -1,6 +1,7 @@
 extends RefCounted
 class_name GameInfo
 
+signal player_info_changed(id: int, info: PlayerInfo)
 signal data_changed(data: Dictionary)
 @export var players: Dictionary[int, PlayerInfo] = { }:
 	set(val):
@@ -39,6 +40,29 @@ func reset() -> void:
 	win_history = []
 	next_map = 0
 	map_history = []
+
+
+func clear_players() -> void:
+	players.clear()
+	_emit_data()
+
+
+func add_or_change_pi(id: int, pi: PlayerInfo, sync_data: bool = false) -> void:
+	if players.keys().count(id) == 0:
+		pi.info_changed.connect(pi_change_func.bind(id))
+	players.set(id, pi)
+	player_info_changed.emit(id, pi)
+	_emit_data()
+	if sync_data and id == GDSync.get_client_id():
+		Log.pr("Synced data")
+		GDSync.player_set_data("player_info", pi.to_dict())
+
+
+func pi_change_func(pi: PlayerInfo, id: int) -> void:
+	player_info_changed.emit(id, pi)
+	if id == GDSync.get_client_id():
+		Log.pr("Synced data")
+		GDSync.player_set_data("player_info", pi.to_dict())
 
 
 func start_new_round() -> void:

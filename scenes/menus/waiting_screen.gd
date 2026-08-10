@@ -24,6 +24,7 @@ func _ready() -> void:
 	#_update_player_list()
 	Global.menu_manager.player_connected.connect(
 		func(id: int):
+			id = GDSync.get_client_id() if id == -1 else id
 			_add_lobby_player(id)
 			_update_player_list(),
 	)
@@ -43,13 +44,7 @@ func _update_player_list() -> void:
 	var keys = Global.menu_manager.game_info.players.keys()
 	for i in range(keys.size()):
 		var key = keys[i]
-		var player_info: PlayerInfo = Global.menu_manager.game_info.players.get(key)
-		if not player_info:
-			printerr("Player info not readable as PlayerInfo")
-			continue
-		var inst := PLAYER_LOBBY_ROW.instantiate() as PlayerLobbyRow
-		player_lobby_cont.add_child(inst)
-		inst.load_player(player_info)
+		_add_lobby_player(key)
 
 
 func _add_lobby_player(id: int) -> void:
