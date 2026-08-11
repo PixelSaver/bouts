@@ -47,6 +47,11 @@ func clear_players() -> void:
 	_emit_data()
 
 
+func erase_player(id: int) -> void:
+	players.erase(id)
+	_emit_data()
+
+
 func add_or_change_pi(id: int, pi: PlayerInfo, sync_data: bool = false) -> void:
 	if players.keys().count(id) == 0:
 		pi.info_changed.connect(pi_change_func.bind(id))

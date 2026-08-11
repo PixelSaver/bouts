@@ -39,7 +39,10 @@ func _ready() -> void:
 	GDSync.lobby_join_failed.connect(_on_lobby_join_failed)
 	GDSync.player_data_changed.connect(_on_pi_changed)
 
+	GDSync.kicked.connect(_on_kicked)
+
 	self.player_connected.connect(_on_player_connected)
+	self.player_disconnected.connect(_on_player_disconnected)
 
 	#GDSync.expose_signal(game_start_requested)
 	GDSync.expose_func(_on_game_start)
@@ -132,6 +135,7 @@ func _randomize_color() -> void:
 #region GDSync connection
 func _on_connected() -> void:
 	player_info.is_host = GDSync.is_host()
+	player_info.id = GDSync.get_client_id()
 	GDSync.player_set_data("player_info", player_info.to_dict())
 	GDSync.player_set_username(str(GDSync.get_client_id()))
 	is_gdsync_connected = true
@@ -151,6 +155,15 @@ func _on_connection_failed(error: int) -> void:
 func _on_disconnected() -> void:
 	is_gdsync_connected = false
 
+
+func _on_kicked() -> void:
+	Log.pr("Got kicked!! client %s" % GDSync.get_client_id())
+	Global.notif_manager.create_notification(
+		"You were kicked!",
+		"Unfortunately, the host kicked you out. Be respectful the next time please?",
+	)
+	SignalBus.kicked.emit()
+
 #endregion
 #region Client connection and disconnetion
 func _peer_connected(id: int) -> void:
@@ -166,6 +179,10 @@ func _on_player_connected(id: int) -> void:
 	var pi_dict = GDSync.player_get_data(id, "player_info")
 	var pi = PlayerInfo.from_dict(pi_dict)
 	game_info.add_or_change_pi(id, pi, false)
+
+
+func _on_player_disconnected(id: int) -> void:
+	game_info.erase_player(id)
 
 
 func _on_pi_changed(client_id: int, key: String, value) -> void:

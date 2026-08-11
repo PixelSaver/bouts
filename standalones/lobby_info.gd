@@ -24,7 +24,6 @@ static func from_dict(dict: Dictionary) -> LobbyInfo:
 	lobby.lobby_is_open = dict.get("Open", true)
 	lobby.lobby_tags = dict.get("Tags", { })
 	lobby.lobby_has_password = dict.get("HasPassword", false)
-	Log.pr("Lobby got password? %s" % lobby.lobby_has_password)
 	lobby.lobby_web_only = dict.get("WebOnly", false)
 	#lobby.lobby_is_host = dict.get("Host", false)
 	return lobby

@@ -24,6 +24,8 @@ signal joined(
 	#data: Dictionary,
 )
 @warning_ignore("unused_signal")
+signal kicked
+@warning_ignore("unused_signal")
 signal bullet_spawned(atk: Attack, rot: float, pos: Vector2, owned_id: int)
 @warning_ignore("unused_signal")
 signal player_info_changed(id: int, p_info: PlayerInfo)
