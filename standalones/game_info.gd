@@ -1,6 +1,13 @@
 extends RefCounted
 class_name GameInfo
 
+enum RoundType {
+	MAJORITY,
+	FIRST_TO,
+	#TODO Add more round types / games / styles
+	#MINiGAME,
+}
+
 signal player_info_changed(id: int, info: PlayerInfo)
 signal data_changed(data: Dictionary)
 @export var players: Dictionary[int, PlayerInfo] = { }:
@@ -33,6 +40,13 @@ signal data_changed(data: Dictionary)
 			return
 		current_round = val
 		_emit_data()
+@export var round_type: RoundType = RoundType.MAJORITY
+@export var rounds_out_of := 5:
+	set(val):
+		if rounds_out_of == val:
+			return
+		rounds_out_of = val
+		_emit_data()
 
 
 func reset() -> void:
@@ -41,7 +55,7 @@ func reset() -> void:
 	next_map = 0
 	map_history = []
 
-
+#region Player api
 func clear_players() -> void:
 	players.clear()
 	_emit_data()
@@ -70,10 +84,39 @@ func pi_change_func(pi: PlayerInfo, id: int) -> void:
 		GDSync.player_set_data("player_info", pi.to_dict())
 
 
+func add_player_win(id: int) -> bool:
+	if win_history.size() > current_round and current_round != -1:
+		Log.warn(
+			"Round #%s has already been won by %s" % [current_round + 1, win_history[current_round]]
+		)
+		return false
+	win_history.append(id)
+	_emit_data()
+	return true
+
+#endregion
+
+#region General API
 func start_new_round() -> void:
 	current_round += 1
 	if win_history.size() - 1 > current_round:
 		Log.err("For some reason current round exceeds win history")
+
+
+func change_game_settings(new_round_type: int, new_max_rounds: int) -> void:
+	if new_max_rounds >= 0:
+		self.rounds_out_of = new_max_rounds
+	if new_round_type >= 0:
+		self.round_type = new_round_type as RoundType
+	_emit_data()
+
+
+func get_game_winner() -> int:
+	var majority = float(rounds_out_of) / float(players.size())
+	for player_id in players.keys():
+		if get_wins(player_id) > majority:
+			return player_id
+	return -1
 
 
 func to_dict() -> Dictionary:
@@ -88,18 +131,9 @@ func to_dict() -> Dictionary:
 		"next_map": next_map,
 		"map_history": map_history,
 		"current_round": current_round,
+		"round_type": round_type,
+		"rounds_out_of": rounds_out_of,
 	}
-
-
-func add_player_win(id: int) -> bool:
-	if win_history.size() > current_round and current_round != -1:
-		Log.warn(
-			"Round #%s has already been won by %s" % [current_round + 1, win_history[current_round]]
-		)
-		return false
-	win_history.append(id)
-	_emit_data()
-	return true
 
 
 func get_wins(id: int) -> int:
@@ -135,4 +169,6 @@ static func from_dict(dict: Dictionary) -> GameInfo:
 	info.next_map = dict.get("next_map", 0)
 	info.map_history = dict.get("map_history", [])
 	info.current_round = dict.get("current_round", -1)
+	info.round_type = dict.get("round_type", RoundType.MAJORITY)
+	info.rounds_out_of = dict.get("rounds_out_of", 5)
 	return info

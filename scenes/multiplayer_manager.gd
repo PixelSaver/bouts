@@ -217,7 +217,6 @@ func try_join_lobby(lobby_name: String, password: String = "") -> void:
 
 func lobby_created(lobby_name: String) -> void:
 	gdsync_lobby_responded.emit(lobby_name, -1)
-	SignalBus.joined.emit(lobby_name)
 	try_join_lobby(lobby_name, _created_lobby_password)
 	print("Lobby of name <%s> made!" % lobby_name)
 

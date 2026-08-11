@@ -130,19 +130,21 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 
 func player_won(id: int) -> void:
 	player_manager.stop_player_sync()
-	var true_win = Global.set_winner(id)
-	if not true_win:
-		return
+	# ignore true win since if tie js do another round :P
+	var _true_win = Global.set_winner(id)
 	Log.pr("Client %s sees %s win" % [GDSync.get_client_id(), id])
 	if not GDSync.is_host():
 		return
 	await get_tree().process_frame
 	await get_tree().process_frame
-	if id == -1:
-		# tie
-		pass
-	else:
+	var game_winner := _game_info.get_game_winner()
+	if game_winner == -1:
 		Global.menu_manager.request_start_game()
+	else:
+		Log.pr("Player %s won the game!" % game_winner)
+		Global.menu_manager.transition_to_scene(
+			SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)
+		)
 
 
 func end_anim() -> void:
