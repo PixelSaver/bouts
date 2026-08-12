@@ -57,8 +57,10 @@ var _jump_armed := true
 var _jump_buffer := 0.0
 var max_jump_buffer := 0.2
 var can_jump := false
+var _skill_countdown := 0.0
 var input_dir := Vector2()
 var input_jump := false
+var input_skill := false
 var input_motion := Vector2.ZERO
 var _mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
@@ -210,6 +212,7 @@ func _handle_input():
 
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
+	var skill = Input.is_action_just_pressed("r_click") or Input.is_action_just_pressed("shift")
 	var motion = mouse_motion
 	mouse_motion = Vector2.ZERO
 
@@ -220,21 +223,21 @@ func _handle_input():
 		input_dir = dir
 		input_jump = jump
 		input_motion = motion
+		input_skill = skill
 	elif _game_info != null:
-		#submit_input.rpc(dir, jump, motion)
-		GDSync.call_func(submit_input, dir, jump, motion)
-		pass
+		GDSync.call_func(submit_input, dir, jump, skill, motion)
 	else:
 		Log.err("Game info is null for player!")
 
 
 #@rpc("any_peer", "unreliable")
 ## Sending input from client to server
-func submit_input(dir: Vector2, jump: bool, _mouse_motion: Vector2) -> void:
+func submit_input(dir: Vector2, jump: bool, skill: bool, _mouse_motion: Vector2) -> void:
 	if not GDSync.is_host():
 		return
 	input_dir = dir
 	input_jump = jump
+	input_skill = skill
 	input_motion = _mouse_motion
 #endregion
 #region Syncing state
@@ -259,6 +262,7 @@ func get_state() -> Array:
 #region Movement and input
 func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
 	_jump_buffer -= delta
+	_skill_countdown -= delta
 	var target = r_hand_marker.global_position + _mouse_motion
 	#mouse_pivot.global_position = look_pos
 	_ik_two_seg(
@@ -268,6 +272,11 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 		r_arm_fore,
 		target,
 	)
+
+	if weapon != null and input_skill and _skill_countdown < 0.:
+		input_skill = false
+		_skill_countdown = weapon.get_skill_cooldown()
+		weapon.apply_skill(self)
 
 	if can_jump and _jump_armed and (jump or _jump_buffer > 0.):
 		_jump_armed = false
@@ -324,13 +333,6 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 func _input(event: InputEvent) -> void:
 	if _disabled == DisableMode.FROZEN or _disabled == DisableMode.NOTHING:
 		return
-
-	if Input.is_action_just_pressed("l_click"):
-		_mouse_mode = Input.MOUSE_MODE_CAPTURED
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if Input.is_action_just_pressed("esc"):
-		_mouse_mode = Input.MOUSE_MODE_VISIBLE
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if not is_multiplayer_authority():
 		return
 	if event is InputEventMouseMotion:

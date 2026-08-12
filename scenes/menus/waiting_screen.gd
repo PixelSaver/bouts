@@ -20,7 +20,6 @@ func _ready() -> void:
 			leave_requested.emit(),
 	)
 
-	_clear_lobby()
 	_update_player_list()
 	Global.menu_manager.player_connected.connect(
 		func(id: int):

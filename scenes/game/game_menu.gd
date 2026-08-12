@@ -9,6 +9,7 @@ const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
 @export var text_cont: Control
 @onready var players: Node2D = $Players
 @onready var player_manager: PlayerManager = $Players
+var mouse_mode: Input.MouseMode = Input.MouseMode.MOUSE_MODE_VISIBLE
 var t: Tween
 var _game_info: GameInfo
 
@@ -40,6 +41,15 @@ func _ready() -> void:
 	for tw in banner_ts:
 		tw.tween_value = 1.0
 		tw.modulate_parent.a = 1.0
+
+
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("l_click"):
+		mouse_mode = Input.MOUSE_MODE_CAPTURED
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if Input.is_action_just_pressed("esc"):
+		mouse_mode = Input.MOUSE_MODE_VISIBLE
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 func pass_game_info(game_info: GameInfo) -> void:

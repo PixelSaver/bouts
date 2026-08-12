@@ -15,6 +15,7 @@ contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("2_6linq")
 weapon_name = "Generic Sword"
+weapon_skill_cooldown = 2.0
 weapon_description = "Just a sword"
 metadata/_custom_type_script = "uid://b6ewgxfuv3c4g"
 

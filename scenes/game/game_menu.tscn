@@ -210,7 +210,6 @@ distance = 1000.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=395550679]
-top_level = true
 zoom = Vector2(5, 5)
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=206576365]
