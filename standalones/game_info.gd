@@ -2,7 +2,7 @@ extends RefCounted
 class_name GameInfo
 
 enum RoundType {
-	MAJORITY,
+	BEST_OF,
 	FIRST_TO,
 	#TODO Add more round types / games / styles
 	#MINiGAME,
@@ -40,7 +40,7 @@ signal data_changed(data: Dictionary)
 			return
 		current_round = val
 		_emit_data()
-@export var round_type: RoundType = RoundType.MAJORITY
+@export var round_type: RoundType = RoundType.BEST_OF
 @export var rounds_out_of := 5:
 	set(val):
 		if rounds_out_of == val:
@@ -112,10 +112,16 @@ func change_game_settings(new_round_type: int, new_max_rounds: int) -> void:
 
 
 func get_game_winner() -> int:
-	var majority = float(rounds_out_of) / float(players.size())
-	for player_id in players.keys():
-		if get_wins(player_id) > majority:
-			return player_id
+	match round_type:
+		RoundType.BEST_OF:
+			var majority = float(rounds_out_of) / float(players.size())
+			for player_id in players.keys():
+				if get_wins(player_id) > majority:
+					return player_id
+		RoundType.FIRST_TO:
+			for player_id in players.keys():
+				if get_wins(player_id) >= rounds_out_of:
+					return player_id
 	return -1
 
 
@@ -173,6 +179,6 @@ static func from_dict(dict: Dictionary) -> GameInfo:
 	info.next_map = dict.get("next_map", 0)
 	info.map_history = dict.get("map_history", [])
 	info.current_round = dict.get("current_round", -1)
-	info.round_type = dict.get("round_type", RoundType.MAJORITY)
+	info.round_type = dict.get("round_type", RoundType.BEST_OF)
 	info.rounds_out_of = dict.get("rounds_out_of", 5)
 	return info
