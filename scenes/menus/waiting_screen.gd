@@ -21,7 +21,7 @@ func _ready() -> void:
 	)
 
 	_clear_lobby()
-	#_update_player_list()
+	_update_player_list()
 	Global.menu_manager.player_connected.connect(
 		func(id: int):
 			id = GDSync.get_client_id() if id == -1 else id

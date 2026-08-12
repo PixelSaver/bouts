@@ -9,6 +9,7 @@ signal game_start_requested(game_info_dict: Dictionary)
 var game_info: GameInfo = GameInfo.new()
 #var players: Dictionary[int, PlayerInfo] = { }
 @onready var player_info := PlayerInfo.new("%.5f" % randf())
+var _connected_lobby: LobbyInfo
 signal gdsync_connection_changed(is_connected: bool)
 signal gdsync_lobby_responded(lobby_name: String, error: int)
 var is_gdsync_connected := false:
@@ -153,10 +154,12 @@ func _on_connection_failed(error: int) -> void:
 
 
 func _on_disconnected() -> void:
+	_connected_lobby = null
 	is_gdsync_connected = false
 
 
 func _on_kicked() -> void:
+	_connected_lobby = null
 	Log.pr("Got kicked!! client %s" % GDSync.get_client_id())
 	Global.notif_manager.create_notification(
 		"You were kicked!",
@@ -247,6 +250,8 @@ func lobby_creation_failed(lobby_name: String, error: int):
 func _on_lobby_joined(lobby_name: String) -> void:
 	player_info.force_update_host()
 	SignalBus.joined.emit(lobby_name)
+	await get_tree().process_frame
+	_connected_lobby = LobbyInfo.from_dict(GDSync.lobby_get_all_data())
 
 
 func _on_lobby_join_failed(lobby_name: String, error: int) -> void:
@@ -269,6 +274,7 @@ func request_start_game() -> void:
 	if not GDSync.is_host():
 		#TODO Write host logic for showing and transferring
 		return
+	game_info.clear_win_history()
 	game_info.start_new_round()
 	GDSync.call_func_all(_on_game_start, game_info.to_dict())
 	#GDSync.emit_signal_remote_all(game_start_requested, game_info.to_dict())

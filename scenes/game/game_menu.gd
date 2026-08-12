@@ -16,6 +16,7 @@ var _game_info: GameInfo
 func _ready() -> void:
 	GDSync.expose_func(spawn_player)
 	GDSync.expose_func(player_won)
+	GDSync.expose_func(end_game_for_all)
 
 	if GDSync.is_host():
 		player_manager.player_won.connect(
@@ -119,14 +120,6 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	inst.begin_round(_game_info)
 	player_manager.register_player_in_game(id, inst)
 
-#@rpc("any_peer", "reliable", "call_remote")
-#func receive_upgrades(win_id:int, upgrades:Array[UpgradeManager.Upgrades]):
-##HACK Update winners and losers better, clean up al the Global.player_won_id = id and stuff
-#Global.player_won_id = win_id
-#Global.round_state = RoundState.new()
-##TODO Upgrade to 4 player
-#Global.round_state.set_player_upgrades(Global.get_losers().front(), upgrades)
-
 
 func player_won(id: int) -> void:
 	player_manager.stop_player_sync()
@@ -142,9 +135,13 @@ func player_won(id: int) -> void:
 		Global.menu_manager.request_start_game()
 	else:
 		Log.pr("Player %s won the game!" % game_winner)
-		Global.menu_manager.transition_to_scene(
-			SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)
-		)
+		GDSync.call_func_all(end_game_for_all)
+
+
+func end_game_for_all() -> void:
+	Global.menu_manager.transition_to_scene(
+		SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)
+	)
 
 
 func end_anim() -> void:

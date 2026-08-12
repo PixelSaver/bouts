@@ -111,8 +111,12 @@ func _ready() -> void:
 	lobbies_screen.start_anim()
 	waiting_screen.leave_requested.connect(_on_leave_requested)
 	waiting_screen.start_game_requested.connect(_on_start_game_requested)
-	lobbies_screen.show()
-	waiting_screen.hide()
+	if Global.menu_manager._connected_lobby == null:
+		lobbies_screen.show()
+		waiting_screen.hide()
+	else:
+		lobbies_screen.hide()
+		waiting_screen.show()
 #Global.menu_manager.gdsync_lobby_responded
 
 

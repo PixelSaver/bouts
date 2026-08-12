@@ -27,7 +27,6 @@ func _update_visibility(_x = null) -> void:
 
 
 func _update_slider_label() -> void:
-	Log.pr("Set slider label")
 	slider_label.text = "%d" % (max_rounds_slider.value)
 
 

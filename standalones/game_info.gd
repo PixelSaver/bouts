@@ -119,6 +119,10 @@ func get_game_winner() -> int:
 	return -1
 
 
+func clear_win_history() -> void:
+	win_history.clear()
+#endregion
+
 func to_dict() -> Dictionary:
 	var players_dict: Dictionary[int, Dictionary] = { }
 	for key in players.keys():
