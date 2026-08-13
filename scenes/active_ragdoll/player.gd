@@ -65,6 +65,7 @@ var input_motion := Vector2.ZERO
 var _mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
 var is_syncing_state := true
+var _sync_clock := 0.0
 var _game_info: GameInfo
 
 
@@ -325,9 +326,11 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	#print("Hand error: %s" % err)
 	if is_syncing_state == false:
 		return
-	if GDSync.is_host():
+	if GDSync.is_host() and _sync_clock > 60. / float(sync_rate):
+		_sync_clock = 0.
 		#sync_state.rpc(get_state())z
 		GDSync.call_func(sync_state, get_state())
+	_sync_clock += delta
 
 
 func _input(event: InputEvent) -> void:
