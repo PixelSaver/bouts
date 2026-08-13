@@ -274,7 +274,6 @@ func request_start_game() -> void:
 	if not GDSync.is_host():
 		#TODO Write host logic for showing and transferring
 		return
-	game_info.clear_win_history()
 	game_info.start_new_round()
 	GDSync.call_func_all(_on_game_start, game_info.to_dict())
 	#GDSync.emit_signal_remote_all(game_start_requested, game_info.to_dict())

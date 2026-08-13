@@ -107,6 +107,32 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_g4dfm")
 
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameUI" unique_id=1669466441]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/GameUI/MarginContainer" unique_id=1009501599]
+layout_mode = 2
+
+[node name="WinHistory" type="HBoxContainer" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=82006299]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=534792602]
+layout_mode = 2
+stretch_mode = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer" unique_id=828282454]
+layout_mode = 2
+
 [node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
 layout_mode = 3
 anchors_preset = 15
