@@ -80,7 +80,7 @@ func add_or_change_pi(id: int, pi: PlayerInfo, sync_data: bool = false) -> void:
 func pi_change_func(pi: PlayerInfo, id: int) -> void:
 	player_info_changed.emit(id, pi)
 	if id == GDSync.get_client_id():
-		Log.pr("Synced data")
+		Log.pr("Synced data: %s" % pi.to_string())
 		GDSync.player_set_data("player_info", pi.to_dict())
 
 

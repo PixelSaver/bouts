@@ -19,8 +19,10 @@ func _ready() -> void:
 func _on_item_selected(index: int) -> void:
 	var weapon_type = index as WeaponManager.WeaponType
 	#weapon_chosen.emit(weapon_type)
-	Global.menu_manager.player_info.weapon = weapon_type
+	var pi = Global.menu_manager.player_info
+	pi.weapon = weapon_type
 	player.bind_weapon(weapon_type)
+	Global.menu_manager.game_info.pi_change_func(pi, pi.id)
 
 
 func _on_color_selected(color: Color) -> void:

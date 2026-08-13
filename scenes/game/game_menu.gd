@@ -92,7 +92,6 @@ func start_anim() -> void:
 		t.tween_property(tw, "tween_value", 1.0, 0.7)
 		t.tween_property(tw, "modulate_parent:a", 0.0, 0.7)
 
-	Log.pr("Client %s is about to spawn players, name is %s" % [GDSync.get_client_id(), self.name])
 	if not GDSync.is_host():
 		return
 
@@ -114,7 +113,8 @@ func start_anim() -> void:
 
 #@rpc("authority", "reliable", "call_local")
 func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
-	Log.pr("Player spawned for client %s" % GDSync.get_client_id())
+	if id == GDSync.get_client_id():
+		Log.pr("Player spawned of this info: %s" % PlayerInfo.from_dict(_pi))
 	var pi = PlayerInfo.from_dict(_pi)
 	var inst = PLAYER.instantiate() as Player
 	players.add_child(inst)

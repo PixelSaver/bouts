@@ -94,7 +94,7 @@ layout_mode = 2
 
 [node name="Polygon2D" type="Polygon2D" parent="MarginContainer/HBoxContainer/HostDisplay/Control" unique_id=1402004202]
 color = Color(0.6392157, 0.81960785, 0.6862745, 1)
-polygon = PackedVector2Array(-43, -34, -45, 19, 38, 17, 39, -36, 18, -15, 1, -37, -15, -16)
+polygon = PackedVector2Array(-40, -23, -45, 19, 38, 17, 35, -24, 12, -12, -2, -27, -19, -8)
 
 [node name="ShadowedButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=946530915]
 custom_minimum_size = Vector2(100, 0)

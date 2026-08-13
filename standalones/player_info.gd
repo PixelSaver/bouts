@@ -58,4 +58,10 @@ static func from_dict(d: Dictionary) -> PlayerInfo:
 
 
 func _to_string() -> String:
-	return "PlayerInfo Res (ID: %s, Name: %s, Color: %s)" % [self.id, self.player_name, self.color]
+	return "PlayerInfo(ID: %s, Name: %s, Color: %s, Weapon: %s, Host? %s)" % [
+		self.id,
+		self.player_name,
+		self.color,
+		WeaponManager.WeaponType.keys()[weapon],
+		self.is_host,
+	]

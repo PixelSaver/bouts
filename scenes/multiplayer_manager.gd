@@ -194,7 +194,7 @@ func _on_pi_changed(client_id: int, key: String, value) -> void:
 		return
 	var pi = PlayerInfo.from_dict(value)
 	pi.id = client_id
-	if not pi or client_id != GDSync.get_client_id():
+	if not pi:
 		return
 	game_info.add_or_change_pi(client_id, pi, false)
 #endregion
