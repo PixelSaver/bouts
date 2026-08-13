@@ -22,7 +22,7 @@ func _ready() -> void:
 
 
 func _update_visibility(_x = null) -> void:
-	self.visible = GDSync.is_host()
+	self.mouse_filter = Control.MOUSE_FILTER_PASS if GDSync.is_host() else Control.MOUSE_FILTER_IGNORE
 	Log.pr("Tested visibliity, %s" % self.visible)
 
 

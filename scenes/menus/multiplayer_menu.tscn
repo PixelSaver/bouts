@@ -615,7 +615,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("4_ftwoh")
-player_lobby_cont = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/PlayerLobbyCont")
+player_lobby_cont = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ScrollContainer/PlayerLobbyCont")
 start_game = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StartGame")
 leave_but = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Leave")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
@@ -648,11 +648,17 @@ text = "Bouts Lobby"
 fit_content = true
 scroll_active = false
 
-[node name="PlayerLobbyCont" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=546159757]
+[node name="ScrollContainer" type="ScrollContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1421840010]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PlayerLobbyRow" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/PlayerLobbyCont" unique_id=1710346516 instance=ExtResource("7_4kuv5")]
+[node name="PlayerLobbyCont" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ScrollContainer" unique_id=546159757]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PlayerLobbyRow" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ScrollContainer/PlayerLobbyCont" unique_id=1710346516 instance=ExtResource("7_4kuv5")]
 layout_mode = 2
 mouse_filter = 1
 
@@ -660,11 +666,11 @@ mouse_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("14_igtkl")
-round_type_button = NodePath("MarginContainer/GameSettings/RoundType/OptionButton")
-max_rounds_slider = NodePath("MarginContainer/GameSettings/MaxRounds/HSlider")
-slider_label = NodePath("MarginContainer/GameSettings/MaxRounds/SliderLabel")
+round_type_button = NodePath("ScrollContainer/MarginContainer/GameSettings/RoundType/OptionButton")
+max_rounds_slider = NodePath("ScrollContainer/MarginContainer/GameSettings/MaxRounds/HSlider")
+slider_label = NodePath("ScrollContainer/MarginContainer/GameSettings/MaxRounds/SliderLabel")
 
-[node name="MarginContainer" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings" unique_id=590111919]
+[node name="ScrollContainer" type="ScrollContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings" unique_id=2121375424]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -672,11 +678,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameSettings" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer" unique_id=1106660466]
+[node name="MarginContainer" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer" unique_id=590111919]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GameSettings" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer" unique_id=1106660466]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings" unique_id=1224624186]
+[node name="RichTextLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=1224624186]
 layout_mode = 2
 bbcode_enabled = true
 text = "Game Settings"
@@ -684,13 +695,13 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HSeparator" type="HSeparator" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings" unique_id=82858627]
+[node name="HSeparator" type="HSeparator" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=82858627]
 layout_mode = 2
 
-[node name="RoundType" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings" unique_id=425730629]
+[node name="RoundType" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=425730629]
 layout_mode = 2
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings/RoundType" unique_id=833319331]
+[node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=833319331]
 layout_mode = 2
 bbcode_enabled = true
 text = "[font_size=20]Round Type: "
@@ -698,17 +709,17 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Control" type="Control" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings/RoundType" unique_id=1843546642]
+[node name="Control" type="Control" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=1843546642]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="OptionButton" type="OptionButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings/RoundType" unique_id=704340158]
+[node name="OptionButton" type="OptionButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=704340158]
 layout_mode = 2
 
-[node name="MaxRounds" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings" unique_id=745885862]
+[node name="MaxRounds" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=745885862]
 layout_mode = 2
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings/MaxRounds" unique_id=1304281281]
+[node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=1304281281]
 layout_mode = 2
 bbcode_enabled = true
 text = "[font_size=20]Best out of #: "
@@ -716,7 +727,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HSlider" type="HSlider" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings/MaxRounds" unique_id=499807739]
+[node name="HSlider" type="HSlider" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=499807739]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -727,7 +738,7 @@ min_value = 1.0
 max_value = 25.0
 value = 5.0
 
-[node name="SliderLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/MarginContainer/GameSettings/MaxRounds" unique_id=18256955]
+[node name="SliderLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=18256955]
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true

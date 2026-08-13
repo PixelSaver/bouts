@@ -2,6 +2,7 @@ extends Weapon
 class_name Mace
 
 @export var colliding_bodies: Array[RigidBody2D]
+@export var excluded_bodies: Array[RigidBody2D]
 @export var hit_cooldown := 0.3
 var _hit_cooldown := 0.3
 
@@ -20,7 +21,7 @@ func _physics_process(delta: float) -> void:
 
 func set_body_collision_exceptions(bodies: Array[RigidBody2D]) -> void:
 	for body in bodies:
-		for weapon_body in colliding_bodies:
+		for weapon_body in excluded_bodies:
 			weapon_body.add_collision_exception_with(body)
 			body.add_collision_exception_with(weapon_body)
 

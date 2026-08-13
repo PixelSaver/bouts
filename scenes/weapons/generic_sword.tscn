@@ -26,10 +26,21 @@ width = 20.0
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=470547925]
-position = Vector2(-0.19999695, 45.600006)
-polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 35, 0, 7, 6, 5.199997, 78.399994, 0, 86, -4.800003, 78.399994, -7, 6, -31, 0, -7, -9, -7, -41)
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2049141650]
 position = Vector2(-0.19999695, 45.600006)
 polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, 7, 6, 5.199997, 78.399994, 0, 86, -4.800003, 78.399994, -7, 6, -7, -9, -7, -41)
+
+[node name="Handle" type="Polygon2D" parent="." unique_id=1090904036]
+position = Vector2(-0.19999695, 45.600006)
+color = Color(0.8784314, 0.8784314, 0.8627451, 1)
+polygon = PackedVector2Array(0, -46, 7, -41, 7, -9, -7, -9, -7, -41)
+
+[node name="Guard" type="Polygon2D" parent="." unique_id=470547925]
+position = Vector2(-0.19999695, 45.600006)
+color = Color(0.8509804, 0.6392157, 0.8039216, 1)
+polygon = PackedVector2Array(7, -9, 35, 0, 7, 6, -7, 6, -31, 0, -7, -9)
+
+[node name="Blade" type="Polygon2D" parent="." unique_id=1202673058]
+position = Vector2(-0.19999695, 45.600006)
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+polygon = PackedVector2Array(7, 6, 5.199997, 78.399994, 0, 86, -4.800003, 78.399994, -7, 6)

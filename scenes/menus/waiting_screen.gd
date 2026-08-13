@@ -31,6 +31,7 @@ func _ready() -> void:
 		func(_x):
 			_update_player_list(),
 	)
+	GDSync.host_changed.connect(_on_host_changed)
 
 
 func _clear_lobby() -> void:
@@ -56,6 +57,10 @@ func start_anim() -> void:
 	_enabled = true
 	start_game.visible = GDSync.is_host()
 	show()
+
+
+func _on_host_changed(is_host: bool, new_host: int) -> void:
+	start_game.visible = is_host
 
 
 func end_anim() -> void:
