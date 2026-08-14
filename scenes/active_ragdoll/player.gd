@@ -62,7 +62,6 @@ var input_dir := Vector2()
 var input_jump := false
 var input_skill := false
 var input_motion := Vector2.ZERO
-var _mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
 var is_syncing_state := true
 var _sync_clock := 0.0
@@ -183,7 +182,7 @@ func _ik_two_seg(
 
 
 func _physics_process(delta: float) -> void:
-	if not multiplayer.multiplayer_peer:
+	if not GDSync.is_active():
 		return
 	_handle_input()
 	if not GDSync.is_host():
@@ -198,8 +197,6 @@ func _update_can_jump() -> void:
 		can_jump = can_jump or part.is_touching_ground
 	if not can_jump:
 		_jump_armed = true
-	#if is_multiplayer_authority() and GDSync.is_host():
-	#print("Can jump? %s" % can_jump)
 
 
 func _handle_input():
@@ -326,11 +323,11 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	#print("Hand error: %s" % err)
 	if is_syncing_state == false:
 		return
-	if GDSync.is_host() and _sync_clock > 60. / float(sync_rate):
+	_sync_clock += delta
+	if GDSync.is_host() and _sync_clock >= 1.0 / float(sync_rate):
 		_sync_clock = 0.
 		#sync_state.rpc(get_state())z
 		GDSync.call_func(sync_state, get_state())
-	_sync_clock += delta
 
 
 func _input(event: InputEvent) -> void:

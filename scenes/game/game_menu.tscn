@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://n0uu6tn8ib5k" path="res://scenes/game/game_ui.gd" id="5_g4dfm"]
 [ext_resource type="PackedScene" uid="uid://cpdx3wny0t6im" path="res://scenes/game/maps/default_map.tscn" id="5_xppml"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_y2var"]
+[ext_resource type="Script" uid="uid://b4afhjrek0wy8" path="res://scenes/game/ping_label.gd" id="6_yoncu"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="8_y61kw"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_g4dfm"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="10_yoncu"]
@@ -133,6 +134,12 @@ stretch_mode = 0
 [node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer" unique_id=828282454]
 layout_mode = 2
 
+[node name="PingLabel" type="Label" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=1617847301]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 24.0
+script = ExtResource("6_yoncu")
+
 [node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
 layout_mode = 3
 anchors_preset = 15
@@ -246,6 +253,7 @@ distance = 1000.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=395550679]
+top_level = true
 zoom = Vector2(5, 5)
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=206576365]

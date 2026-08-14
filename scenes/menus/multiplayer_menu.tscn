@@ -10,7 +10,7 @@
 [ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="8_jxd0g"]
 [ext_resource type="PackedScene" uid="uid://t4eelh8k41jw" path="res://scenes/active_ragdoll/player.tscn" id="9_0haww"]
 [ext_resource type="Script" uid="uid://doncweywmgs0e" path="res://scenes/menus/password_popup.gd" id="9_xcpy6"]
-[ext_resource type="Script" path="res://scenes/menus/auth/secret_toggle.gd" id="10_0lu5u"]
+[ext_resource type="Script" uid="uid://bdldifg4qplqx" path="res://scenes/menus/secret_toggle.gd" id="10_igtkl"]
 [ext_resource type="Script" uid="uid://dqlbdyibxomuh" path="res://scenes/menus/lobbies_screen.gd" id="11_5jciy"]
 [ext_resource type="Script" uid="uid://cg7undgju3pjo" path="res://scenes/menus/lobbies_cont.gd" id="12_0lu5u"]
 [ext_resource type="Script" uid="uid://blmm825dbb2nn" path="res://scenes/menus/new_lobby_cont.gd" id="13_ykd5h"]
@@ -514,12 +514,11 @@ max_length = 80
 expand_to_text_length = true
 secret = true
 
-[node name="CheckButton" type="CheckButton" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=447734301 node_paths=PackedStringArray("password")]
+[node name="CheckButton" type="CheckButton" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=447734301]
 layout_mode = 2
 mouse_filter = 1
 button_pressed = true
-script = ExtResource("10_0lu5u")
-password = NodePath("../Password")
+script = ExtResource("10_igtkl")
 
 [node name="Control" type="Control" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=288367921]
 layout_mode = 2

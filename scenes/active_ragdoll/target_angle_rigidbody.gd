@@ -12,7 +12,7 @@ var _target_angle := 0.0
 @export var damping := 10.0
 @export var max_torque := 300000.
 @export var disabled := false
-@export var state_lerp_speed := 1.
+@export var state_lerp_speed := 3.
 var is_touching_ground := false
 var is_touching_wall := false
 

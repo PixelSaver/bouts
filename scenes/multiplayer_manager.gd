@@ -256,7 +256,9 @@ func _on_lobby_joined(lobby_name: String) -> void:
 
 func _on_lobby_join_failed(lobby_name: String, error: int) -> void:
 	var error_str = ENUMS.LOBBY_JOIN_ERROR.keys()[error]
-	Log.err("Failed to join %s, because of: %s" % [lobby_name, error_str])
+	error_str = "Failed to join %s, because of: %s" % [lobby_name, error_str]
+	Log.err(error_str)
+	Global.notif_manager.create_notification("Lobby Join Failure", error_str)
 
 #endregion
 
