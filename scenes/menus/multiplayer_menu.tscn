@@ -77,6 +77,25 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
+[sub_resource type="StyleBox" id="StyleBox_nw0vu"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_4kuv5")
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
 [sub_resource type="StyleBox" id="StyleBox_igtkl"]
 resource_local_to_scene = false
 resource_name = ""
@@ -207,8 +226,7 @@ waiting_screen = NodePath("WaitingScreen")
 lobbies_screen = NodePath("LobbiesScreen")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
-[node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont", "lobby_popup")]
-visible = false
+[node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont", "lobby_popup", "join_lobby_but")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -218,6 +236,7 @@ grow_vertical = 2
 script = ExtResource("11_5jciy")
 scan_cont = NodePath("MarginContainer/VBoxContainer/LobbiesCont")
 lobby_popup = NodePath("PasswordPopup")
+join_lobby_but = NodePath("MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Join")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen" unique_id=55909135]
@@ -376,6 +395,42 @@ theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "Create
 "
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Join" type="Button" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=631285354]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("3_igtkl")
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Join" unique_id=1661760214]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_nw0vu")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Join" unique_id=1492432007]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Join"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
@@ -606,6 +661,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game", "leave_but")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

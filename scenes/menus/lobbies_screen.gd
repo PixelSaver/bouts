@@ -4,6 +4,7 @@ class_name LobbiesScreen
 const LOBBY_ROW := preload("res://scenes/menus/lobby_row.tscn")
 @export var scan_cont: LobbyScanContainer
 @export var lobby_popup: PasswordPopup
+@export var join_lobby_but: DefaultButton
 var last_refresh := 0.
 
 #region Fluff
@@ -23,10 +24,15 @@ func _ready() -> void:
 	scan_cont.join_lobby_requested.connect(_on_join_lobby_requested)
 	lobby_popup.lobby_canceled.connect(_on_lobby_join_canceled)
 	lobby_popup.lobby_submitted.connect(_on_join_lobby_requested_with_password)
+	join_lobby_but.pressed.connect(_on_join_lobby_requested_custom)
 
 
 func _on_lobby_join_canceled() -> void:
 	lobby_popup.end_anim()
+
+
+func _on_join_lobby_requested_custom() -> void:
+	lobby_popup.prompt_lobby_input()
 
 
 func _on_join_lobby_requested_with_password(lobby_name: String, password: String) -> void:
