@@ -186,6 +186,11 @@ func _on_player_connected(id: int) -> void:
 
 func _on_player_disconnected(id: int) -> void:
 	game_info.erase_player(id)
+	SignalBus.player_disconnected.emit()
+	Global.notif_manager.create_notification(
+		"Player disconnected",
+		"Player of id <%s> disconnected from the server." % id,
+	)
 
 
 func _on_pi_changed(client_id: int, key: String, value) -> void:

@@ -255,6 +255,7 @@ metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 [node name="Camera2D" type="Camera2D" parent="." unique_id=395550679]
 top_level = true
 zoom = Vector2(5, 5)
+editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=206576365]
 process_priority = 300
@@ -268,9 +269,11 @@ script = ExtResource("8_y61kw")
 follow_mode = 3
 zoom = Vector2(5, 5)
 tween_resource = SubResource("Resource_6lcsq")
+inactive_update_mode = 1
 follow_damping = true
 auto_zoom = true
 auto_zoom_min = 0.5
 auto_zoom_max = 1.0
 auto_zoom_margin = Vector4(100, 100, 100, 100)
+draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"

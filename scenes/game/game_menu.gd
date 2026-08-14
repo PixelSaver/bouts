@@ -41,6 +41,10 @@ func _ready() -> void:
 	for tw in banner_ts:
 		tw.tween_value = 1.0
 		tw.modulate_parent.a = 1.0
+	SignalBus.player_disconnected.connect(
+		func():
+			end_game_for_all(),
+	)
 
 
 func _input(_event: InputEvent) -> void:
@@ -157,5 +161,9 @@ func end_game_for_all() -> void:
 
 func end_anim() -> void:
 	self.hide()
-	await get_tree().create_timer(3.).timeout
+	await get_tree().create_timer(.5).timeout
+	$PhantomCamera2D.hide()
+	$PhantomCamera2D.queue_free()
+	$Camera2D.hide()
+	$Camera2D.queue_free()
 	queue_free()
