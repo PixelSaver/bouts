@@ -8,25 +8,12 @@
 [ext_resource type="Script" uid="uid://n0uu6tn8ib5k" path="res://scenes/game/game_ui.gd" id="5_g4dfm"]
 [ext_resource type="PackedScene" uid="uid://cpdx3wny0t6im" path="res://scenes/game/maps/default_map.tscn" id="5_xppml"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_y2var"]
+[ext_resource type="Script" uid="uid://cha0gp1a5pqj0" path="res://scenes/game/win_history_display.gd" id="6_6lcsq"]
 [ext_resource type="Script" uid="uid://b4afhjrek0wy8" path="res://scenes/game/ping_label.gd" id="6_yoncu"]
+[ext_resource type="PackedScene" uid="uid://dyqf138arjrkc" path="res://scenes/game/one_win_history.tscn" id="7_wgtxe"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="8_y61kw"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_g4dfm"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="10_yoncu"]
-
-[sub_resource type="StyleBox" id="StyleBox_yoncu"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-script = ExtResource("5_y2var")
-color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-corner_detail = 5
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBox" id="StyleBox_jxd0g"]
 resource_local_to_scene = false
@@ -146,256 +133,22 @@ anchor_bottom = 0.05
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
+script = ExtResource("6_6lcsq")
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1110118791]
+[node name="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1190652418 instance=ExtResource("7_wgtxe")]
 layout_mode = 2
-stretch_mode = 1
 
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer" unique_id=828282454]
+[node name="AspectRatioContainer2" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=248111556 instance=ExtResource("7_wgtxe")]
 layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
 
-[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=116687673]
+[node name="AspectRatioContainer3" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1310429699 instance=ExtResource("7_wgtxe")]
 layout_mode = 2
-stretch_mode = 1
 
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer2" unique_id=405816702]
+[node name="AspectRatioContainer4" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1209137504 instance=ExtResource("7_wgtxe")]
 layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
 
-[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=380188740]
+[node name="AspectRatioContainer5" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=2130784556 instance=ExtResource("7_wgtxe")]
 layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer3" unique_id=1907793691]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer4" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1721814059]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer4" unique_id=634019594]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer5" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1387417270]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer5" unique_id=1767180325]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer6" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1086911982]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer6" unique_id=704539957]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer7" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1072947349]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer7" unique_id=869998475]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer8" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=824456781]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer8" unique_id=302932961]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer9" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=2113867231]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer9" unique_id=1216106219]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer10" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1752993945]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer10" unique_id=2138195678]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer11" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=948979187]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer11" unique_id=1088089449]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer12" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1673668025]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer12" unique_id=1528716104]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer13" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1138028406]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer13" unique_id=805425286]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer14" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=2025326152]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer14" unique_id=569519504]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer15" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=821567651]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer15" unique_id=1970461056]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer16" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1428479319]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer16" unique_id=174770820]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer17" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1038287190]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer17" unique_id=489424724]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer18" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1939382537]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer18" unique_id=583982489]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer19" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1169345808]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer19" unique_id=403492351]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer20" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=912640701]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer20" unique_id=272205542]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer21" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=830586329]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer21" unique_id=1305915599]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer22" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=400220349]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer22" unique_id=379620084]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer23" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1892930699]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer23" unique_id=2027807260]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer24" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=798307119]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer24" unique_id=973678890]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
-
-[node name="AspectRatioContainer25" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1543697320]
-layout_mode = 2
-stretch_mode = 1
-
-[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory/AspectRatioContainer25" unique_id=1680152315]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 0.7853982
-theme_override_styles/panel = SubResource("StyleBox_yoncu")
 
 [node name="PingLabel" type="Label" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=1617847301]
 layout_mode = 0
