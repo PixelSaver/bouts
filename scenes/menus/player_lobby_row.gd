@@ -63,9 +63,13 @@ func _on_kick() -> void:
 		SignalBus.kick_player_requested.emit(_player_info.id)
 
 
+func _is_me(pi: PlayerInfo) -> bool:
+	return GDSync.get_client_id() == pi.id
+
+
 func load_player(pi: PlayerInfo):
 	_player_info = pi
 	_box.color = pi.color
-	player_name.text = pi.player_name
+	player_name.text = "%s (me)" % pi.player_name if _is_me(pi) else pi.player_name
 	kick_button.visible = (pi.id != GDSync.get_client_id() and GDSync.is_host())
 	host_display.visible = pi.id == GDSync.get_host()

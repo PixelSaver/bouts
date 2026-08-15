@@ -24,3 +24,7 @@ func _on_round_started(gi: GameInfo) -> void:
 			return
 		inst.display((gi.players.get(id, PlayerInfo.new()) as PlayerInfo).color)
 		add_child(inst)
+
+	var curr = WIN_DISPLAY.instantiate() as OneWinHistoryDisplay
+	curr.set_as_current_round()
+	add_child(curr)

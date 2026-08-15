@@ -8,6 +8,8 @@ extends MarginContainer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player.set_disable(Player.DisableMode.NOTHING)
+	if not color_picker_button or not weapon_button:
+		return
 	Global.menu_manager.game_info.player_info_changed.connect(_on_pi_changed)
 	_on_pi_changed(GDSync.get_client_id(), Global.menu_manager.player_info)
 	for w_name in WeaponManager.get_all_weapon_types_str():

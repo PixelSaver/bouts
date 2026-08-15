@@ -4,18 +4,24 @@ class_name DefaultButton
 
 var t: Tween
 var _original_enabled_button_text: String = ""
+var _label: RichTextLabel
 
 #region Public API
 func disable_button() -> void:
 	disabled = true
-	self.modulate.ok_hsl_h = 0.
+	self.modulate.v = 0.4
 
 
 func enable_button() -> String:
 	disabled = false
-	self.modulate.ok_hsl_h = 1.0
+	self.modulate.v = 1.0
 	return _original_enabled_button_text
 
+
+func set_button_text(new_text: String) -> void:
+	if not _label:
+		return
+	_label.text = new_text
 #endregion
 
 func _enter_tree() -> void:
@@ -48,6 +54,11 @@ func _ensure_label():
 func _ready() -> void:
 	self.pivot_offset_ratio = Vector2(0.5, 0.5)
 	self.pressed.connect(_on_pressed)
+	for child in get_children():
+		if child is RichTextLabel:
+			_label = child as RichTextLabel
+			_original_enabled_button_text = _label.text
+			break
 
 
 func _notification(what: int) -> void:

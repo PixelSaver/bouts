@@ -2,40 +2,51 @@
 class_name Tweenable
 extends Node
 
-
-@export_range(0.0, 1.0, .0001) var tween_value: float = 0.0 :
+@export_range(0.0, 1.0, .0001) var tween_value: float = 0.0:
 	set(val):
 		tween_value = val
 		apply(val)
 @export var use_local_transform := false
-@export var modulate_parent : Color = Color.WHITE :
+@export var modulate_parent: Color = Color.WHITE:
 	set(val):
 		modulate_parent = val
-		if parent: parent.modulate = modulate_parent
-@export var scale_curve : Curve
-@export var direction : Vector2 = Vector2.ZERO
-@export var distance: float = 100.0
+		if parent:
+			parent.modulate = modulate_parent
+@export var scale_curve: Curve
+@export var direction: Vector2 = Vector2.ZERO
+@export var distance: float = 100.0:
+	set(val):
+		distance = val
+		apply(tween_value)
+@export var use_custom_transform_pivot_ratio := false:
+	set(val):
+		use_custom_transform_pivot_ratio = val
+		apply(tween_value)
 @export_tool_button("Randomize distance") var randomize_action = _randomize_distance
-var parent : Control
-
+var parent: Control
 
 
 func _randomize_distance():
 	distance = randf_range(0.2, 4.0) * 100
 
+
 func _ready() -> void:
 	parent = get_parent() as Control
-	if not parent: 
+	if not parent:
 		push_warning("Tweenable <%s> could not find it's parent, queue_free()ing" % self)
-		queue_free()
+		if not Engine.is_editor_hint():
+			queue_free()
+		return
 	parent.offset_transform_enabled = true
-	parent.offset_transform_pivot_ratio = Vector2.ONE * 0.5
+	if use_custom_transform_pivot_ratio:
+		parent.offset_transform_pivot_ratio = Vector2.ONE * 0.5
 
-func apply(t:float) -> void:
+
+func apply(t: float) -> void:
 	var offset = direction.normalized() * distance * t
 	if use_local_transform:
-		offset *= parent.get_transform() 
+		offset *= parent.get_transform()
 	if scale_curve:
 		parent.offset_transform_scale = Vector2.ONE * scale_curve.sample(t)
-	
+
 	parent.offset_transform_position = offset

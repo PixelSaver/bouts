@@ -5,7 +5,6 @@ class_name ShadowedButton
 @onready var panel: Panel = $Panel
 @export var shadow_range := Vector2(5, 15)
 @export var shadow_direction := Vector2(1, 1)
-var label: RichTextLabel
 var box: StyleBox
 
 
@@ -18,10 +17,6 @@ func _ready() -> void:
 		box.shadow_enabled = true
 		box.shadow_offset = Vector2(5, 5)
 		panel.add_theme_stylebox_override("panel", box)
-	for child in get_children():
-		if child is RichTextLabel:
-			label = child as RichTextLabel
-			break
 
 
 func _hover() -> void:
@@ -48,7 +43,6 @@ func _unhover() -> void:
 		t.tween_property(box, "shadow_offset", shadow_direction * shadow_range.x, 0.7)
 
 
-func set_button_text(new_text: String) -> void:
-	if not label:
-		return
-	label.text = new_text
+func set_button_color(col: Color) -> void:
+	if box.has_method("set_color"):
+		box.set_color(col)

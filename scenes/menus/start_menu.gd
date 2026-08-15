@@ -43,11 +43,11 @@ func _update_player_info() -> void:
 
 func _on_gdsync_connection_changed(_is_connected: bool) -> void:
 	if _is_connected:
-		_play_but.set_button_text("Play")
-		_play_but.disabled = false
+		var old_text = _play_but.enable_button()
+		_play_but.set_button_text(old_text)
 	else:
 		_play_but.set_button_text("Connecting to servers...")
-		_play_but.disabled = true
+		_play_but.disable()
 
 
 func _on_button_pressed(_name: String) -> void:

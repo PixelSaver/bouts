@@ -45,6 +45,15 @@ func _update_player_list() -> void:
 	for i in range(keys.size()):
 		var key = keys[i]
 		_add_lobby_player(key)
+	if keys.size() == 2:
+		var old_text = start_game.enable_button()
+		start_game.set_button_text(old_text)
+	elif keys.size() < 2:
+		start_game.set_button_text("Not Enough Players")
+		start_game.disable_button()
+	else:
+		start_game.set_button_text("Too Many Players")
+		start_game.disable_button()
 
 
 func _add_lobby_player(id: int) -> void:
