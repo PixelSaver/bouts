@@ -156,9 +156,10 @@ func player_won(id: int) -> void:
 
 func end_game_for_all() -> void:
 	_game_info.clear_win_history()
-	Global.menu_manager.transition_to_scene(
-		SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)
+	var won_scene: GameWonMenu = Global.menu_manager.transition_to_scene(
+		SceneDatabase.get_scene(SceneDatabase.Scene.WON)
 	)
+	won_scene.pass_game_info(_game_info)
 
 
 func end_anim() -> void:

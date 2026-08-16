@@ -43,6 +43,8 @@ func _ready() -> void:
 
 
 func apply(t: float) -> void:
+	if not parent:
+		await ready
 	var offset = direction.normalized() * distance * t
 	if use_local_transform:
 		offset *= parent.get_transform()

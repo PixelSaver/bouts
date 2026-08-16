@@ -20,7 +20,7 @@ var current_scene: PixelMenu
 var previous_scene: PixelMenu
 
 
-func transition_to_scene(new_scene: PackedScene, force_readable_name: bool = false):
+func transition_to_scene(new_scene: PackedScene, force_readable_name: bool = false) -> PixelMenu:
 	if previous_scene:
 		previous_scene.queue_free()
 	if current_scene:
@@ -30,6 +30,7 @@ func transition_to_scene(new_scene: PackedScene, force_readable_name: bool = fal
 	#TODO Need to find a more solid fix to having the same name for game_menu, other than force_readable_name
 	add_child(current_scene, force_readable_name)
 	current_scene.start_anim()
+	return current_scene
 
 
 func _ready() -> void:

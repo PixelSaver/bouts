@@ -68,7 +68,7 @@ func start_anim() -> void:
 	show()
 
 
-func _on_host_changed(is_host: bool, new_host: int) -> void:
+func _on_host_changed(is_host: bool, _new_host: int) -> void:
 	start_game.visible = is_host
 
 
