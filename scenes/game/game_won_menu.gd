@@ -15,20 +15,38 @@ func _ready() -> void:
 	all_t = get_all_tweenables(self)
 	for but in buttons:
 		but.pressed.connect(_on_but_pressed.bind(but.name.to_lower()))
+	GDSync.expose_func(back_to_lobby)
+	GDSync.expose_func(next_game)
+
+
+func back_to_lobby() -> void:
+	Global.menu_manager.transition_to_scene(
+		SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER),
+		true,
+	)
+
+
+func next_game(gi: Dictionary) -> void:
+	_game_info.clear_game_history()
+	var game_menu: GameMenu = Global.menu_manager.transition_to_scene(
+		SceneDatabase.get_scene(SceneDatabase.Scene.GAME),
+		true,
+	)
+	game_menu.pass_game_info(GameInfo.from_dict(gi))
 
 
 func _on_but_pressed(but_name: String) -> void:
+	if not GDSync.is_host():
+		Global.notif_manager.create_notification(
+			"Not the host",
+			"You can't go to next game or back to lobby unless you are host.",
+		)
+		return
 	match but_name.to_lower():
 		"backtolobby":
-			Global.menu_manager.transition_to_scene(
-				SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)
-			)
+			GDSync.call_func_all(back_to_lobby)
 		"nextgame":
-			_game_info.clear_game_history()
-			var game_menu: GameMenu = Global.menu_manager.transition_to_scene(
-				SceneDatabase.get_scene(SceneDatabase.Scene.GAME)
-			)
-			game_menu.pass_game_info(_game_info)
+			GDSync.call_func_all(next_game, _game_info.to_dict())
 
 
 func start_anim() -> void:
@@ -62,8 +80,11 @@ func pass_game_info(game_info: GameInfo) -> void:
 
 
 func end_anim() -> void:
-	if t and t.is_running():
-		t.kill()
-	t = default_tween()
-	for table in all_t:
-		t.tween_property(table, "tween_value", 0.0, 1.5)
+	hide()
+	await get_tree().create_timer(0.5).timeout
+	queue_free()
+	#if t and t.is_running():
+	#t.kill()
+	#t = default_tween()
+	#for table in all_t:
+	#t.tween_property(table, "tween_value", 0.0, 1.5)

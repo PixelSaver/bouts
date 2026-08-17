@@ -44,7 +44,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		const POS_GAIN := 15.0
 		const ROT_GAIN := 15.0
 
-		var alpha = 1.0 - exp(-12. * get_physics_process_delta_time())
+		var alpha = 1.0 - exp(-30. * get_physics_process_delta_time())
 
 		state.linear_velocity = state.linear_velocity.lerp(target_vel + pos_error * POS_GAIN, alpha)
 
