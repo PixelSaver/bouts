@@ -51,6 +51,10 @@ signal data_changed(data: Dictionary)
 
 func reset() -> void:
 	players = { }
+	clear_game_history()
+
+
+func clear_game_history() -> void:
 	win_history = []
 	next_map = 0
 	map_history = []

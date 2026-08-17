@@ -55,7 +55,7 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[node name="GameWonMenu" type="Control" unique_id=794266950 node_paths=PackedStringArray("winner_label", "score_label")]
+[node name="GameWonMenu" type="Control" unique_id=794266950 node_paths=PackedStringArray("buttons", "winner_label", "score_label", "player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,8 +63,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iyie8")
+buttons = [NodePath("MarginContainer/VBoxContainer/HBoxContainer/BackToLobby"), NodePath("MarginContainer/VBoxContainer/HBoxContainer/NextGame")]
 winner_label = NodePath("MarginContainer/VBoxContainer/PlayerDisplay/Text/WinnerLabel")
 score_label = NodePath("MarginContainer/VBoxContainer/PlayerDisplay/Text/ScoreLabel")
+player = NodePath("MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1763651957]
@@ -105,11 +107,10 @@ offset_top = -322.0
 offset_right = 40.0
 offset_bottom = -282.0
 offset_transform_enabled = true
-offset_transform_position = Vector2(0, 200)
+offset_transform_scale = Vector2(0, 0)
 
 [node name="Tweenable" type="Node" parent="MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player/Control" unique_id=1054972038]
 script = ExtResource("4_gxtco")
-tween_value = 1.0
 scale_curve = SubResource("Curve_itt1y")
 direction = Vector2(0, 1)
 distance = 200.0
@@ -197,7 +198,7 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
 bbcode_enabled = true
-text = "BackToLobby"
+text = "Back T oLobby"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
