@@ -1,6 +1,8 @@
 extends RefCounted
 class_name GameInfo
 
+const MAPS = MapManager.MapCollection
+
 enum RoundType {
 	BEST_OF,
 	FIRST_TO,
@@ -22,7 +24,7 @@ signal data_changed(data: Dictionary)
 			return
 		win_history = val
 		_emit_data()
-@export var next_map: int = 0:
+@export var next_map: MAPS = MAPS.DEFAULT:
 	set(val):
 		if next_map == val:
 			return
@@ -55,8 +57,9 @@ func reset() -> void:
 
 
 func clear_game_history() -> void:
+	current_round = -1
 	win_history = []
-	next_map = 0
+	next_map = MAPS.DEFAULT
 	map_history = []
 
 #region Player api
@@ -95,12 +98,20 @@ func add_player_win(id: int) -> bool:
 		)
 		return false
 	win_history.append(id)
+	map_history.append(next_map)
+	update_next_map()
 	_emit_data()
 	return true
 
 #endregion
 
 #region General API
+func update_next_map() -> void:
+	next_map = MAPS.values().pick_random()
+	if OS.is_debug_build():
+		next_map = MAPS.CHAINS
+
+
 func start_new_round() -> void:
 	current_round += 1
 	if win_history.size() - 1 > current_round:

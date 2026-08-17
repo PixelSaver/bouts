@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://onsd34cf2hev"]
+
+[ext_resource type="Script" uid="uid://dfxmrhw0omh5f" path="res://scenes/game/map.gd" id="1_7wa7s"]
+[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_4namg"]
+[ext_resource type="PackedScene" uid="uid://dblelrhrnny1c" path="res://scenes/game/water_killbox.tscn" id="3_k34u5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7qh56"]
+size = Vector2(1922, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7wa7s"]
+size = Vector2(256, 20)
+
+[node name="BattlefieldMap" type="Node2D" unique_id=895377889 node_paths=PackedStringArray("markers")]
+script = ExtResource("1_7wa7s")
+markers = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2")]
+
+[node name="Markers" type="Node2D" parent="." unique_id=1127902626]
+
+[node name="Marker2D" type="Marker2D" parent="Markers" unique_id=159863680]
+position = Vector2(51, 396)
+
+[node name="Marker2D2" type="Marker2D" parent="Markers" unique_id=1680494587]
+position = Vector2(1052, 401)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=803067717]
+position = Vector2(554, 553)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1984787684]
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=336819495]
+scale = Vector2(15, 0.2)
+texture = ExtResource("2_4namg")
+
+[node name="Floor2" type="StaticBody2D" parent="." unique_id=458907457]
+position = Vector2(44, 279)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" unique_id=490806884]
+shape = SubResource("RectangleShape2D_7wa7s")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2" unique_id=771041962]
+scale = Vector2(2, 0.15)
+texture = ExtResource("2_4namg")
+
+[node name="Floor3" type="StaticBody2D" parent="." unique_id=748351055]
+position = Vector2(1052, 277)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor3" unique_id=2022680117]
+shape = SubResource("RectangleShape2D_7wa7s")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor3" unique_id=44764460]
+scale = Vector2(2, 0.15)
+texture = ExtResource("2_4namg")
+
+[node name="WaterKillbox" parent="." unique_id=263105909 instance=ExtResource("3_k34u5")]
+position = Vector2(553, 599)

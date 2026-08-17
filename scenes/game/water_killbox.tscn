@@ -12,7 +12,7 @@ script = ExtResource("1_8yvq6")
 shape = SubResource("WorldBoundaryShape2D_gkedh")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=372762678]
-offset_right = 2000.0
+offset_right = 5000.0
 offset_bottom = 1000.0
 offset_transform_enabled = true
 offset_transform_position_ratio = Vector2(-0.5, 0)

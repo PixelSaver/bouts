@@ -282,6 +282,7 @@ func request_start_game() -> void:
 		#TODO Write host logic for showing and transferring
 		return
 	game_info.start_new_round()
+	game_info.update_next_map()
 	GDSync.call_func_all(_on_game_start, game_info.to_dict())
 	#GDSync.emit_signal_remote_all(game_start_requested, game_info.to_dict())
 

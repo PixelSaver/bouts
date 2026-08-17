@@ -1,0 +1,579 @@
+[gd_scene format=3 uid="uid://dlcavih6os0eu"]
+
+[ext_resource type="Script" uid="uid://dfxmrhw0omh5f" path="res://scenes/game/map.gd" id="1_u0cr3"]
+[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_5j86l"]
+[ext_resource type="Script" uid="uid://bbbjh7tp0fq7w" path="res://scenes/active_ragdoll/target_angle_rigidbody.gd" id="2_qx8mr"]
+[ext_resource type="PackedScene" uid="uid://dblelrhrnny1c" path="res://scenes/game/water_killbox.tscn" id="3_qx8mr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0cr3"]
+size = Vector2(1126, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7qh56"]
+size = Vector2(1126, 20)
+
+[node name="Map" type="Node2D" unique_id=895377889 node_paths=PackedStringArray("markers")]
+script = ExtResource("1_u0cr3")
+markers = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2")]
+
+[node name="Markers" type="Node2D" parent="." unique_id=1127902626]
+
+[node name="Marker2D" type="Marker2D" parent="Markers" unique_id=159863680]
+position = Vector2(186, 266)
+
+[node name="Marker2D2" type="Marker2D" parent="Markers" unique_id=1680494587]
+position = Vector2(882, 266)
+
+[node name="Floor1" type="RigidBody2D" parent="." unique_id=1807630335]
+position = Vector2(181, 537)
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+script = ExtResource("2_qx8mr")
+power = 0.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1" unique_id=1238178973]
+scale = Vector2(0.54197836, -1.0047983)
+shape = SubResource("RectangleShape2D_u0cr3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1" unique_id=1511391786]
+scale = Vector2(4.786721, 0.14929147)
+texture = ExtResource("2_5j86l")
+
+[node name="ChainHead" type="StaticBody2D" parent="Floor1" unique_id=867631476]
+position = Vector2(-238, -259)
+disable_mode = 1
+collision_layer = 8388608
+collision_mask = 8388608
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead" unique_id=1148742951]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor1/ChainHead" unique_id=309456090]
+position = Vector2(1, 9.109985)
+node_a = NodePath("..")
+node_b = NodePath("../Chain1")
+
+[node name="Chain1" type="RigidBody2D" parent="Floor1/ChainHead" unique_id=1365305483]
+position = Vector2(1, 35)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead/Chain1" unique_id=918299532]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead/Chain1" unique_id=162649273]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor1/ChainHead" unique_id=837626081]
+position = Vector2(0, 56.109985)
+node_a = NodePath("../Chain1")
+node_b = NodePath("../Chain2")
+
+[node name="Chain2" type="RigidBody2D" parent="Floor1/ChainHead" unique_id=574382398]
+position = Vector2(0, 82)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead/Chain2" unique_id=1684391502]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead/Chain2" unique_id=1579525190]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="Floor1/ChainHead" unique_id=2082010886]
+position = Vector2(0, 107.109985)
+node_a = NodePath("../Chain2")
+node_b = NodePath("../Chain3")
+
+[node name="Chain3" type="RigidBody2D" parent="Floor1/ChainHead" unique_id=2009129482]
+position = Vector2(0, 133)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead/Chain3" unique_id=1771109151]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead/Chain3" unique_id=1571059412]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor1/ChainHead/Chain3" unique_id=1537823122]
+position = Vector2(1, 20.109985)
+node_a = NodePath("..")
+node_b = NodePath("../../Chain4")
+
+[node name="Chain4" type="RigidBody2D" parent="Floor1/ChainHead" unique_id=1829073230]
+position = Vector2(1, 179)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead/Chain4" unique_id=1557974118]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead/Chain4" unique_id=2044586525]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="Floor1/ChainHead" unique_id=604819913]
+position = Vector2(0, 201.10999)
+node_a = NodePath("../Chain4")
+node_b = NodePath("../Chain5")
+
+[node name="Chain5" type="RigidBody2D" parent="Floor1/ChainHead" unique_id=1651845050]
+position = Vector2(0, 227)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead/Chain5" unique_id=1691549978]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead/Chain5" unique_id=80890218]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor1/ChainHead/Chain5" unique_id=1861455758]
+position = Vector2(-1, 29.000015)
+node_a = NodePath("..")
+node_b = NodePath("../../..")
+
+[node name="ChainHead2" type="StaticBody2D" parent="Floor1" unique_id=2122670439]
+position = Vector2(190, -255)
+collision_layer = 8388608
+collision_mask = 8388608
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead2" unique_id=2084080213]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor1/ChainHead2" unique_id=589362221]
+position = Vector2(1, 9.109985)
+node_a = NodePath("..")
+node_b = NodePath("../Chain1")
+
+[node name="Chain1" type="RigidBody2D" parent="Floor1/ChainHead2" unique_id=2058207514]
+position = Vector2(1, 35)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead2/Chain1" unique_id=713991466]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead2/Chain1" unique_id=1752771100]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor1/ChainHead2" unique_id=61809626]
+position = Vector2(0, 56.109985)
+node_a = NodePath("../Chain1")
+node_b = NodePath("../Chain2")
+
+[node name="Chain2" type="RigidBody2D" parent="Floor1/ChainHead2" unique_id=410093606]
+position = Vector2(0, 82)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead2/Chain2" unique_id=1006662961]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead2/Chain2" unique_id=1042799782]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="Floor1/ChainHead2" unique_id=405062149]
+position = Vector2(0, 107.109985)
+node_a = NodePath("../Chain2")
+node_b = NodePath("../Chain3")
+
+[node name="Chain3" type="RigidBody2D" parent="Floor1/ChainHead2" unique_id=1827786272]
+position = Vector2(0, 133)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead2/Chain3" unique_id=269612419]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead2/Chain3" unique_id=1653607077]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor1/ChainHead2/Chain3" unique_id=1627713833]
+position = Vector2(1, 20.109985)
+node_a = NodePath("..")
+node_b = NodePath("../../Chain4")
+
+[node name="Chain4" type="RigidBody2D" parent="Floor1/ChainHead2" unique_id=704114068]
+position = Vector2(1, 179)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead2/Chain4" unique_id=1423128773]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead2/Chain4" unique_id=1151960945]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="Floor1/ChainHead2" unique_id=1224249845]
+position = Vector2(0, 201.10999)
+node_a = NodePath("../Chain4")
+node_b = NodePath("../Chain5")
+
+[node name="Chain5" type="RigidBody2D" parent="Floor1/ChainHead2" unique_id=1836227812]
+position = Vector2(0, 227)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1/ChainHead2/Chain5" unique_id=601921668]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor1/ChainHead2/Chain5" unique_id=248868457]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor1/ChainHead2/Chain5" unique_id=687320318]
+position = Vector2(-1, 29.000015)
+node_a = NodePath("..")
+node_b = NodePath("../../..")
+
+[node name="Floor2" type="RigidBody2D" parent="." unique_id=2051832171]
+position = Vector2(921, 531)
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+script = ExtResource("2_qx8mr")
+power = 0.0
+metadata/_custom_type_script = "uid://bbbjh7tp0fq7w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" unique_id=1460210039]
+scale = Vector2(0.54197836, -1.0047983)
+shape = SubResource("RectangleShape2D_u0cr3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2" unique_id=862307005]
+scale = Vector2(4.786721, 0.14929147)
+texture = ExtResource("2_5j86l")
+
+[node name="ChainHead" type="StaticBody2D" parent="Floor2" unique_id=1604406996]
+position = Vector2(-238, -259)
+disable_mode = 1
+collision_layer = 8388608
+collision_mask = 8388608
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead" unique_id=1706007232]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor2/ChainHead" unique_id=1872356298]
+position = Vector2(1, 9.109985)
+node_a = NodePath("..")
+node_b = NodePath("../Chain1")
+
+[node name="Chain1" type="RigidBody2D" parent="Floor2/ChainHead" unique_id=622635183]
+position = Vector2(1, 35)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead/Chain1" unique_id=1253956712]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead/Chain1" unique_id=1568847912]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor2/ChainHead" unique_id=595825075]
+position = Vector2(0, 56.109985)
+node_a = NodePath("../Chain1")
+node_b = NodePath("../Chain2")
+
+[node name="Chain2" type="RigidBody2D" parent="Floor2/ChainHead" unique_id=1875259527]
+position = Vector2(0, 82)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead/Chain2" unique_id=1003425317]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead/Chain2" unique_id=1223587408]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="Floor2/ChainHead" unique_id=162983668]
+position = Vector2(0, 107.109985)
+node_a = NodePath("../Chain2")
+node_b = NodePath("../Chain3")
+
+[node name="Chain3" type="RigidBody2D" parent="Floor2/ChainHead" unique_id=515132121]
+position = Vector2(0, 133)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead/Chain3" unique_id=182281530]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead/Chain3" unique_id=1090854220]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor2/ChainHead/Chain3" unique_id=651378201]
+position = Vector2(1, 20.109985)
+node_a = NodePath("..")
+node_b = NodePath("../../Chain4")
+
+[node name="Chain4" type="RigidBody2D" parent="Floor2/ChainHead" unique_id=202310024]
+position = Vector2(1, 179)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead/Chain4" unique_id=1811571209]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead/Chain4" unique_id=1928152108]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="Floor2/ChainHead" unique_id=356642487]
+position = Vector2(0, 201.10999)
+node_a = NodePath("../Chain4")
+node_b = NodePath("../Chain5")
+
+[node name="Chain5" type="RigidBody2D" parent="Floor2/ChainHead" unique_id=1424579941]
+position = Vector2(0, 227)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead/Chain5" unique_id=871923809]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead/Chain5" unique_id=532996259]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor2/ChainHead/Chain5" unique_id=611807524]
+position = Vector2(-1, 29.000015)
+node_a = NodePath("..")
+node_b = NodePath("../../..")
+
+[node name="ChainHead2" type="StaticBody2D" parent="Floor2" unique_id=553454793]
+position = Vector2(190, -255)
+collision_layer = 8388608
+collision_mask = 8388608
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead2" unique_id=1486516631]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor2/ChainHead2" unique_id=388151210]
+position = Vector2(1, 9.109985)
+node_a = NodePath("..")
+node_b = NodePath("../Chain1")
+
+[node name="Chain1" type="RigidBody2D" parent="Floor2/ChainHead2" unique_id=683574742]
+position = Vector2(1, 35)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead2/Chain1" unique_id=1813268378]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead2/Chain1" unique_id=826469187]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor2/ChainHead2" unique_id=1831348070]
+position = Vector2(0, 56.109985)
+node_a = NodePath("../Chain1")
+node_b = NodePath("../Chain2")
+
+[node name="Chain2" type="RigidBody2D" parent="Floor2/ChainHead2" unique_id=1730447175]
+position = Vector2(0, 82)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead2/Chain2" unique_id=2012362932]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead2/Chain2" unique_id=1288299856]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="Floor2/ChainHead2" unique_id=1775713318]
+position = Vector2(0, 107.109985)
+node_a = NodePath("../Chain2")
+node_b = NodePath("../Chain3")
+
+[node name="Chain3" type="RigidBody2D" parent="Floor2/ChainHead2" unique_id=584255306]
+position = Vector2(0, 133)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead2/Chain3" unique_id=74628442]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead2/Chain3" unique_id=2121651226]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Floor2/ChainHead2/Chain3" unique_id=283182121]
+position = Vector2(1, 20.109985)
+node_a = NodePath("..")
+node_b = NodePath("../../Chain4")
+
+[node name="Chain4" type="RigidBody2D" parent="Floor2/ChainHead2" unique_id=891897442]
+position = Vector2(1, 179)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead2/Chain4" unique_id=413583089]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead2/Chain4" unique_id=23903051]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="Floor2/ChainHead2" unique_id=1853217916]
+position = Vector2(0, 201.10999)
+node_a = NodePath("../Chain4")
+node_b = NodePath("../Chain5")
+
+[node name="Chain5" type="RigidBody2D" parent="Floor2/ChainHead2" unique_id=234292931]
+position = Vector2(0, 227)
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+can_sleep = false
+linear_damp = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2/ChainHead2/Chain5" unique_id=1997925018]
+rotation = 1.5707964
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_7qh56")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2/ChainHead2/Chain5" unique_id=1135539474]
+rotation = 1.5707964
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_5j86l")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="Floor2/ChainHead2/Chain5" unique_id=132810091]
+position = Vector2(-1, 29.000015)
+node_a = NodePath("..")
+node_b = NodePath("../../..")
+
+[node name="WaterKillbox" parent="." unique_id=263105909 instance=ExtResource("3_qx8mr")]
+position = Vector2(553, 599)

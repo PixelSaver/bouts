@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://d4mj8dcv5fiht"]
+
+[ext_resource type="Script" uid="uid://dfxmrhw0omh5f" path="res://scenes/game/map.gd" id="1_lquwx"]
+[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_gb0oh"]
+[ext_resource type="PackedScene" uid="uid://dblelrhrnny1c" path="res://scenes/game/water_killbox.tscn" id="3_80por"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwx"]
+size = Vector2(768, 24)
+
+[node name="BattlefieldMap" type="Node2D" unique_id=895377889 node_paths=PackedStringArray("markers")]
+script = ExtResource("1_lquwx")
+markers = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2")]
+
+[node name="Markers" type="Node2D" parent="." unique_id=1127902626]
+
+[node name="Marker2D" type="Marker2D" parent="Markers" unique_id=159863680]
+position = Vector2(172, 75)
+
+[node name="Marker2D2" type="Marker2D" parent="Markers" unique_id=1680494587]
+position = Vector2(930, 74)
+
+[node name="WaterKillbox" parent="." unique_id=263105909 instance=ExtResource("3_80por")]
+position = Vector2(553, 599)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1788560178]
+position = Vector2(217, 369)
+rotation = 0.5235988
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=729394384]
+shape = SubResource("RectangleShape2D_lquwx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=1240067350]
+scale = Vector2(6, 0.2)
+texture = ExtResource("2_gb0oh")
+
+[node name="Floor2" type="StaticBody2D" parent="." unique_id=2139704391]
+position = Vector2(890, 367.99997)
+rotation = -0.5235988
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" unique_id=1536065796]
+shape = SubResource("RectangleShape2D_lquwx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor2" unique_id=1926013239]
+scale = Vector2(6, 0.2)
+texture = ExtResource("2_gb0oh")

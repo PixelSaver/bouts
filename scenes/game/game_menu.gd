@@ -58,6 +58,7 @@ func _input(_event: InputEvent) -> void:
 
 func pass_game_info(game_info: GameInfo) -> void:
 	_game_info = game_info
+	map_man.pick_map(game_info.next_map)
 	SignalBus.round_started.emit(_game_info)
 	Log.pr("Round started")
 	start_anim()
