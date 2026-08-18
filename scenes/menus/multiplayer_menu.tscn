@@ -227,6 +227,7 @@ lobbies_screen = NodePath("LobbiesScreen")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont", "lobby_popup", "join_lobby_but")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -661,7 +662,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game", "leave_but")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -720,6 +720,7 @@ mouse_filter = 1
 [node name="LobbyGameSettings" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1954190469 node_paths=PackedStringArray("round_type_button", "max_rounds_slider", "slider_label")]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 script = ExtResource("14_igtkl")
 round_type_button = NodePath("ScrollContainer/MarginContainer/GameSettings/RoundType/OptionButton")
 max_rounds_slider = NodePath("ScrollContainer/MarginContainer/GameSettings/MaxRounds/HSlider")
@@ -744,6 +745,7 @@ size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=1224624186]
 layout_mode = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "Game Settings"
 fit_content = true
@@ -752,12 +754,14 @@ autowrap_mode = 0
 
 [node name="HSeparator" type="HSeparator" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=82858627]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="RoundType" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=425730629]
 layout_mode = 2
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=833319331]
 layout_mode = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "[font_size=20]Round Type: "
 fit_content = true
@@ -767,15 +771,18 @@ autowrap_mode = 0
 [node name="Control" type="Control" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=1843546642]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 
 [node name="OptionButton" type="OptionButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=704340158]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="MaxRounds" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=745885862]
 layout_mode = 2
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=1304281281]
 layout_mode = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "[font_size=20]Best out of #: "
 fit_content = true
@@ -789,12 +796,14 @@ size_flags_vertical = 4
 offset_transform_enabled = true
 offset_transform_position_ratio = Vector2(0, 0.1)
 offset_transform_visual_only = false
+mouse_filter = 1
 min_value = 1.0
 max_value = 25.0
 value = 5.0
 
 [node name="SliderLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=18256955]
 layout_mode = 2
+mouse_filter = 1
 bbcode_enabled = true
 fit_content = true
 scroll_active = false

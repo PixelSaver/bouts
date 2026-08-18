@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_gb0oh"]
 [ext_resource type="PackedScene" uid="uid://dblelrhrnny1c" path="res://scenes/game/water_killbox.tscn" id="3_80por"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6nyrj"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwx"]
 size = Vector2(768, 24)
 
@@ -23,8 +25,9 @@ position = Vector2(930, 74)
 position = Vector2(553, 599)
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1788560178]
-position = Vector2(217, 369)
-rotation = 0.5235988
+position = Vector2(175.99998, 453)
+rotation = 0.2617994
+physics_material_override = SubResource("PhysicsMaterial_6nyrj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=729394384]
 shape = SubResource("RectangleShape2D_lquwx")
@@ -34,8 +37,9 @@ scale = Vector2(6, 0.2)
 texture = ExtResource("2_gb0oh")
 
 [node name="Floor2" type="StaticBody2D" parent="." unique_id=2139704391]
-position = Vector2(890, 367.99997)
-rotation = -0.5235988
+position = Vector2(929.99994, 453.99997)
+rotation = -0.2617994
+physics_material_override = SubResource("PhysicsMaterial_6nyrj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" unique_id=1536065796]
 shape = SubResource("RectangleShape2D_lquwx")

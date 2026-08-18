@@ -4,6 +4,7 @@ class_name LobbyGameSettings
 @export var round_type_button: OptionButton
 @export var max_rounds_slider: HSlider
 @export var slider_label: RichTextLabel
+var _game_info: GameInfo
 
 
 func _ready() -> void:
@@ -19,6 +20,15 @@ func _ready() -> void:
 	SignalBus.joined.connect(_update_visibility)
 	GDSync.lobby_joined.connect(_update_visibility)
 	_update_visibility()
+	_game_info = Global.menu_manager.game_info
+	_game_info.data_changed.connect(_on_game_info_changed)
+
+
+func _on_game_info_changed(data: Dictionary) -> void:
+	var gi := GameInfo.from_dict(data)
+	max_rounds_slider.value = gi.rounds_out_of
+	round_type_button.select(gi.round_type)
+	Log.pr("Rounds out of: %s\n Round type: %s" % [gi.rounds_out_of, gi.round_type])
 
 
 func _update_visibility(_x = null) -> void:

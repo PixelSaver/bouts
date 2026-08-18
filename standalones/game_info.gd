@@ -108,8 +108,8 @@ func add_player_win(id: int) -> bool:
 #region General API
 func update_next_map() -> void:
 	next_map = MAPS.values().pick_random()
-	if OS.is_debug_build():
-		next_map = MAPS.CHAINS
+	#if OS.is_debug_build():
+	#next_map = MAPS.CHAINS
 
 
 func start_new_round() -> void:

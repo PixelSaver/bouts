@@ -5,14 +5,14 @@ enum MapCollection {
 	DEFAULT,
 	BATTLEFIELD,
 	VALLEY,
-	CHAINS,
+	#CHAINS,
 	PINWHEEL,
 }
 var maps: Dictionary[MapCollection, PackedScene] = {
 	MapCollection.DEFAULT: preload("res://scenes/game/maps/default_map.tscn"),
 	MapCollection.BATTLEFIELD: preload("res://scenes/game/maps/battlefield_map.tscn"),
 	MapCollection.VALLEY: preload("res://scenes/game/maps/valley_map.tscn"),
-	MapCollection.CHAINS: preload("res://scenes/game/maps/chains_map.tscn"),
+	#MapCollection.CHAINS: preload("res://scenes/game/maps/chains_map.tscn"),
 	MapCollection.PINWHEEL: preload("res://scenes/game/maps/pinwheel_map.tscn"),
 }
 var _current_map: Map
