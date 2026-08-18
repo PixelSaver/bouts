@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func _on_game_info_changed(data: Dictionary) -> void:
 	var gi := GameInfo.from_dict(data)
-	max_rounds_slider.value = gi.rounds_out_of
+	max_rounds_slider.set_value_no_signal(gi.rounds_out_of)
 	round_type_button.select(gi.round_type)
 	Log.pr("Rounds out of: %s\n Round type: %s" % [gi.rounds_out_of, gi.round_type])
 
