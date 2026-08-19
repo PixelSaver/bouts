@@ -3,7 +3,7 @@
 [ext_resource type="PhysicsMaterial" uid="uid://w2lebln4ho1x" path="res://assets/ragdoll_physics_material.tres" id="1_xp0f5"]
 [ext_resource type="Script" uid="uid://b6ewgxfuv3c4g" path="res://scenes/weapons/generic_sword.gd" id="2_6linq"]
 
-[node name="Sword" type="RigidBody2D" unique_id=1006290758]
+[node name="Sword" type="RigidBody2D" unique_id=1006290758 node_paths=PackedStringArray("colliding_bodies")]
 collision_layer = 3
 collision_mask = 2
 mass = 0.1
@@ -14,6 +14,7 @@ continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("2_6linq")
+colliding_bodies = [NodePath(".")]
 weapon_name = "Generic Sword"
 weapon_skill_cooldown = 2.0
 weapon_description = "Just a sword"

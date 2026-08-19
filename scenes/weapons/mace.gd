@@ -13,6 +13,12 @@ func _ready() -> void:
 	#body.body_entered.connect(_body_entered)
 
 
+func apply_skill(_player: Player = player) -> void:
+	self.linear_damp = 10000.
+	await get_tree().create_timer(1.0).timeout
+	self.linear_damp = 1.
+
+
 func _physics_process(delta: float) -> void:
 	_hit_cooldown -= delta
 	if _hit_cooldown <= 0.:
@@ -23,6 +29,7 @@ func _physics_process(delta: float) -> void:
 
 		for col in collided_bodies:
 			if Player.try_damage_player_body_part(_get_attack(), col, player if player else null):
+				_hit_cooldown = hit_cooldown
 				break
 
 	if player and player.is_syncing_state == false:

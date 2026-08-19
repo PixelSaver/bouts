@@ -61,8 +61,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	for i in range(state.get_contact_count()):
 		var normal = state.get_contact_local_normal(i)
 
-		if normal.dot(Vector2.UP) > 1. - 0.3:
+		if normal.dot(Vector2.UP) > 0.8:
 			is_touching_ground = true
 
-		if normal.dot(Vector2.RIGHT) > 0.999 or normal.dot(Vector2.LEFT) > 0.999:
+		if normal.dot(Vector2.RIGHT) > 0.8 or normal.dot(Vector2.LEFT) > 0.8:
 			is_touching_wall = true
