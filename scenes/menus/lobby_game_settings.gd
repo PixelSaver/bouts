@@ -24,14 +24,13 @@ func _ready() -> void:
 	_game_info.data_changed.connect(_on_game_info_changed)
 
 
-func _on_game_info_changed(data: Dictionary) -> void:
+func _on_game_info_changed(_d: Dictionary) -> void:
 	if GDSync.is_host():
 		return
-	Log.pr("Game info change received correctly")
-	var gi := GameInfo.from_dict(data)
-	max_rounds_slider.set_value_no_signal(gi.rounds_out_of)
-	round_type_button.select(gi.round_type)
-	Log.pr("Rounds out of: %s | Round type: %s" % [max_rounds_slider.value, gi.round_type])
+	_game_info = Global.menu_manager.game_info
+	max_rounds_slider.set_value_no_signal(_game_info.rounds_out_of)
+	round_type_button.select(_game_info.round_type)
+	Log.pr("Rounds out of: %s | Round type: %s" % [max_rounds_slider.value, _game_info.round_type])
 	_update_slider_label()
 
 
