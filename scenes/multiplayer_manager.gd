@@ -70,16 +70,20 @@ func _randomize_color() -> void:
 
 
 func _on_game_info_changed(data: Dictionary) -> void:
-	if not GDSync.is_active() or not GDSync.is_host():
+	if not GDSync.is_active():
 		return
-	Log.pr("Game Info sync sent")
+	if not GDSync.is_host():
+		return
+	Log.pr("Game Info sync sent %s" % GDSync.get_client_id())
 	GDSync.call_func(_sync_game_info, data)
 
 
 func _sync_game_info(data: Dictionary) -> void:
-	Log.pr("Game Info sync received")
+	if GDSync.is_host():
+		return
+	Log.pr("Game info sync received")
 	game_info = GameInfo.from_dict(data)
-	game_info.data_changed.emit(game_info.to_dict())
+	game_info.data_changed.emit(data)
 
 #region old_colde
 # Callback from SceneTree.

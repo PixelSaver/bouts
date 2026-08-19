@@ -25,14 +25,18 @@ func _ready() -> void:
 
 
 func _on_game_info_changed(data: Dictionary) -> void:
+	if GDSync.is_host():
+		return
+	Log.pr("Game info change received correctly")
 	var gi := GameInfo.from_dict(data)
 	max_rounds_slider.set_value_no_signal(gi.rounds_out_of)
 	round_type_button.select(gi.round_type)
-	Log.pr("Rounds out of: %s\n Round type: %s" % [gi.rounds_out_of, gi.round_type])
+	Log.pr("Rounds out of: %s | Round type: %s" % [max_rounds_slider.value, gi.round_type])
+	_update_slider_label()
 
 
 func _update_visibility(_x = null) -> void:
-	self.mouse_filter = Control.MOUSE_FILTER_PASS if GDSync.is_host() else Control.MOUSE_FILTER_IGNORE
+	self.mouse_behavior_recursive = Control.MOUSE_BEHAVIOR_INHERITED if GDSync.is_host() else Control.MOUSE_BEHAVIOR_DISABLED
 	Log.pr("Tested visibliity, %s" % self.visible)
 
 

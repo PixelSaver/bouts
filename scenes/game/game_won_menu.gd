@@ -60,13 +60,13 @@ func start_anim() -> void:
 		t.tween_property(table, "tween_value", 1.0, 5.5)
 
 
-func pass_game_info(game_info: GameInfo) -> void:
+func pass_game_info(game_info: GameInfo, winner_id: int = -1) -> void:
 	_game_info = game_info
-	var winner_id := _game_info.get_game_winner()
 	var winner_pi: PlayerInfo = _game_info.players.get(winner_id, PlayerInfo.new())
+	Log.pr("Winner pi: %s, id was %s" % [winner_pi, winner_id])
 	winner_label.text = "%s Wins (Player #%s)" % [
-		winner_id,
 		winner_pi.player_name,
+		winner_id,
 	]
 	player.set_color(winner_pi.color)
 	player.bind_weapon(winner_pi.weapon)
@@ -81,6 +81,8 @@ func pass_game_info(game_info: GameInfo) -> void:
 
 func end_anim() -> void:
 	hide()
+	if _game_info:
+		_game_info.clear_win_history()
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
 	#if t and t.is_running():

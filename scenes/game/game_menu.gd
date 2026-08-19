@@ -152,16 +152,20 @@ func player_won(id: int) -> void:
 		Global.menu_manager.request_start_game()
 	else:
 		Log.pr("Player %s won the game!" % game_winner)
-		GDSync.call_func_all(end_game_for_all)
+		GDSync.call_func_all(end_game_for_all, game_winner)
 
 
-func end_game_for_all() -> void:
-	_game_info.clear_win_history()
-	var won_scene: GameWonMenu = Global.menu_manager.transition_to_scene(
-		SceneDatabase.get_scene(SceneDatabase.Scene.WON),
-		true,
-	)
-	won_scene.pass_game_info(_game_info)
+func end_game_for_all(winner_id: int = -1) -> void:
+	if winner_id != -1:
+		var won_scene: GameWonMenu = Global.menu_manager.transition_to_scene(
+			SceneDatabase.get_scene(SceneDatabase.Scene.WON),
+			true,
+		)
+		won_scene.pass_game_info(_game_info, winner_id)
+	else:
+		Global.menu_manager.transition_to_scene(
+			SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)
+		)
 
 
 func end_anim() -> void:

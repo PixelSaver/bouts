@@ -161,6 +161,10 @@ func to_dict() -> Dictionary:
 	}
 
 
+func get_all_players() -> Array[PlayerInfo]:
+	return players.values()
+
+
 func get_wins(id: int) -> int:
 	return win_history.count(id)
 
