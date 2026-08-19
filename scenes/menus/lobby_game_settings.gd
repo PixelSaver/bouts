@@ -21,16 +21,15 @@ func _ready() -> void:
 	GDSync.lobby_joined.connect(_update_visibility)
 	_update_visibility()
 	_game_info = Global.menu_manager.game_info
-	_game_info.data_changed.connect(_on_game_info_changed)
+	#_game_info.data_changed.connect(_on_game_info_changed)
 
 
-func _on_game_info_changed(_d: Dictionary) -> void:
+func _process(_delta: float) -> void:
 	if GDSync.is_host():
 		return
 	_game_info = Global.menu_manager.game_info
 	max_rounds_slider.set_value_no_signal(_game_info.rounds_out_of)
 	round_type_button.select(_game_info.round_type)
-	Log.pr("Rounds out of: %s | Round type: %s" % [max_rounds_slider.value, _game_info.round_type])
 	_update_slider_label()
 
 
