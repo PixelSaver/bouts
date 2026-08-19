@@ -14,9 +14,9 @@ func _ready() -> void:
 
 
 func apply_skill(_player: Player = player) -> void:
-	self.linear_damp = 10000.
+	$Ball.freeze = true
 	await get_tree().create_timer(1.0).timeout
-	self.linear_damp = 1.
+	$Ball.freeze = false
 
 
 func _physics_process(delta: float) -> void:
