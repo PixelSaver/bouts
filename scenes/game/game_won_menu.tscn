@@ -63,24 +63,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iyie8")
-buttons = [NodePath("MarginContainer/VBoxContainer/HBoxContainer/BackToLobby"), NodePath("MarginContainer/VBoxContainer/HBoxContainer/NextGame")]
-winner_label = NodePath("MarginContainer/VBoxContainer/PlayerDisplay/Text/WinnerLabel")
-score_label = NodePath("MarginContainer/VBoxContainer/PlayerDisplay/Text/ScoreLabel")
-player = NodePath("MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player")
+buttons = [NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/BackToLobby"), NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/NextGame")]
+winner_label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/WinnerLabel")
+score_label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/ScoreLabel")
+player = NodePath("CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1763651957]
-layout_mode = 1
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160387984]
+layer = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1763651957]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1714348549]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=1714348549]
 layout_mode = 2
 
-[node name="PlayerDisplay" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=480887888 node_paths=PackedStringArray("player")]
+[node name="PlayerDisplay" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=480887888 node_paths=PackedStringArray("player")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -91,16 +93,16 @@ theme_override_constants/margin_bottom = 10
 script = ExtResource("2_b62kf")
 player = NodePath("Control/Control/Player")
 
-[node name="Control" type="CenterContainer" parent="MarginContainer/VBoxContainer/PlayerDisplay" unique_id=52534634]
+[node name="Control" type="CenterContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay" unique_id=52534634]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/PlayerDisplay/Control" unique_id=805773717]
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control" unique_id=805773717]
 layout_mode = 2
 mouse_filter = 1
 
-[node name="Player" parent="MarginContainer/VBoxContainer/PlayerDisplay/Control/Control" unique_id=1098918678 instance=ExtResource("3_gxtco")]
+[node name="Player" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control" unique_id=1098918678 instance=ExtResource("3_gxtco")]
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player" unique_id=231312583]
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player" unique_id=231312583]
 layout_mode = 3
 anchors_preset = 0
 offset_top = -322.0
@@ -109,7 +111,7 @@ offset_bottom = -282.0
 offset_transform_enabled = true
 offset_transform_scale = Vector2(0, 0)
 
-[node name="Tweenable" type="Node" parent="MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player/Control" unique_id=1054972038]
+[node name="Tweenable" type="Node" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player/Control" unique_id=1054972038]
 script = ExtResource("4_gxtco")
 scale_curve = SubResource("Curve_itt1y")
 direction = Vector2(0, 1)
@@ -117,17 +119,17 @@ distance = 200.0
 use_custom_transform_pivot_ratio = true
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="Polygon2D" type="Polygon2D" parent="MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player/Control" unique_id=1046968515]
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player/Control" unique_id=1046968515]
 position = Vector2(1.9999999, 0)
 scale = Vector2(0.7, 0.7)
 color = Color(0.6392157, 0.81960785, 0.6862745, 1)
 polygon = PackedVector2Array(-40, -23, -45, 19, 38, 17, 35, -24, 12, -12, -2, -27, -19, -8)
 
-[node name="Text" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PlayerDisplay" unique_id=893102468]
+[node name="Text" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay" unique_id=893102468]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="WinnerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PlayerDisplay/Text" unique_id=1122293591]
+[node name="WinnerLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text" unique_id=1122293591]
 layout_mode = 2
 size_flags_horizontal = 3
 offset_transform_enabled = true
@@ -139,12 +141,12 @@ autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tweenable" type="Node" parent="MarginContainer/VBoxContainer/PlayerDisplay/Text/WinnerLabel" unique_id=762659041]
+[node name="Tweenable" type="Node" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/WinnerLabel" unique_id=762659041]
 script = ExtResource("4_gxtco")
 scale_curve = SubResource("Curve_gkedh")
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="ScoreLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PlayerDisplay/Text" unique_id=43517410]
+[node name="ScoreLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text" unique_id=43517410]
 layout_mode = 2
 size_flags_horizontal = 3
 offset_transform_enabled = true
@@ -158,17 +160,17 @@ autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tweenable" type="Node" parent="MarginContainer/VBoxContainer/PlayerDisplay/Text/ScoreLabel" unique_id=64715058]
+[node name="Tweenable" type="Node" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/ScoreLabel" unique_id=64715058]
 script = ExtResource("4_gxtco")
 tween_value = 1.0
 scale_curve = SubResource("Curve_gkedh")
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1416223776]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1416223776]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="BackToLobby" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=88347529]
+[node name="BackToLobby" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=88347529]
 custom_minimum_size = Vector2(220, 70)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -177,7 +179,7 @@ theme = ExtResource("4_itt1y")
 script = ExtResource("5_finrq")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer/BackToLobby" unique_id=1877342822]
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/BackToLobby" unique_id=1877342822]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -187,7 +189,7 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBox_afy4y")
 
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/BackToLobby" unique_id=57311032]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/BackToLobby" unique_id=57311032]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -205,12 +207,12 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1110614348]
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1110614348]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="NextGame" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=234327569]
+[node name="NextGame" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=234327569]
 custom_minimum_size = Vector2(220, 70)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -219,7 +221,7 @@ theme = ExtResource("4_itt1y")
 script = ExtResource("5_finrq")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer/NextGame" unique_id=1491575742]
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/NextGame" unique_id=1491575742]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -229,7 +231,7 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBox_ledga")
 
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/NextGame" unique_id=514542175]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/NextGame" unique_id=514542175]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15

@@ -170,6 +170,7 @@ func end_game_for_all(winner_id: int = -1) -> void:
 
 func end_anim() -> void:
 	self.hide()
+	$CanvasLayer.hide()
 	await get_tree().create_timer(.5).timeout
 	$PhantomCamera2D.hide()
 	$PhantomCamera2D.queue_free()

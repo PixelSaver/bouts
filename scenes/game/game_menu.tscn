@@ -36,29 +36,22 @@ colors = PackedColorArray(1, 1, 1, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_gkedh"]
 gradient = SubResource("Gradient_c1rlj")
 
-[sub_resource type="Resource" id="Resource_plx5h"]
-script = ExtResource("4_paljw")
-color = Color(0.6117647, 0.5529412, 0.7607843, 1)
-width_left = 10
-width_top = 2
-width_bottom = 7
-metadata/_custom_type_script = "uid://cjmmhbp1b5312"
-
-[sub_resource type="StyleBox" id="StyleBox_v40oh"]
-resource_local_to_scene = false
-resource_name = ""
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgtxe"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-script = ExtResource("5_y2var")
+bg_color = Color(1, 1, 1, 1)
 draw_center = false
-borders = Array[ExtResource("4_paljw")]([SubResource("Resource_plx5h")])
+border_width_left = 10
+border_width_top = 2
+border_width_bottom = 7
+border_color = Color(0.6117647, 0.5529412, 0.7607843, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
 corner_detail = 20
-corner_radius_top_left = 60
-corner_radius_top_right = 60
-corner_radius_bottom_right = 60
-corner_radius_bottom_left = 60
 
 [sub_resource type="StyleBox" id="StyleBox_jxd0g"]
 resource_local_to_scene = false
@@ -229,12 +222,12 @@ tint_progress = Color(0.92156863, 0.7647059, 0.654902, 1)
 
 [node name="Panel2" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=536534006]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBox_v40oh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgtxe")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=384212429]
 visible = false
