@@ -15,6 +15,51 @@
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_g4dfm"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="10_yoncu"]
 
+[sub_resource type="StyleBox" id="StyleBox_wgtxe"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_y2var")
+corner_detail = 5
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[sub_resource type="Gradient" id="Gradient_c1rlj"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gkedh"]
+gradient = SubResource("Gradient_c1rlj")
+
+[sub_resource type="Resource" id="Resource_plx5h"]
+script = ExtResource("4_paljw")
+color = Color(0.6117647, 0.5529412, 0.7607843, 1)
+width_left = 10
+width_top = 2
+width_bottom = 7
+metadata/_custom_type_script = "uid://cjmmhbp1b5312"
+
+[sub_resource type="StyleBox" id="StyleBox_v40oh"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_y2var")
+draw_center = false
+borders = Array[ExtResource("4_paljw")]([SubResource("Resource_plx5h")])
+corner_detail = 20
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
 [sub_resource type="StyleBox" id="StyleBox_jxd0g"]
 resource_local_to_scene = false
 resource_name = ""
@@ -101,7 +146,7 @@ script = ExtResource("4_xppml")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=118128479]
 
-[node name="GameUI" type="Control" parent="CanvasLayer" unique_id=514880391]
+[node name="GameUI" type="Control" parent="CanvasLayer" unique_id=514880391 node_paths=PackedStringArray("skill_progress")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -109,6 +154,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_g4dfm")
+skill_progress = NodePath("MarginContainer/Control/AspectRatioContainer/Panel/SkillProgress")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameUI" unique_id=1669466441]
 layout_mode = 1
@@ -150,13 +196,67 @@ layout_mode = 2
 [node name="AspectRatioContainer5" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=2130784556 instance=ExtResource("7_wgtxe")]
 layout_mode = 2
 
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=1938934187]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer" unique_id=1992143524]
+clip_children = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_wgtxe")
+
+[node name="SkillProgress" type="TextureProgressBar" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=36511836]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 117.600006
+offset_bottom = 117.600006
+step = 0.001
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_gkedh")
+texture_progress = SubResource("GradientTexture1D_gkedh")
+tint_under = Color(0.38039216, 0.36862746, 0.52156866, 1)
+tint_progress = Color(0.92156863, 0.7647059, 0.654902, 1)
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=536534006]
+layout_mode = 0
+offset_right = 117.600006
+offset_bottom = 117.600006
+theme_override_styles/panel = SubResource("StyleBox_v40oh")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=384212429]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
 [node name="PingLabel" type="Label" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=1617847301]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 24.0
 script = ExtResource("6_yoncu")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=519513495]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

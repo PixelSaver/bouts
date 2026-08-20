@@ -71,6 +71,7 @@ var _game_info: GameInfo
 func _ready() -> void:
 	GDSync.expose_func(submit_input)
 	GDSync.expose_func(sync_state)
+	GDSync.expose_func(_sync_skill_countdown)
 	if OS.is_debug_build() and test_weapon:
 		self.bind_weapon(test_weapon)
 
@@ -91,6 +92,13 @@ func _ready() -> void:
 				continue
 			body.add_collision_exception_with(part)
 	ragdoll_parts = bodies
+
+	await get_tree().process_frame
+	if GDSync.is_gdsync_owner(self):
+		SignalBus.player_skill_cooldown_changed.emit(
+			_skill_countdown,
+			weapon.get_skill_cooldown(),
+		)
 
 #region Ragdoll
 func set_disable(disabled: DisableMode) -> void:
@@ -257,7 +265,7 @@ func get_state() -> Array:
 	state.append(RigidBody2DState.get_state(weapon))
 	return state
 #endregion
-#region Movement and input
+#region Movement and input processing
 func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
 	_jump_buffer -= delta
 	_skill_countdown -= delta
@@ -275,6 +283,13 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 		input_skill = false
 		_skill_countdown = weapon.get_skill_cooldown()
 		weapon.apply_skill(self)
+		if GDSync.is_gdsync_owner(self):
+			SignalBus.player_skill_cooldown_changed.emit(
+				_skill_countdown,
+				weapon.get_skill_cooldown(),
+			)
+		else:
+			GDSync.call_func(_sync_skill_countdown, _skill_countdown)
 
 	if can_jump and _jump_armed and (jump or _jump_buffer > 0.):
 		_jump_armed = false
@@ -326,8 +341,13 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	_sync_clock += delta
 	if GDSync.is_host() and _sync_clock >= 1.0 / float(sync_rate):
 		_sync_clock = 0.
-		#sync_state.rpc(get_state())z
+		#sync_state.rpc(get_state())
 		GDSync.call_func(sync_state, get_state())
+
+
+func _sync_skill_countdown(countdown: int) -> void:
+	_skill_countdown = countdown
+	SignalBus.player_skill_cooldown_changed.emit(_skill_countdown, weapon.get_skill_cooldown())
 
 
 func _input(event: InputEvent) -> void:
