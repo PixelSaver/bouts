@@ -29,19 +29,22 @@ func create_notification(
 			get_viewport_rect().size.y - notif.get_combined_minimum_size().y,
 		)
 	)
-	notif.tree_exiting.connect(_on_notif_freed.bind(notif))
+	notif.end_anim_started.connect(_on_notif_freed.bind(notif))
 	return notif
 
 
 func clear_notifications() -> void:
 	for n in notifs:
 		notifs.erase(n)
-		n.disconnect("tree_exiting", _on_notif_freed)
+		n.disconnect("end_anim_started", _on_notif_freed)
 		n.end_anim()
 
 
 func _on_notif_freed(n: PixelNotification) -> void:
 	notifs.erase(n)
+	Log.pr("Erased notif")
+	_rebuild_targets()
+
 #endregion
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("5") and OS.is_debug_build():

@@ -23,11 +23,11 @@ content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
 script = ExtResource("5_y2var")
-corner_detail = 5
-corner_radius_top_left = 60
-corner_radius_top_right = 60
-corner_radius_bottom_right = 60
-corner_radius_bottom_left = 60
+corner_detail = 20
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
 
 [sub_resource type="Gradient" id="Gradient_c1rlj"]
 offsets = PackedFloat32Array(1)
@@ -207,15 +207,18 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer" unique_id=1992143524]
-clip_children = 1
+clip_children = 2
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_wgtxe")
 
 [node name="SkillProgress" type="TextureProgressBar" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=36511836]
 show_behind_parent = true
-layout_mode = 0
-offset_right = 117.600006
-offset_bottom = 117.600006
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 step = 0.001
 fill_mode = 4
 nine_patch_stretch = true
@@ -225,9 +228,12 @@ tint_under = Color(0.38039216, 0.36862746, 0.52156866, 1)
 tint_progress = Color(0.92156863, 0.7647059, 0.654902, 1)
 
 [node name="Panel2" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=536534006]
-layout_mode = 0
-offset_right = 117.600006
-offset_bottom = 117.600006
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBox_v40oh")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=384212429]
