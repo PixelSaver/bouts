@@ -42,6 +42,8 @@ func _on_but_pressed(but_name: String) -> void:
 			"You can't go to next game or back to lobby unless you are host.",
 		)
 		return
+
+	_game_info.clear_win_history()
 	match but_name.to_lower():
 		"backtolobby":
 			GDSync.call_func_all(back_to_lobby)

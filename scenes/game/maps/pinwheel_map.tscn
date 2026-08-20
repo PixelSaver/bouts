@@ -110,7 +110,9 @@ scale = Vector2(0.044142127, 0.919253)
 shape = SubResource("RectangleShape2D_6nyrj")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="PinHead4" unique_id=710710479]
-angular_damp = 1.0
+mass = 3.0
+inertia = 1.0
+angular_damp = 3.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PinHead4/RigidBody2D" unique_id=258843724]
 scale = Vector2(0.43689346, 0.46292567)
@@ -134,7 +136,9 @@ scale = Vector2(0.044142127, 0.919253)
 shape = SubResource("RectangleShape2D_6nyrj")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="PinHead5" unique_id=1720223952]
-angular_damp = 1.0
+mass = 3.0
+inertia = 1.0
+angular_damp = 3.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PinHead5/RigidBody2D" unique_id=771118903]
 scale = Vector2(0.43689346, 0.46292567)

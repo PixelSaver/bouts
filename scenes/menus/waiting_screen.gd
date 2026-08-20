@@ -13,6 +13,7 @@ var _enabled := false
 func _ready() -> void:
 	start_game.pressed.connect(
 		func():
+			Global.menu_manager.game_info.clear_win_history()
 			start_game_requested.emit(),
 	)
 	leave_but.pressed.connect(

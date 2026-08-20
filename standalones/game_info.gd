@@ -141,6 +141,7 @@ func get_game_winner() -> int:
 
 
 func clear_win_history() -> void:
+	Log.pr("Game win history cleared")
 	win_history.clear()
 #endregion
 
