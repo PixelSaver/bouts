@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b4pdlxyjxim6i" path="res://utilities/ui/tweenable.gd" id="4_6ygue"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_paljw"]
 [ext_resource type="Script" uid="uid://37ep8qd6rfa6" path="res://scenes/game/map_manager.gd" id="4_xppml"]
+[ext_resource type="Script" uid="uid://dyr8qa70mm3ry" path="res://standalones/projectile_manager.gd" id="5_c1rlj"]
 [ext_resource type="Script" uid="uid://n0uu6tn8ib5k" path="res://scenes/game/game_ui.gd" id="5_g4dfm"]
 [ext_resource type="PackedScene" uid="uid://cpdx3wny0t6im" path="res://scenes/game/maps/default_map.tscn" id="5_xppml"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_y2var"]
@@ -137,6 +138,9 @@ script = ExtResource("4_xppml")
 
 [node name="Map" parent="MapManager" unique_id=895377889 instance=ExtResource("5_xppml")]
 
+[node name="ProjectileManager" type="Node2D" parent="." unique_id=2118985391]
+script = ExtResource("5_c1rlj")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=118128479]
 
 [node name="GameUI" type="Control" parent="CanvasLayer" unique_id=514880391 node_paths=PackedStringArray("skill_progress")]
@@ -255,7 +259,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

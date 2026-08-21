@@ -396,3 +396,11 @@ static func try_damage_player_body_part(attack: Attack, body: Node, owner_player
 		return false
 	player.damage(attack)
 	return true
+
+
+static func is_collider_owner_id_same(body: Node, id: int) -> bool:
+	var par = body.get_parent()
+	if par is not Player:
+		return false
+	var player = par as Player
+	return GDSync.get_gdsync_owner(player) == id

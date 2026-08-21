@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://djruv861k85ox"]
+
+[ext_resource type="Script" uid="uid://biwk7v44sfmv7" path="res://scenes/weapons/projectiles/generic_bullet.gd" id="1_25n3p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gkedh"]
+radius = 22.0
+
+[node name="GenericBullet" type="RigidBody2D" unique_id=1002261373]
+collision_layer = 3
+collision_mask = 0
+can_sleep = false
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 3
+script = ExtResource("1_25n3p")
+metadata/_custom_type_script = "uid://bmrmbau6rw2is"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=582419335]
+shape = SubResource("CircleShape2D_gkedh")
+
+[node name="Panel" type="Panel" parent="." unique_id=612829620]
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
