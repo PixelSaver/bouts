@@ -3,11 +3,13 @@ class_name Gun
 
 @export var colliding_bodies: Array[Projectile]
 @export var marker: Marker2D
+var bullet_occlusion_range: float = 1000.
 
 
 func _ready() -> void:
 	self.set_meta("is_weapon", true)
 	SignalBus.projectile_spawned.connect(_on_proj_spawned)
+	bullet_occlusion_range = max(get_viewport_rect().size.x, get_viewport_rect().size.y) * 2
 
 
 func _on_proj_spawned(p: Projectile, owner_id: int):
@@ -32,7 +34,7 @@ func apply_skill(_player: Player = player) -> void:
 		atk,
 		marker.global_rotation,
 		marker.global_position,
-		marker.global_transform.origin.x * 1000.,
+		marker.global_transform.basis_xform(Vector2.RIGHT) * 1000.,
 		GDSync.get_gdsync_owner(player),
 	)
 
@@ -45,8 +47,11 @@ func set_body_collision_exceptions(bodies: Array[RigidBody2D]) -> void:
 func _physics_process(_delta: float) -> void:
 	if GDSync.is_active() and not GDSync.is_host():
 		return
+
 	for body in colliding_bodies:
 		for col in body.get_colliding_bodies():
 			if Player.try_damage_player_body_part(_get_attack(), col, player if player else null):
 				SignalBus.unregister_projectile_requested.emit(body)
 				Log.pr("Unregister requested")
+		if self.to_local(body.global_position).length() > bullet_occlusion_range:
+			SignalBus.unregister_projectile_requested.emit(body)

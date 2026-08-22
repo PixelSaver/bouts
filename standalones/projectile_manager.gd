@@ -22,12 +22,22 @@ func _on_proj_spawn_requested(
 	atk: Attack,
 	rot: float,
 	pos: Vector2,
+	linear_velocity: Vector2,
 	owned_id: int,
 ):
 	if not GDSync.is_host():
 		return
 	var id = get_next_projectile_id(owned_id)
-	GDSync.call_func_all(_spawn_proj, p_type, atk.to_dict(), rot, pos, owned_id, id)
+	GDSync.call_func_all(
+		_spawn_proj,
+		p_type,
+		atk.to_dict(),
+		rot,
+		pos,
+		linear_velocity,
+		owned_id,
+		id,
+	)
 
 
 func _spawn_proj(
@@ -35,6 +45,7 @@ func _spawn_proj(
 	atk_d: Dictionary,
 	rot: float,
 	pos: Vector2,
+	linear_velocity: Vector2,
 	owned_id: int,
 	name_id: int,
 ):
@@ -43,6 +54,7 @@ func _spawn_proj(
 	p.attack = atk
 	p.global_rotation = rot
 	p.global_position = pos
+	p.linear_velocity = linear_velocity
 	p.owner_id = owned_id
 	p.name = "Projectile_%d" % name_id
 	self.register_projectile(p, name_id)
