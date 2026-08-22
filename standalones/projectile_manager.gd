@@ -15,6 +15,7 @@ func _ready() -> void:
 	SignalBus.unregister_projectile_requested.connect(unregister_projectile)
 	GDSync.expose_func(_spawn_proj)
 	GDSync.expose_func(end_projectile)
+	GDSync.expose_func(receive_states)
 
 
 func _on_proj_spawn_requested(
@@ -93,3 +94,20 @@ func _physics_process(delta: float) -> void:
 	for id in projectiles.keys():
 		var p = projectiles.get(id) as Projectile
 		p.process_projectile_movement(delta)
+	if not GDSync.is_host():
+		return
+	var states: Dictionary[int, Array] = { }
+	for id in projectiles.keys():
+		var p = projectiles.get(id) as Projectile
+		var s = ProjectileState.get_state(p)
+		states.set(id, s)
+	GDSync.call_func(receive_states, states)
+
+
+func receive_states(states: Dictionary[int, Array]) -> void:
+	for id in states.keys():
+		var p = projectiles.get(id) as Projectile
+		if not p:
+			Log.err("Projectile of id %s not found" % id)
+		var s = states.get(id)
+		ProjectileState.set_state(s, p)

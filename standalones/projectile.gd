@@ -7,6 +7,10 @@ var owner_id: int = -1
 var _hit_cooldown := 0.
 
 
+func _ready() -> void:
+	GDSync.expose_func(receive_state)
+
+
 func process_projectile_movement(delta: float) -> void:
 	_hit_cooldown -= delta
 	if _hit_cooldown <= 0.:
@@ -26,26 +30,5 @@ func _get_attack() -> Attack:
 	return attack
 
 
-class ProjectileState extends Resource:
-	enum StateType {
-		POS,
-		ROT,
-		LIN_VEL,
-		ANG_VEL,
-	}
-
-
-	static func get_state(body: Projectile) -> Array:
-		var out: Array = []
-		out.append(body.global_position)
-		out.append(body.global_rotation)
-		out.append(body.linear_velocity)
-		out.append(body.angular_velocity)
-		return out
-
-
-	static func set_state(state_array: Array, body: Projectile) -> void:
-		body.global_position = state_array[0]
-		body.global_rotation = state_array[1]
-		body.linear_velocity = state_array[2]
-		body.angular_velocity = state_array[3]
+func receive_state(arr: Array) -> void:
+	ProjectileState.set_state(arr, self)
