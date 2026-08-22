@@ -35,19 +35,28 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" unique_id=1190652418 node_paths=PackedStringArray("inside_panel", "bg_panel")]
-offset_bottom = 100.0
-stretch_mode = 1
+custom_minimum_size = Vector2(30, 0)
+offset_right = 6.0
+offset_bottom = 6.0
+stretch_mode = 0
 script = ExtResource("1_bwc21")
-inside_panel = NodePath("Inside")
-bg_panel = NodePath("BG")
+inside_panel = NodePath("PanelContainer/Inside")
+bg_panel = NodePath("PanelContainer/BG")
 
-[node name="BG" type="Panel" parent="." unique_id=2128600946]
+[node name="PanelContainer" type="MarginContainer" parent="." unique_id=290137560]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="BG" type="Panel" parent="PanelContainer" unique_id=2128600946]
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_rotation = 0.7853982
 theme_override_styles/panel = SubResource("StyleBox_yoncu")
 
-[node name="Inside" type="Panel" parent="." unique_id=508820715]
+[node name="Inside" type="Panel" parent="PanelContainer" unique_id=508820715]
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_scale = Vector2(0.8, 0.8)

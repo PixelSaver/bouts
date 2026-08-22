@@ -172,10 +172,10 @@ layout_mode = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 0.05
+anchor_bottom = 0.06
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 5
 script = ExtResource("6_6lcsq")
 
 [node name="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1190652418 instance=ExtResource("7_wgtxe")]
@@ -259,6 +259,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
