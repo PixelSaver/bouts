@@ -12,7 +12,9 @@ var projectiles: Dictionary[int, Projectile] = { }
 
 func _ready() -> void:
 	SignalBus.projectile_spawn_requested.connect(_on_proj_spawn_requested)
+	SignalBus.unregister_projectile_requested.connect(unregister_projectile)
 	GDSync.expose_func(_spawn_proj)
+	GDSync.expose_func(end_projectile)
 
 
 func _on_proj_spawn_requested(
@@ -43,7 +45,7 @@ func _spawn_proj(
 	p.global_position = pos
 	p.owner_id = owned_id
 	p.name = "Projectile_%d" % name_id
-	add_child(p)
+	self.register_projectile(p, name_id)
 	SignalBus.projectile_spawned.emit(p, owned_id)
 
 
@@ -55,6 +57,24 @@ func register_projectile(p: Projectile, id: int) -> void:
 	projectiles.set(id, p)
 	p.name = "Projectile_%s" % id
 	add_child(p)
+
+
+func unregister_projectile(p: Projectile) -> void:
+	var id = projectiles.find_key(p)
+	Log.pr("Projectile key is %s" % id)
+	if id == null:
+		return
+	Log.pr("Unregisterable projectile found")
+	GDSync.call_func_all(end_projectile, id)
+
+
+func end_projectile(id: int) -> void:
+	var p = projectiles.get(id)
+	if not p:
+		return
+	Log.pr("Ending projectile id %s on client %s" % [id, GDSync.get_client_id()])
+	projectiles.erase(id)
+	p.queue_free()
 
 
 func _physics_process(delta: float) -> void:

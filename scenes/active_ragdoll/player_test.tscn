@@ -9,4 +9,4 @@
 
 [node name="Player" parent="." unique_id=1098918678 instance=ExtResource("1_utvop")]
 position = Vector2(572, 189)
-test_weapon = 1
+test_weapon = 2

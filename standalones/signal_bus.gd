@@ -31,8 +31,11 @@ signal projectile_spawn_requested(
 	atk: Attack,
 	rot: float,
 	pos: Vector2,
+	linear_velocity: Vector2,
 	owned_id: int,
 )
+@warning_ignore("unused_signal")
+signal unregister_projectile_requested(id: int)
 @warning_ignore("unused_signal")
 signal projectile_spawned(p: Projectile, owned_id: int)
 @warning_ignore("unused_signal")

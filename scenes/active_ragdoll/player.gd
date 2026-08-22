@@ -191,6 +191,9 @@ func _ik_two_seg(
 
 func _physics_process(delta: float) -> void:
 	if not GDSync.is_active():
+		_handle_input()
+		_update_can_jump()
+		_process_movement(input_dir, input_jump, input_motion, delta)
 		return
 	_handle_input()
 	if not GDSync.is_host():
@@ -352,8 +355,6 @@ func _sync_skill_countdown(countdown: int) -> void:
 
 func _input(event: InputEvent) -> void:
 	if _disabled == DisableMode.FROZEN or _disabled == DisableMode.NOTHING:
-		return
-	if not is_multiplayer_authority():
 		return
 	if event is InputEventMouseMotion:
 		mouse_motion += event.relative * sensitivity

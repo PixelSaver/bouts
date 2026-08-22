@@ -2,8 +2,7 @@ extends Weapon
 class_name Gun
 
 @export var colliding_bodies: Array[Projectile]
-@export var hit_cooldown := 0.3
-var _hit_cooldown := 0.3
+@export var marker: Marker2D
 
 
 func _ready() -> void:
@@ -31,8 +30,9 @@ func apply_skill(_player: Player = player) -> void:
 	SignalBus.projectile_spawn_requested.emit(
 		ProjectileManager.ProjectileType.DEFAULT,
 		atk,
-		self.global_rotation,
-		self.global_position,
+		marker.global_rotation,
+		marker.global_position,
+		marker.global_transform.origin.x * 1000.,
 		GDSync.get_gdsync_owner(player),
 	)
 
@@ -42,18 +42,11 @@ func set_body_collision_exceptions(bodies: Array[RigidBody2D]) -> void:
 		self.add_collision_exception_with(part)
 
 
-func _physics_process(delta: float) -> void:
-	_hit_cooldown -= delta
-	if _hit_cooldown <= 0.:
-		var collided_bodies: Array[Node2D] = []
-		for body in colliding_bodies:
-			for col in body.get_colliding_bodies():
-				collided_bodies.append(col)
-
-		for col in collided_bodies:
-			if Player.try_damage_player_body_part(_get_attack(), col, player if player else null):
-				_hit_cooldown = hit_cooldown
-				break
-
-	if player and player.is_syncing_state == false:
+func _physics_process(_delta: float) -> void:
+	if GDSync.is_active() and not GDSync.is_host():
 		return
+	for body in colliding_bodies:
+		for col in body.get_colliding_bodies():
+			if Player.try_damage_player_body_part(_get_attack(), col, player if player else null):
+				SignalBus.unregister_projectile_requested.emit(body)
+				Log.pr("Unregister requested")
