@@ -15,9 +15,9 @@ contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("2_mgo42")
 marker = NodePath("Marker2D")
-weapon_name = "Generic Sword"
+weapon_name = "Gun"
 weapon_skill_cooldown = 2.0
-weapon_description = "Just a sword"
+weapon_description = "A gun."
 metadata/_custom_type_script = "uid://bew7356lpm7yp"
 
 [node name="Line2D" type="Line2D" parent="." unique_id=633370630]

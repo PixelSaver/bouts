@@ -259,7 +259,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

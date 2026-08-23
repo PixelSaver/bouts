@@ -3,9 +3,13 @@ class_name ProjectileManager
 
 enum ProjectileType {
 	DEFAULT,
+	GENERIC_BULLET,
+	SNIPER_BULLET,
 }
 var projectile_scenes: Dictionary[ProjectileType, PackedScene] = {
-	ProjectileType.DEFAULT: preload("res://scenes/weapons/projectiles/generic_bullet.tscn")
+	ProjectileType.DEFAULT: preload("res://scenes/weapons/projectiles/generic_bullet.tscn"),
+	ProjectileType.GENERIC_BULLET: preload("res://scenes/weapons/projectiles/generic_bullet.tscn"),
+	ProjectileType.SNIPER_BULLET: preload("res://scenes/weapons/projectiles/sniper_bullet.tscn"),
 }
 var projectiles: Dictionary[int, Projectile] = { }
 
