@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d2qm5skkbse7x"]
+
+[ext_resource type="Shader" uid="uid://boiholne7teap" path="res://shaders/water.gdshader" id="1_4mq8m"]
+
+[resource]
+shader = ExtResource("1_4mq8m")
+shader_parameter/liquid_level = 0.5
+shader_parameter/liquid_color = Color(0.2, 0.5, 1, 0.8)
+shader_parameter/foam_color = Color(0.8, 0.9, 1, 0.6)
+shader_parameter/wave_amplitude = 0.0050000002375
+shader_parameter/wave_frequency = 14.5530006912675
+shader_parameter/wave_speed = 1.5310000727225002
+shader_parameter/gravity_angle = 0.0
+shader_parameter/gravity_direction = Vector2(0, 1)
+shader_parameter/foam_thickness = 0.02
+shader_parameter/shine_intensity = 0.2350000111625
+shader_parameter/add_bubble = true
+shader_parameter/bubble_scale = 16.80800079838
+shader_parameter/bubble_speed = 1.2890000612275

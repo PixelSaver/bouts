@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dblelrhrnny1c"]
 
 [ext_resource type="Script" uid="uid://bp1yjqkb2ahku" path="res://scenes/game/water_killbox.gd" id="1_8yvq6"]
-[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_aflja"]
+[ext_resource type="Material" uid="uid://d2qm5skkbse7x" path="res://assets/water_material.tres" id="3_77ryl"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gkedh"]
 
@@ -11,11 +11,14 @@ script = ExtResource("1_8yvq6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1328907051]
 shape = SubResource("WorldBoundaryShape2D_gkedh")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=372762678]
-offset_right = 5000.0
-offset_bottom = 1000.0
+[node name="Panel" type="ColorRect" parent="." unique_id=2000350732]
+material = ExtResource("3_77ryl")
+custom_minimum_size = Vector2(5000, 1000)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(-0.5, 0)
-texture = ExtResource("2_aflja")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

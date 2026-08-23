@@ -42,6 +42,7 @@ angular_damp = 1.0
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="Polygon2D" type="Polygon2D" parent="PinHead/RigidBody2D" unique_id=1888428092]
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="PinJoint2D" type="PinJoint2D" parent="PinHead" unique_id=1416316537]
@@ -68,6 +69,7 @@ angular_damp = 1.0
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="Polygon2D" type="Polygon2D" parent="PinHead2/RigidBody2D" unique_id=165748060]
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="PinJoint2D" type="PinJoint2D" parent="PinHead2" unique_id=640665342]
@@ -94,6 +96,7 @@ angular_damp = 1.0
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="Polygon2D" type="Polygon2D" parent="PinHead3/RigidBody2D" unique_id=182020710]
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="PinJoint2D" type="PinJoint2D" parent="PinHead3" unique_id=1696735378]
@@ -120,6 +123,7 @@ polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12
 
 [node name="Polygon2D" type="Polygon2D" parent="PinHead4/RigidBody2D" unique_id=1784656419]
 scale = Vector2(0.43475616, 0.4402386)
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="PinJoint2D" type="PinJoint2D" parent="PinHead4" unique_id=607004721]
@@ -146,6 +150,7 @@ polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12
 
 [node name="Polygon2D" type="Polygon2D" parent="PinHead5/RigidBody2D" unique_id=1371605062]
 scale = Vector2(0.43475616, 0.4402386)
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
 polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
 
 [node name="PinJoint2D" type="PinJoint2D" parent="PinHead5" unique_id=1387497863]
