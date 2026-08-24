@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://fj7ykktocnh6" path="res://utilities/health_component.gd" id="2_h3ani"]
 [ext_resource type="Script" uid="uid://bbbjh7tp0fq7w" path="res://scenes/active_ragdoll/target_angle_rigidbody.gd" id="3_h3ani"]
 [ext_resource type="PackedScene" uid="uid://ng8x4jpda7ic" path="res://scenes/weapons/generic_sword.tscn" id="5_04ies"]
+[ext_resource type="Script" uid="uid://dko7ymbu3i1jj" path="res://scenes/active_ragdoll/shield.gd" id="8_h3ani"]
 [ext_resource type="Script" uid="uid://d1bfvfeni03bw" path="res://scenes/active_ragdoll/win_number_label.gd" id="9_6w5i6"]
 [ext_resource type="Script" uid="uid://1k8bpr23sn6k" path="res://scenes/game/hp_bar.gd" id="9_mlfyp"]
 
@@ -35,6 +36,18 @@ colors = PackedColorArray(1, 1, 1, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_mlfyp"]
 gradient = SubResource("Gradient_mlfyp")
 width = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_plx5h"]
+radius = 180.0
+
+[sub_resource type="Gradient" id="Gradient_6w5i6"]
+offsets = PackedFloat32Array(0, 0.69509345, 0.7348131, 1, 1.414)
+colors = PackedColorArray(1, 1, 1, 0, 0.41777155, 0.6002817, 1.0495375, 1, 0.4172754, 0.6020386, 1.0495763, 0, 0.4172754, 0.6020386, 1.0495763, 0, 0.4174973, 0.6012528, 1.049559, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gkedh"]
+gradient = SubResource("Gradient_6w5i6")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="Player" type="Node2D" unique_id=1098918678 node_paths=PackedStringArray("head", "torso", "r_pelvis", "r_leg_upper", "r_knee", "r_leg_lower", "l_pelvis", "l_leg_upper", "l_knee", "l_leg_lower", "r_shoulder", "r_arm_fore", "r_elbow", "r_arm_upper", "l_shoulder", "l_arm_fore", "l_elbow", "l_arm_upper", "r_hand_marker", "r_hand_groove_joint", "r_hand_pin_joint", "_health_component", "_win_number_label", "weapon")]
 script = ExtResource("1_dnie3")
@@ -459,5 +472,22 @@ offset_bottom = 40.0
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="Shield" type="RigidBody2D" parent="." unique_id=268638039 node_paths=PackedStringArray("col", "tex")]
+script = ExtResource("8_h3ani")
+col = NodePath("CollisionShape2D")
+tex = NodePath("TextureRect")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" unique_id=1632272544]
+shape = SubResource("CircleShape2D_plx5h")
+
+[node name="TextureRect" type="TextureRect" parent="Shield" unique_id=1784669210]
+custom_minimum_size = Vector2(360, 360)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_gkedh")
 
 [connection signal="health_changed" from="HealthComponent" to="HPBar" method="_on_health_component_health_changed"]
