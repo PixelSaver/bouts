@@ -14,9 +14,12 @@ func _ready() -> void:
 
 
 func apply_skill(_player: Player = player) -> void:
-	$Ball.freeze = true
+	$Ball.gravity_scale = 0.
+	$Ball.mass = 100000000
+	$Ball.linear_velocity = Vector2.ZERO
 	await get_tree().create_timer(1.0).timeout
-	$Ball.freeze = false
+	$Ball.gravity_scale = .1
+	$Ball.mass = 0.1
 
 
 func _physics_process(delta: float) -> void:

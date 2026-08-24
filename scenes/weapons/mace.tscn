@@ -138,6 +138,7 @@ collision_layer = 3
 collision_mask = 2
 mass = 0.1
 physics_material_override = ExtResource("1_7gkdb")
+gravity_scale = 0.1
 can_sleep = false
 contact_monitor = true
 max_contacts_reported = 3

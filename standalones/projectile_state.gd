@@ -17,6 +17,8 @@ static func get_state(body: Projectile) -> Array:
 
 
 static func set_state(state_array: Array, body: Projectile) -> void:
+	if not body:
+		return
 	body.global_position = state_array[0]
 	body.global_rotation = state_array[1]
 	body.linear_velocity = state_array[2]

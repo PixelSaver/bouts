@@ -25,7 +25,6 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 	for i in state.get_contact_count():
 		var collider := state.get_contact_collider_object(i)
-
 		if Player.try_damage_player_body_part(
 			_get_attack(),
 			collider,
@@ -33,13 +32,9 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		):
 			SignalBus.unregister_projectile_requested.emit(self)
 			return
-
 		if ricochet and ricochets < max_ricochets:
 			var normal := state.get_contact_local_normal(i)
-
-			# Reflect the current velocity
 			state.linear_velocity = state.linear_velocity.bounce(normal)
-
 			ricochets += 1
 			_r_c = ricochet_cooldown
 		elif ricochet:

@@ -422,6 +422,7 @@ rotation = -0.7853982
 player = NodePath("..")
 
 [node name="HPBar" type="TextureProgressBar" parent="." unique_id=1511458412 node_paths=PackedStringArray("follow_target")]
+z_index = 10
 anchors_preset = -1
 offset_left = -75.0
 offset_top = -145.0
