@@ -467,6 +467,7 @@ script = ExtResource("9_6w5i6")
 follow_target = NodePath("../Torso")
 
 [node name="DebugLabel" type="RichTextLabel" parent="." unique_id=1230572078]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 fit_content = true
@@ -474,6 +475,9 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="Shield" type="RigidBody2D" parent="." unique_id=268638039 node_paths=PackedStringArray("col", "tex")]
+visible = false
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("8_h3ani")
 col = NodePath("CollisionShape2D")
 tex = NodePath("TextureRect")
