@@ -23,7 +23,9 @@ Head to my itch.io to play, or download the corresponding build. Please note: we
 ## Gameplay
 
 <img src="media/Screenshot from 2026-08-24 23-13-03.png" alt="Gameplay screenshot">
-    
+
+https://github.com/user-attachments/assets/4eb58921-cdb8-4bbf-8ed6-324918edc05d
+
 
 ## Acknowledgements
 
