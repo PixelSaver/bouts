@@ -2,12 +2,33 @@
 extends Button
 class_name DefaultButton
 
-var t : Tween
+var t: Tween
+var _original_enabled_button_text: String = ""
+var _label: RichTextLabel
+
+#region Public API
+func disable_button() -> void:
+	disabled = true
+	self.modulate.v = 0.4
+
+
+func enable_button() -> String:
+	disabled = false
+	self.modulate.v = 1.0
+	return _original_enabled_button_text
+
+
+func set_button_text(new_text: String) -> void:
+	if not _label:
+		return
+	_label.text = new_text
+#endregion
 
 func _enter_tree() -> void:
 	if not Engine.is_editor_hint():
 		return
 	call_deferred("_ensure_label")
+
 
 func _ensure_label():
 	if self.custom_minimum_size == Vector2.ZERO:
@@ -29,12 +50,20 @@ func _ensure_label():
 	label.bbcode_enabled = true
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)
 
+
 func _ready() -> void:
 	self.pivot_offset_ratio = Vector2(0.5, 0.5)
 	self.pressed.connect(_on_pressed)
+	for child in get_children():
+		if child is RichTextLabel:
+			_label = child as RichTextLabel
+			_original_enabled_button_text = _label.text
+			break
+
 
 func _notification(what: int) -> void:
-	if Engine.is_editor_hint(): return
+	if Engine.is_editor_hint():
+		return
 	match what:
 		NOTIFICATION_MOUSE_ENTER:
 			_hover()
@@ -45,25 +74,33 @@ func _notification(what: int) -> void:
 		NOTIFICATION_FOCUS_EXIT:
 			_unhover()
 
+
 func _on_pressed() -> void:
-	if Engine.is_editor_hint(): return
-	if t and t.is_running(): t.kill()
+	if Engine.is_editor_hint():
+		return
+	if t and t.is_running():
+		t.kill()
 	t = create_tween().set_ease(Tween.EASE_OUT)
 	t.set_trans(Tween.TRANS_QUINT)
 	t.tween_property(self, "scale", Vector2.ONE * 0.95, 0.07)
 	t.tween_property(self, "scale", Vector2.ONE * 1.1, 0.07)
-	
+
 
 func _hover() -> void:
-	if Engine.is_editor_hint(): return
-	if t and t.is_running(): t.kill()
+	if Engine.is_editor_hint():
+		return
+	if t and t.is_running():
+		t.kill()
 	t = create_tween().set_ease(Tween.EASE_OUT)
 	t.set_trans(Tween.TRANS_QUINT).set_parallel(true)
 	t.tween_property(self, "scale", Vector2.ONE * 1.1, 0.7)
-	
+
+
 func _unhover() -> void:
-	if Engine.is_editor_hint(): return
-	if t and t.is_running(): t.kill()
+	if Engine.is_editor_hint():
+		return
+	if t and t.is_running():
+		t.kill()
 	t = create_tween().set_ease(Tween.EASE_OUT)
 	t.set_trans(Tween.TRANS_ELASTIC).set_parallel(true)
 	t.tween_property(self, "scale", Vector2.ONE, 0.7)

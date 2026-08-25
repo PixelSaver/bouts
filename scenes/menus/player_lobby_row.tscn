@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bkbfmrefw38t7" path="res://scenes/menus/player_lobby_row.gd" id="1_pennx"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="2_odqdg"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="3_3f0tn"]
-[ext_resource type="Script" uid="uid://dmxfx72msunjl" path="res://scenes/menus/auth/shadowed_button.gd" id="4_nmbvh"]
+[ext_resource type="Script" uid="uid://bbevr0r82fs0i" path="res://utilities/ui/menus/shadowed_button.gd" id="4_pennx"]
 
 [sub_resource type="StyleBox" id="StyleBox_jxd0g"]
 resource_local_to_scene = false
@@ -38,7 +38,7 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[node name="PlayerLobbyRow" type="Panel" unique_id=1710346516 node_paths=PackedStringArray("panel_color", "player_name", "kick_cont", "kick_button")]
+[node name="PlayerLobbyRow" type="Panel" unique_id=1710346516 node_paths=PackedStringArray("panel_color", "player_name", "host_display", "kick_button")]
 custom_minimum_size = Vector2(0, 60)
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,7 +48,7 @@ grow_vertical = 2
 script = ExtResource("1_pennx")
 panel_color = NodePath("MarginContainer/HBoxContainer/Panel")
 player_name = NodePath("MarginContainer/HBoxContainer/RichTextLabel")
-kick_cont = NodePath("")
+host_display = NodePath("MarginContainer/HBoxContainer/HostDisplay")
 kick_button = NodePath("MarginContainer/HBoxContainer/ShadowedButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=17826105]
@@ -85,12 +85,21 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="HostDisplay" type="CenterContainer" parent="MarginContainer/HBoxContainer" unique_id=1947067950]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer/HostDisplay" unique_id=380569032]
+layout_mode = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="MarginContainer/HBoxContainer/HostDisplay/Control" unique_id=1402004202]
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+polygon = PackedVector2Array(-40, -23, -45, 19, 38, 17, 35, -24, 12, -12, -2, -27, -19, -8)
+
 [node name="ShadowedButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=946530915]
 custom_minimum_size = Vector2(100, 0)
-custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
-script = ExtResource("4_nmbvh")
-metadata/_custom_type_script = "uid://dmxfx72msunjl"
+script = ExtResource("4_pennx")
 
 [node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/ShadowedButton" unique_id=414103384]
 layout_mode = 1

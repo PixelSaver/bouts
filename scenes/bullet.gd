@@ -17,7 +17,7 @@ var prev_pos : Array[Vector2] = []
 
 #@rpc("any_peer", "call_remote")
 #func sync_location(pos:Vector2):
-	#if not multiplayer.is_server(): return
+	#if not GDSync.is_host(): return
 	#self.global_position = pos
 
 func server_update(delta: float) -> void: 
@@ -34,7 +34,7 @@ func _update_trail():
 
 
 func _body_entered(body:Node2D) -> void:
-	if not multiplayer.is_server(): return
+	if not GDSync.is_host(): return
 	if body is not Player: return
 	## Check that the bullet isnt hitting it's own parent
 	if body.get_multiplayer_authority() == owner_id: return

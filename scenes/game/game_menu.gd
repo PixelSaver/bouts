@@ -9,11 +9,17 @@ const PLAYER = preload("res://scenes/active_ragdoll/player.tscn")
 @export var text_cont: Control
 @onready var players: Node2D = $Players
 @onready var player_manager: PlayerManager = $Players
+var mouse_mode: Input.MouseMode = Input.MouseMode.MOUSE_MODE_VISIBLE
 var t: Tween
+var _game_info: GameInfo
 
 
 func _ready() -> void:
-	if multiplayer.is_server():
+	GDSync.expose_func(spawn_player)
+	GDSync.expose_func(player_won)
+	GDSync.expose_func(end_game_for_all)
+
+	if GDSync.is_host():
 		player_manager.player_won.connect(
 			func(id: int):
 				#var ups = UpgradeManager.get_random_upgrades(5)
@@ -25,20 +31,43 @@ func _ready() -> void:
 				#for _id in Global.menu_manager.players.keys():
 				#if _id == 1: continue
 				#receive_upgrades.rpc_id(_id, id, ups)
-				player_won.rpc(id),
+				GDSync.call_func_all(player_won, id),
 		)
 		player_manager.tie.connect(
 			func():
-				player_won.rpc(-1),
+				GDSync.call_func_all(player_won, -1),
 		)
 	var banner_ts = get_all_tweenables(banners_cont)
 	for tw in banner_ts:
 		tw.tween_value = 1.0
 		tw.modulate_parent.a = 1.0
+	SignalBus.player_disconnected.connect(
+		func():
+			end_game_for_all(),
+	)
+
+
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("l_click"):
+		mouse_mode = Input.MOUSE_MODE_CAPTURED
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if Input.is_action_just_pressed("esc"):
+		mouse_mode = Input.MOUSE_MODE_VISIBLE
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func pass_game_info(game_info: GameInfo) -> void:
+	_game_info = game_info
+	map_man.pick_map(game_info.next_map)
+	SignalBus.round_started.emit(_game_info)
+	Log.pr("Round started")
+	start_anim()
 
 
 func start_anim() -> void:
-	var keys = Global.menu_manager.players.keys()
+	if not _game_info:
+		return
+	var keys = _game_info.players.keys()
 
 	# animation
 	var all_ts = get_all_tweenables(self)
@@ -56,10 +85,7 @@ func start_anim() -> void:
 	await t.finished
 
 	# text
-	await text_cont.animate(
-		Global.round_state.get_wins(keys[0]),
-		Global.round_state.get_wins(keys[1]),
-	)
+	await text_cont.animate(_game_info.get_wins(keys[0]), _game_info.get_wins(keys[1]))
 
 	# bounce
 	t = default_tween().set_parallel(false).set_trans(Tween.TRANS_CIRC)
@@ -72,7 +98,8 @@ func start_anim() -> void:
 	for tw in all_ts:
 		t.tween_property(tw, "tween_value", 1.0, 0.7)
 		t.tween_property(tw, "modulate_parent:a", 0.0, 0.7)
-	if not multiplayer.is_server():
+
+	if not GDSync.is_host():
 		return
 
 	var spawns = map_man.get_spawn_points()
@@ -84,15 +111,17 @@ func start_anim() -> void:
 		return
 	for i in range(keys.size()):
 		var key = keys[i]
-		var player_info: PlayerInfo = Global.menu_manager.players.get(key)
+		var player_info: PlayerInfo = _game_info.players.get(key)
 		if not player_info:
-			printerr("Player info not readable as PlayerInfo")
+			Log.warn("Player info not readable as PlayerInfo")
 			continue
-		spawn_player.rpc(key, spawns[i], player_info.to_dict())
+		GDSync.call_func_all(spawn_player, key, spawns[i], player_info.to_dict())
 
 
-@rpc("authority", "reliable", "call_local")
+#@rpc("authority", "reliable", "call_local")
 func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
+	if id == GDSync.get_client_id():
+		Log.pr("Player spawned of this info: %s" % PlayerInfo.from_dict(_pi))
 	var pi = PlayerInfo.from_dict(_pi)
 	var inst = PLAYER.instantiate() as Player
 	players.add_child(inst)
@@ -101,35 +130,50 @@ func spawn_player(id: int, pos: Vector2, _pi: Dictionary):
 	inst.name = "Player_%d" % id
 	inst.set_color(pi.color)
 	inst.global_position = pos
-	inst.set_multiplayer_authority(id)
+	inst.bind_weapon(pi.weapon)
+	GDSync.set_gdsync_owner(inst, id)
+	#inst.set_multiplayer_authority(id)
 	camera.append_follow_targets(inst.get_cam_follow_node())
-	inst.begin_round(Global.round_state.get_wins(id))
+	inst.begin_round(_game_info)
 	player_manager.register_player_in_game(id, inst)
 
-#@rpc("any_peer", "reliable", "call_remote")
-#func receive_upgrades(win_id:int, upgrades:Array[UpgradeManager.Upgrades]):
-##HACK Update winners and losers better, clean up al the Global.player_won_id = id and stuff
-#Global.player_won_id = win_id
-#Global.round_state = RoundState.new()
-##TODO Upgrade to 4 player
-#Global.round_state.set_player_upgrades(Global.get_losers().front(), upgrades)
 
-
-@rpc("authority", "call_local", "reliable")
 func player_won(id: int) -> void:
 	player_manager.stop_player_sync()
-	Global.set_winner(id)
-	print("Client %s sees %s won" % [self.multiplayer.get_unique_id(), id])
+	# ignore true win since if tie js do another round :P
+	var _true_win = Global.set_winner(id)
+	Log.pr("Client %s sees %s win" % [GDSync.get_client_id(), id])
+	if not GDSync.is_host():
+		return
 	await get_tree().process_frame
 	await get_tree().process_frame
-	if id == -1:
-		# tie
-		pass
+	var game_winner := _game_info.get_game_winner()
+	if game_winner == -1:
+		Global.menu_manager.request_start_game()
 	else:
-		Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
+		Log.pr("Player %s won the game!" % game_winner)
+		GDSync.call_func_all(end_game_for_all, game_winner)
+
+
+func end_game_for_all(winner_id: int = -1) -> void:
+	if winner_id != -1:
+		var won_scene: GameWonMenu = Global.menu_manager.transition_to_scene(
+			SceneDatabase.get_scene(SceneDatabase.Scene.WON),
+			true,
+		)
+		won_scene.pass_game_info(_game_info, winner_id)
+	else:
+		Global.menu_manager.transition_to_scene(
+			SceneDatabase.get_scene(SceneDatabase.Scene.MULTIPLAYER)
+		)
 
 
 func end_anim() -> void:
 	self.hide()
-	await get_tree().create_timer(3.).timeout
+	$CanvasLayer.hide()
+	await get_tree().create_timer(.5).timeout
+	$PhantomCamera2D.hide()
+	$PhantomCamera2D.queue_free()
+	$Camera2D.hide()
+	$Camera2D.queue_free()
 	queue_free()

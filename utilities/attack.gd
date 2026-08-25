@@ -7,13 +7,29 @@ class_name Attack
 ## Knockback vector encoding direction and strength of knockback
 @export var knockback := Vector2.ZERO
 
-static func spawn_attack(dmg:float) -> Attack:
+
+static func spawn_attack(dmg: float) -> Attack:
 	var atk = Attack.new()
 	atk.damage = dmg
 	return atk
 
+
 ## Set the knockback using the position, normalizes the direction, and then multiplies by the kb_strength
-func calc_knockback(attacker:Node2D, attacked:Node2D, kb_strength:float) -> Vector2:
+func calc_knockback(attacker: Node2D, attacked: Node2D, kb_strength: float) -> Vector2:
 	var dir = attacked.global_position - attacker.global_position
 	knockback = dir.normalized() * kb_strength
 	return knockback
+
+
+func to_dict() -> Dictionary:
+	return {
+		"damage": damage,
+		"knockback": knockback,
+	}
+
+
+static func from_dict(d: Dictionary) -> Attack:
+	var atk = Attack.new()
+	atk.damage = d.get("damage", 1.0)
+	atk.knockback = d.get("knockback", Vector2.ZERO)
+	return atk

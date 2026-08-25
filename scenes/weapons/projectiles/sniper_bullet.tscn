@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://h8f58fsti5ip"]
+
+[ext_resource type="Script" uid="uid://bjxx6prwbs05e" path="res://scenes/weapons/projectiles/sniper_bullet.gd" id="1_yisoq"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="2_lx60r"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="3_avdwy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vmjbp"]
+
+[sub_resource type="StyleBox" id="StyleBox_0ei1m"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("3_avdwy")
+color = Color(0.92156863, 0.7647059, 0.654902, 1)
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="SniperBullet" type="RigidBody2D" unique_id=1002261373]
+collision_layer = 3
+collision_mask = 2
+mass = 0.3
+gravity_scale = 0.1
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 3
+script = ExtResource("1_yisoq")
+metadata/_custom_type_script = "uid://bmrmbau6rw2is"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=582419335]
+shape = SubResource("CircleShape2D_vmjbp")
+
+[node name="Panel" type="Panel" parent="." unique_id=612829620]
+offset_right = 20.0
+offset_bottom = 20.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
+theme_override_styles/panel = SubResource("StyleBox_0ei1m")

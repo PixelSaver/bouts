@@ -3,26 +3,27 @@ extends Node
 enum States {
 	START,
 }
-var state : States = States.START
+var state: States = States.START
 
 var menu_manager: MultiplayerManager
-var round_state: RoundState = RoundState.new()
+var notif_manager: NotificationManager
 #var multiplayer_manager: MultiplayerManager
 
-var win_history : Array[int] = []
+var win_history: Array[int] = []
 var player_won_id := -1
-func set_winner(id:int):
+
+
+func set_winner(id: int) -> bool:
 	player_won_id = id
-	if id == -1 or id == 0: return
-	print("Adding win: %s" % id)
-	round_state.add_player_win(id)
+	if id == -1 or id == 0:
+		return false
+	return menu_manager.game_info.add_player_win(id)
+
 #func get_losers() -> Array[int]:
-	#if player_won_id == -1 or !menu_manager: return []
-	#var out: Array[int] = []
-	#print("On client %s, there are players: %s" % [multiplayer.get_unique_id(), menu_manager.players.values()])
-	#for p in (menu_manager.players.values() as Array[PlayerInfo]):
-		#if p.id != player_won_id: out.append(p.id)
-	#print("Losers on client %s are %s" % [multiplayer.get_unique_id(), out])
-	#return out
-func reset_rounds() -> void:
-	round_state = RoundState.new()
+#if player_won_id == -1 or !menu_manager: return []
+#var out: Array[int] = []
+#print("On client %s, there are players: %s" % [multiplayer.get_unique_id(), menu_manager.players.values()])
+#for p in (menu_manager.players.values() as Array[PlayerInfo]):
+#if p.id != player_won_id: out.append(p.id)
+#print("Losers on client %s are %s" % [multiplayer.get_unique_id(), out])
+#return out

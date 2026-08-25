@@ -5,11 +5,54 @@
 [ext_resource type="Script" uid="uid://b4pdlxyjxim6i" path="res://utilities/ui/tweenable.gd" id="4_6ygue"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_paljw"]
 [ext_resource type="Script" uid="uid://37ep8qd6rfa6" path="res://scenes/game/map_manager.gd" id="4_xppml"]
+[ext_resource type="Script" uid="uid://dyr8qa70mm3ry" path="res://standalones/projectile_manager.gd" id="5_c1rlj"]
+[ext_resource type="Script" uid="uid://n0uu6tn8ib5k" path="res://scenes/game/game_ui.gd" id="5_g4dfm"]
 [ext_resource type="PackedScene" uid="uid://cpdx3wny0t6im" path="res://scenes/game/maps/default_map.tscn" id="5_xppml"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_y2var"]
+[ext_resource type="Script" uid="uid://cha0gp1a5pqj0" path="res://scenes/game/win_history_display.gd" id="6_6lcsq"]
+[ext_resource type="Script" uid="uid://b4afhjrek0wy8" path="res://scenes/game/ping_label.gd" id="6_yoncu"]
+[ext_resource type="PackedScene" uid="uid://dyqf138arjrkc" path="res://scenes/game/one_win_history.tscn" id="7_wgtxe"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="8_y61kw"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_g4dfm"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="10_yoncu"]
+
+[sub_resource type="StyleBox" id="StyleBox_wgtxe"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_y2var")
+corner_detail = 20
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+
+[sub_resource type="Gradient" id="Gradient_c1rlj"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gkedh"]
+gradient = SubResource("Gradient_c1rlj")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgtxe"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_width_left = 10
+border_width_top = 2
+border_width_bottom = 7
+border_color = Color(0.6117647, 0.5529412, 0.7607843, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+corner_detail = 20
 
 [sub_resource type="StyleBox" id="StyleBox_jxd0g"]
 resource_local_to_scene = false
@@ -19,7 +62,7 @@ content_margin_top = -1.0
 content_margin_right = -1.0
 content_margin_bottom = -1.0
 script = ExtResource("5_y2var")
-color = Color(0.8509804, 0.6392157, 0.8039216, 0.9019608)
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
 skew = Vector2(1, 0)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
@@ -95,7 +138,125 @@ script = ExtResource("4_xppml")
 
 [node name="Map" parent="MapManager" unique_id=895377889 instance=ExtResource("5_xppml")]
 
+[node name="ProjectileManager" type="Node2D" parent="." unique_id=2118985391]
+script = ExtResource("5_c1rlj")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=118128479]
+
+[node name="GameUI" type="Control" parent="CanvasLayer" unique_id=514880391 node_paths=PackedStringArray("skill_progress")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_g4dfm")
+skill_progress = NodePath("MarginContainer/Control/AspectRatioContainer/Panel/SkillProgress")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameUI" unique_id=1669466441]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Control" type="Control" parent="CanvasLayer/GameUI/MarginContainer" unique_id=1009501599]
+layout_mode = 2
+
+[node name="WinHistory" type="HBoxContainer" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=82006299]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.06
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+script = ExtResource("6_6lcsq")
+
+[node name="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1190652418 instance=ExtResource("7_wgtxe")]
+layout_mode = 2
+
+[node name="AspectRatioContainer2" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=248111556 instance=ExtResource("7_wgtxe")]
+layout_mode = 2
+
+[node name="AspectRatioContainer3" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1310429699 instance=ExtResource("7_wgtxe")]
+layout_mode = 2
+
+[node name="AspectRatioContainer4" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=1209137504 instance=ExtResource("7_wgtxe")]
+layout_mode = 2
+
+[node name="AspectRatioContainer5" parent="CanvasLayer/GameUI/MarginContainer/Control/WinHistory" unique_id=2130784556 instance=ExtResource("7_wgtxe")]
+layout_mode = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=1938934187]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer" unique_id=1992143524]
+clip_children = 2
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_wgtxe")
+
+[node name="SkillProgress" type="TextureProgressBar" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=36511836]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.001
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_gkedh")
+texture_progress = SubResource("GradientTexture1D_gkedh")
+tint_under = Color(0.38039216, 0.36862746, 0.52156866, 1)
+tint_progress = Color(0.92156863, 0.7647059, 0.654902, 1)
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=536534006]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgtxe")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GameUI/MarginContainer/Control/AspectRatioContainer/Panel" unique_id=384212429]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="PingLabel" type="Label" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=1617847301]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 24.0
+script = ExtResource("6_yoncu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GameUI/MarginContainer/Control" unique_id=519513495]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Banners" type="Control" parent="CanvasLayer" unique_id=82936727]
 layout_mode = 3
@@ -167,7 +328,7 @@ vertical_alignment = 1
 [node name="Tweenable" type="Node" parent="CanvasLayer/TextCont/Left" unique_id=1214984781]
 script = ExtResource("4_6ygue")
 direction = Vector2(-1, 1)
-distance = 700.0
+distance = 1000.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
 [node name="VS" type="RichTextLabel" parent="CanvasLayer/TextCont" unique_id=17418500]
@@ -206,12 +367,13 @@ vertical_alignment = 1
 [node name="Tweenable" type="Node" parent="CanvasLayer/TextCont/Right" unique_id=638500118]
 script = ExtResource("4_6ygue")
 direction = Vector2(1, -1)
-distance = 700.0
+distance = 1000.0
 metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=395550679]
 top_level = true
 zoom = Vector2(5, 5)
+editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=206576365]
 process_priority = 300
@@ -225,9 +387,11 @@ script = ExtResource("8_y61kw")
 follow_mode = 3
 zoom = Vector2(5, 5)
 tween_resource = SubResource("Resource_6lcsq")
+inactive_update_mode = 1
 follow_damping = true
 auto_zoom = true
 auto_zoom_min = 0.5
 auto_zoom_max = 1.0
 auto_zoom_margin = Vector4(100, 100, 100, 100)
+draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"

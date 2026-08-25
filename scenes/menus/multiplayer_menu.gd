@@ -1,108 +1,150 @@
 extends PixelMenu
 class_name MultiplayerMenu
-@export_group("Loading", "loading_")
-@export var loading_screen: PixelMenu
-#@export var status_text: RichTextLabel
-@export var name_ip: LineEdit
-@export var color_ip: ColorPickerButton
-@export var loading_ip: LineEdit
-@export var loading_host_button: Button
-@export var loading_join_button: Button
-@export_group("Waiting", "waiting_")
+
+#region old code
+#@export_group("Loading", "loading_")
+#@export var loading_screen: PixelMenu
+##@export var status_text: RichTextLabel
+#@export var name_ip: LineEdit
+#@export var color_ip: ColorPickerButton
+#@export var loading_ip: LineEdit
+#@export var loading_host_button: Button
+#@export var loading_join_button: Button
+#@export_group("Waiting", "waiting_")
+#@export var waiting_screen: PixelMenu
+#@export var waiting_color: ColorPickerButton
+#@export var waiting_start_game_button: DefaultButton
+#@export var waiting_leave_button: DefaultButton
+
+
+#func _ready() -> void:
+#loading_host_button.pressed.connect(_on_host_button_pressed)
+#loading_join_button.pressed.connect(_on_join.bind(loading_ip.text))
+#waiting_leave_button.pressed.connect(_on_leave)
+#name_ip.text_changed.connect(
+#func(_n: String):
+#_update_player_info(),
+#)
+#color_ip.color_changed.connect(
+#func(_n: Color):
+#_update_player_info(),
+#)
+#waiting_color.color_changed.connect(
+#func(_n: Color):
+#_update_player_info(),
+#)
+#
+#loading_screen.show()
+#waiting_screen.hide()
+#SignalBus.hosted.connect(_on_hosted)
+##SignalBus.join.connect(_on_join)
+#waiting_start_game_button.pressed.connect(_on_start_game)
+#_update_color()
+#
+#
+#func _update_color() -> void:
+#await get_tree().process_frame
+#await get_tree().process_frame
+#color_ip.color = Global.menu_manager.player_info.color
+#
+#
+#func _on_start_game() -> void:
+#start_game.rpc()
+#
+#
+#@rpc("authority", "call_local", "reliable")
+#func start_game():
+#Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
+#
+#
+#func _on_host_button_pressed() -> void:
+#_update_player_info()
+#SignalBus.host.emit()
+#
+#
+#func _on_hosted():
+#loading_screen.end_anim()
+#waiting_screen.start_anim()
+#
+#
+#func _on_leave():
+#SignalBus.leave_requested.emit()
+#waiting_screen.end_anim()
+#loading_screen.start_anim()
+#
+#
+#func _on_join(_ip: String) -> void:
+#_update_player_info()
+#SignalBus.join.emit(loading_ip.text)
+#loading_screen.end_anim()
+#waiting_screen.start_anim()
+#
+#
+#func _update_player_info() -> void:
+#var p_info = Global.menu_manager.player_info
+#if not name_ip.text.is_empty():
+#p_info.player_name = name_ip.name
+#if loading_screen.visible:
+#p_info.color = color_ip.color
+#waiting_color.color = color_ip.color
+#else:
+#p_info.color = waiting_color.color
+#color_ip.color = waiting_color.color
+#
+#sync_player_info.rpc(multiplayer.get_unique_id(), p_info.to_dict())
+#
+#
+#@rpc("any_peer", "reliable", "call_local")
+#func sync_player_info(id: int, pi_dict: Dictionary) -> void:
+#var pi = PlayerInfo.from_dict(pi_dict)
+#Global.menu_manager.players.set(id, pi)
+#SignalBus.player_info_changed.emit(id, pi)
+#endregion
+@export_category("New")
 @export var waiting_screen: PixelMenu
-@export var waiting_color: ColorPickerButton
-@export var waiting_start_game_button: DefaultButton
-@export var waiting_leave_button: DefaultButton
+@export var lobbies_screen: LobbiesScreen
 
 
 func _ready() -> void:
-	loading_host_button.pressed.connect(_on_host_button_pressed)
-	loading_join_button.pressed.connect(_on_join.bind(loading_ip.text))
-	waiting_leave_button.pressed.connect(_on_leave)
-	name_ip.text_changed.connect(
-		func(_n: String):
-			_update_player_info(),
-	)
-	color_ip.color_changed.connect(
-		func(_n: Color):
-			_update_player_info(),
-	)
-	waiting_color.color_changed.connect(
-		func(_n: Color):
-			_update_player_info(),
-	)
-
-	loading_screen.show()
-	waiting_screen.hide()
-	SignalBus.hosted.connect(_on_hosted)
-	#SignalBus.join.connect(_on_join)
-	waiting_start_game_button.pressed.connect(_on_start_game)
-	_update_color()
-
-
-func _update_color() -> void:
-	await get_tree().process_frame
-	await get_tree().process_frame
-	color_ip.color = Global.menu_manager.player_info.color
-
-
-func _on_start_game() -> void:
-	start_game.rpc()
-
-
-@rpc("authority", "call_local", "reliable")
-func start_game():
-	Global.menu_manager.transition_to_scene(SceneDatabase.get_scene(SceneDatabase.Scene.GAME))
-
-
-func _on_host_button_pressed() -> void:
-	_update_player_info()
-	SignalBus.host.emit()
-
-
-func _on_hosted():
-	loading_screen.end_anim()
-	waiting_screen.start_anim()
-
-
-func _on_leave():
-	multiplayer.multiplayer_peer = ENetMultiplayerPeer.new()
-	SignalBus.leave_requested.emit()
-	waiting_screen.end_anim()
-	loading_screen.start_anim()
-
-
-func _on_join(_ip: String) -> void:
-	_update_player_info()
-	SignalBus.join.emit(loading_ip.text)
-	loading_screen.end_anim()
-	waiting_screen.start_anim()
-
-
-func _update_player_info() -> void:
-	var p_info = Global.menu_manager.player_info
-	if not name_ip.text.is_empty():
-		p_info.player_name = name_ip.name
-	if loading_screen.visible:
-		p_info.color = color_ip.color
-		waiting_color.color = color_ip.color
+	SignalBus.joined.connect(_on_joined)
+	SignalBus.kicked.connect(_on_kicked)
+	lobbies_screen.start_anim()
+	waiting_screen.leave_requested.connect(_on_leave_requested)
+	waiting_screen.start_game_requested.connect(_on_start_game_requested)
+	if Global.menu_manager._connected_lobby == null:
+		lobbies_screen.start_anim()
+		waiting_screen.end_anim()
 	else:
-		p_info.color = waiting_color.color
-		color_ip.color = waiting_color.color
+		lobbies_screen.end_anim()
+		waiting_screen.start_anim()
+#Global.menu_manager.gdsync_lobby_responded
 
-	sync_player_info.rpc(multiplayer.get_unique_id(), p_info.to_dict())
+
+func _on_leave_requested() -> void:
+	Global.menu_manager.request_leave_lobby()
+	waiting_screen.end_anim()
+	lobbies_screen.start_anim()
 
 
-@rpc("any_peer", "reliable", "call_local")
-func sync_player_info(id: int, pi_dict: Dictionary) -> void:
-	var pi = PlayerInfo.from_dict(pi_dict)
-	Global.menu_manager.players.set(id, pi)
-	SignalBus.player_info_changed.emit(id, pi)
+func _on_kicked() -> void:
+	waiting_screen.end_anim()
+	lobbies_screen.start_anim()
+
+
+func _on_start_game_requested() -> void:
+	if not GDSync.is_host():
+		return
+	Global.menu_manager.request_start_game()
+
+
+func _on_joined(_lobby_name: String) -> void:
+	waiting_screen.start_anim()
+	lobbies_screen.end_anim()
 
 
 func start_anim() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	loading_screen.start_anim()
+	#loading_screen.start_anim()
 
 
 func end_anim() -> void:

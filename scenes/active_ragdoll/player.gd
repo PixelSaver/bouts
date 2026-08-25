@@ -1,9 +1,11 @@
 extends Node2D
 class_name Player
 
+@export var test_weapon: WeaponManager.WeaponType
 @export var sensitivity := 1.0
 @export var power := 100
 @export var torque := 1000
+@export var sync_rate := 30
 @export_group("Ragdoll Pieces")
 @export var head: TargetAngleRigidBody2D
 @export var torso: RigidBody2D
@@ -27,10 +29,14 @@ class_name Player
 @export var l_arm_fore: TargetAngleRigidBody2D
 @export var l_elbow: PinJoint2D
 @export var l_arm_upper: TargetAngleRigidBody2D
+@export_group("Hand stuff")
+@export var r_hand_marker: Marker2D
+@export var r_hand_groove_joint: GrooveJoint2D
+@export var r_hand_pin_joint: PinJoint2D
 @export_group("Nodes", "_")
 @export var _health_component: HealthComponent
 @export var _win_number_label: WinNumberLabel
-@export var r_hand_marker: Marker2D
+@export var weapon: Weapon
 var mouse_motion := Vector2.ZERO
 var _walk_cycle := 0.
 var _disabled := DisableMode.FREE
@@ -51,25 +57,31 @@ var _jump_armed := true
 var _jump_buffer := 0.0
 var max_jump_buffer := 0.2
 var can_jump := false
+var _skill_countdown := 0.0
 var input_dir := Vector2()
 var input_jump := false
+var input_skill := false
 var input_motion := Vector2.ZERO
-var _mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 var ragdoll_parts: Array[TargetAngleRigidBody2D] = []
 var is_syncing_state := true
+var _sync_clock := 0.0
+var _game_info: GameInfo
 
 
 func _ready() -> void:
+	GDSync.expose_func(submit_input)
+	GDSync.expose_func(sync_state)
+	GDSync.expose_func(_sync_skill_countdown)
+	if OS.is_debug_build() and test_weapon:
+		self.bind_weapon(test_weapon)
+
 	_health_component.death.connect(
 		func():
 			died.emit(),
 	)
 
 	var bodies: Array[TargetAngleRigidBody2D] = []
-	var weapon: Weapon
 	for child in get_children():
-		if child is Weapon:
-			weapon = child
 		if child is not TargetAngleRigidBody2D:
 			continue
 		bodies.append(child)
@@ -81,9 +93,16 @@ func _ready() -> void:
 			body.add_collision_exception_with(part)
 	ragdoll_parts = bodies
 
+	await get_tree().process_frame
+	if GDSync.is_gdsync_owner(self):
+		SignalBus.player_skill_cooldown_changed.emit(
+			_skill_countdown,
+			weapon.get_skill_cooldown(),
+		)
 
+#region Ragdoll
 func set_disable(disabled: DisableMode) -> void:
-	Log.pr("Setting player state: %s" % DisableMode.keys()[disabled])
+	#Log.pr("Setting player state: %s" % DisableMode.keys()[disabled])
 	_disabled = disabled
 	match disabled:
 		DisableMode.FREE:
@@ -102,7 +121,6 @@ func set_disable(disabled: DisableMode) -> void:
 				part.freeze = true
 			is_syncing_state = true
 		DisableMode.NOTHING:
-			Log.pr("Setting player to do nothing")
 			for part in ragdoll_parts:
 				part.disabled = true
 				part.freeze = true
@@ -113,8 +131,15 @@ func get_cam_follow_node() -> Node2D:
 	return torso
 
 
-func begin_round(wins: int) -> void:
+func begin_round(game_info: GameInfo) -> void:
+	_game_info = game_info
+	var wins = game_info.get_wins(GDSync.get_gdsync_owner(self))
 	_win_number_label.flash_wins(wins)
+	$DebugLabel.text = str(GDSync.get_gdsync_owner(self))
+	for body in ragdoll_parts:
+		GDSync.set_gdsync_owner(body, GDSync.get_host())
+		GDSync.set_gdsync_owner(body, GDSync.get_host())
+		#GDSync.set_gdsync_owner(body, GDSync.get_gdsync_owner(self))
 
 
 func _ik_two_seg(
@@ -165,29 +190,30 @@ func _ik_two_seg(
 
 
 func _physics_process(delta: float) -> void:
-	if not multiplayer.multiplayer_peer:
+	if not GDSync.is_active():
+		_handle_input()
+		_update_can_jump()
+		_process_movement(input_dir, input_jump, input_motion, delta)
 		return
 	_handle_input()
-	if not multiplayer.is_server():
+	if not GDSync.is_host():
 		return
 	_update_can_jump()
 	_process_movement(input_dir, input_jump, input_motion, delta)
-
-
+#endregion
+#region Input
 func _update_can_jump() -> void:
 	can_jump = false
 	for part in ragdoll_parts:
 		can_jump = can_jump or part.is_touching_ground
 	if not can_jump:
 		_jump_armed = true
-	#if is_multiplayer_authority() and multiplayer.is_server():
-	#print("Can jump? %s" % can_jump)
 
 
 func _handle_input():
-	if not multiplayer.multiplayer_peer:
-		return
-	if not is_multiplayer_authority():
+	#if not multiplayer.multiplayer_peer:
+	#return
+	if not GDSync.is_gdsync_owner(self):
 		#_gun.position = Vector2.RIGHT.rotated(_gun_angle) * gun_radius
 		return # only client controls client player
 	if _disabled == DisableMode.FROZEN or _disabled == DisableMode.NOTHING:
@@ -195,57 +221,57 @@ func _handle_input():
 
 	var dir := Input.get_vector("left", "right", "down", "up")
 	var jump = Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")
+	var skill = Input.is_action_just_pressed("r_click") or Input.is_action_just_pressed("shift")
 	var motion = mouse_motion
 	mouse_motion = Vector2.ZERO
 
 	if is_syncing_state == false:
 		return
 
-	if multiplayer.is_server():
+	if GDSync.is_host():
 		input_dir = dir
 		input_jump = jump
 		input_motion = motion
+		input_skill = skill
+	elif _game_info != null:
+		GDSync.call_func(submit_input, dir, jump, skill, motion)
 	else:
-		submit_input.rpc(dir, jump, motion)
+		Log.err("Game info is null for player!")
 
 
-@rpc("any_peer", "unreliable")
+#@rpc("any_peer", "unreliable")
 ## Sending input from client to server
-func submit_input(dir: Vector2, jump: bool, _mouse_motion: Vector2) -> void:
+func submit_input(dir: Vector2, jump: bool, skill: bool, _mouse_motion: Vector2) -> void:
+	if not GDSync.is_host():
+		return
 	input_dir = dir
 	input_jump = jump
+	input_skill = skill
 	input_motion = _mouse_motion
-
+#endregion
 #region Syncing state
 
-@rpc("any_peer", "unreliable")
 ## Server processing and then sending back
 func sync_state(state: Array) -> void:
-	if multiplayer.is_server():
+	if GDSync.is_host():
 		return # don't overwrite server's local player
-	for i in range(min(state.size(), ragdoll_parts.size())):
+	for i in range(min(state.size() - 1, ragdoll_parts.size())):
 		var body := ragdoll_parts[i]
-		body.global_position = state[i]["pos"]
-		body.global_rotation = state[i]["rot"]
-		body.linear_velocity = state[i]["vel"]
-		body.angular_velocity = state[i]["ang_vel"]
+		RigidBody2DState.set_state(state[i], body)
+	RigidBody2DState.set_state(state[state.size() - 1], weapon)
 
 
 func get_state() -> Array:
 	var state := []
 	for body in ragdoll_parts:
-		state.append(
-			{
-				"pos": body.global_position,
-				"rot": body.global_rotation,
-				"vel": body.linear_velocity,
-				"ang_vel": body.angular_velocity,
-			}
-		)
+		state.append(RigidBody2DState.get_state(body))
+	state.append(RigidBody2DState.get_state(weapon))
 	return state
 #endregion
+#region Movement and input processing
 func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: float) -> void:
 	_jump_buffer -= delta
+	_skill_countdown -= delta
 	var target = r_hand_marker.global_position + _mouse_motion
 	#mouse_pivot.global_position = look_pos
 	_ik_two_seg(
@@ -255,6 +281,18 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 		r_arm_fore,
 		target,
 	)
+
+	if weapon != null and input_skill and _skill_countdown < 0.:
+		input_skill = false
+		_skill_countdown = weapon.get_skill_cooldown()
+		weapon.apply_skill(self)
+		if GDSync.is_gdsync_owner(self):
+			SignalBus.player_skill_cooldown_changed.emit(
+				_skill_countdown,
+				weapon.get_skill_cooldown(),
+			)
+		else:
+			GDSync.call_func(_sync_skill_countdown, _skill_countdown)
 
 	if can_jump and _jump_armed and (jump or _jump_buffer > 0.):
 		_jump_armed = false
@@ -303,30 +341,67 @@ func _process_movement(dir: Vector2, jump: bool, _mouse_motion: Vector2, delta: 
 	#print("Hand error: %s" % err)
 	if is_syncing_state == false:
 		return
-	if multiplayer.is_server():
-		sync_state.rpc(get_state())
+	_sync_clock += delta
+	if GDSync.is_host() and _sync_clock >= 1.0 / float(sync_rate):
+		_sync_clock = 0.
+		#sync_state.rpc(get_state())
+		GDSync.call_func(sync_state, get_state())
+
+
+func _sync_skill_countdown(countdown: int) -> void:
+	_skill_countdown = countdown
+	SignalBus.player_skill_cooldown_changed.emit(_skill_countdown, weapon.get_skill_cooldown())
 
 
 func _input(event: InputEvent) -> void:
 	if _disabled == DisableMode.FROZEN or _disabled == DisableMode.NOTHING:
 		return
-
-	if Input.is_action_just_pressed("l_click"):
-		_mouse_mode = Input.MOUSE_MODE_CAPTURED
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if Input.is_action_just_pressed("esc"):
-		_mouse_mode = Input.MOUSE_MODE_VISIBLE
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if not is_multiplayer_authority():
-		return
 	if event is InputEventMouseMotion:
 		mouse_motion += event.relative * sensitivity
 
+#endregion
 
 func set_color(col: Color) -> void:
 	for part in ragdoll_parts:
 		part.modulate = col
 
 
+func bind_weapon(wt: WeaponManager.WeaponType):
+	var w = WeaponManager.get_weapon(wt).instantiate() as Weapon
+	self.add_child(w)
+	w.player = self
+	if weapon:
+		weapon.queue_free()
+	weapon = w
+	var path = weapon.get_path()
+	var bodies: Array[RigidBody2D] = []
+	for part in ragdoll_parts:
+		bodies.append(part)
+	weapon.set_body_collision_exceptions(bodies)
+	weapon.global_transform = r_hand_marker.global_transform
+	r_hand_groove_joint.node_b = path
+	r_hand_pin_joint.node_b = path
+
+
 func damage(atk: Attack):
 	_health_component.damage(atk)
+	torso.apply_central_impulse(atk.knockback)
+
+
+static func try_damage_player_body_part(attack: Attack, body: Node, owner_player: Player = null) -> bool:
+	var par = body.get_parent()
+	if body is Weapon or par is not Player:
+		return false
+	var player = par as Player
+	if player == owner_player:
+		return false
+	player.damage(attack)
+	return true
+
+
+static func is_collider_owner_id_same(body: Node, id: int) -> bool:
+	var par = body.get_parent()
+	if par is not Player:
+		return false
+	var player = par as Player
+	return GDSync.get_gdsync_owner(player) == id

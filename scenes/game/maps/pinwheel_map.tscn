@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://de24a2obiybmy"]
+
+[ext_resource type="Script" uid="uid://dfxmrhw0omh5f" path="res://scenes/game/map.gd" id="1_6nyrj"]
+[ext_resource type="Texture2D" uid="uid://b2oese3sm7bus" path="res://assets/icon.svg" id="2_jfgog"]
+[ext_resource type="PackedScene" uid="uid://dblelrhrnny1c" path="res://scenes/game/water_killbox.tscn" id="3_ffvu5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6nyrj"]
+size = Vector2(1126, 20)
+
+[node name="Map" type="Node2D" unique_id=895377889 node_paths=PackedStringArray("markers")]
+script = ExtResource("1_6nyrj")
+markers = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2")]
+
+[node name="Markers" type="Node2D" parent="." unique_id=1127902626]
+
+[node name="Marker2D" type="Marker2D" parent="Markers" unique_id=159863680]
+position = Vector2(200, 177)
+
+[node name="Marker2D2" type="Marker2D" parent="Markers" unique_id=1680494587]
+position = Vector2(901, 214)
+
+[node name="WaterKillbox" parent="." unique_id=263105909 instance=ExtResource("3_ffvu5")]
+position = Vector2(553, 599)
+
+[node name="PinHead" type="StaticBody2D" parent="." unique_id=1868164018]
+position = Vector2(211, 447)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PinHead" unique_id=825568184]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_6nyrj")
+
+[node name="Sprite2D" type="Sprite2D" parent="PinHead" unique_id=1392638537]
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_jfgog")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="PinHead" unique_id=1419335649]
+angular_damp = 1.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PinHead/RigidBody2D" unique_id=1167159823]
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="Polygon2D" type="Polygon2D" parent="PinHead/RigidBody2D" unique_id=1888428092]
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="PinHead" unique_id=1416316537]
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody2D")
+
+[node name="PinHead2" type="StaticBody2D" parent="." unique_id=923869447]
+position = Vector2(908, 467)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PinHead2" unique_id=1359929889]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_6nyrj")
+
+[node name="Sprite2D" type="Sprite2D" parent="PinHead2" unique_id=1487012081]
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_jfgog")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="PinHead2" unique_id=452479910]
+angular_damp = 1.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PinHead2/RigidBody2D" unique_id=625639888]
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="Polygon2D" type="Polygon2D" parent="PinHead2/RigidBody2D" unique_id=165748060]
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="PinHead2" unique_id=640665342]
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody2D")
+
+[node name="PinHead3" type="StaticBody2D" parent="." unique_id=1299471598]
+position = Vector2(571, 454)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PinHead3" unique_id=1518188786]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_6nyrj")
+
+[node name="Sprite2D" type="Sprite2D" parent="PinHead3" unique_id=128790034]
+scale = Vector2(0.405943, 0.15437976)
+texture = ExtResource("2_jfgog")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="PinHead3" unique_id=1320612515]
+angular_damp = 1.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PinHead3/RigidBody2D" unique_id=1924550104]
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="Polygon2D" type="Polygon2D" parent="PinHead3/RigidBody2D" unique_id=182020710]
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="PinHead3" unique_id=1696735378]
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody2D")
+
+[node name="PinHead4" type="StaticBody2D" parent="." unique_id=2009328602]
+position = Vector2(757, 132)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PinHead4" unique_id=129877242]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_6nyrj")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="PinHead4" unique_id=710710479]
+mass = 3.0
+inertia = 1.0
+angular_damp = 3.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PinHead4/RigidBody2D" unique_id=258843724]
+scale = Vector2(0.43689346, 0.46292567)
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="Polygon2D" type="Polygon2D" parent="PinHead4/RigidBody2D" unique_id=1784656419]
+scale = Vector2(0.43475616, 0.4402386)
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="PinHead4" unique_id=607004721]
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody2D")
+
+[node name="PinHead5" type="StaticBody2D" parent="." unique_id=460535315]
+position = Vector2(406, 127)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PinHead5" unique_id=572256585]
+scale = Vector2(0.044142127, 0.919253)
+shape = SubResource("RectangleShape2D_6nyrj")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="PinHead5" unique_id=1720223952]
+mass = 3.0
+inertia = 1.0
+angular_damp = 3.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PinHead5/RigidBody2D" unique_id=771118903]
+scale = Vector2(0.43689346, 0.46292567)
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="Polygon2D" type="Polygon2D" parent="PinHead5/RigidBody2D" unique_id=1371605062]
+scale = Vector2(0.43475616, 0.4402386)
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+polygon = PackedVector2Array(-17, -112, 16, -116, 13, -11, 142, -12, 143, 14, 12, 14, 3, 118, -23, 114, -15, 13, -134, 9, -130, -15, -18, -12)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="PinHead5" unique_id=1387497863]
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody2D")

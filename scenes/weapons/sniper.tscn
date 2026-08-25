@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://blma7l17c72x0"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://w2lebln4ho1x" path="res://assets/ragdoll_physics_material.tres" id="1_wpcbb"]
+[ext_resource type="Script" uid="uid://b41w1oijphwsc" path="res://scenes/weapons/sniper.gd" id="2_wpcbb"]
+
+[sub_resource type="Gradient" id="Gradient_ohs8w"]
+offsets = PackedFloat32Array(0.4031477, 1)
+colors = PackedColorArray(0.92156863, 0.7647059, 0.654902, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_imjbj"]
+gradient = SubResource("Gradient_ohs8w")
+fill = 1
+fill_from = Vector2(0, 0.5307167)
+fill_to = Vector2(1, 0.49317408)
+
+[node name="Gun" type="RigidBody2D" unique_id=1539681279 node_paths=PackedStringArray("marker")]
+collision_layer = 3
+collision_mask = 2
+mass = 0.1
+physics_material_override = ExtResource("1_wpcbb")
+inertia = 100.0
+can_sleep = false
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("2_wpcbb")
+marker = NodePath("Marker2D")
+weapon_name = "Generic Sword"
+weapon_skill_cooldown = 2.0
+weapon_description = "Just a sword"
+metadata/_custom_type_script = "uid://b41w1oijphwsc"
+
+[node name="Line2D" type="Line2D" parent="." unique_id=633370630]
+points = PackedVector2Array(0, 107, 0, 201)
+width = 3.0
+texture = SubResource("GradientTexture2D_imjbj")
+texture_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2049141650]
+position = Vector2(-0.19999695, 45.600006)
+polygon = PackedVector2Array(0.19999695, -47.600006, 5.199997, -41.600006, 7.199997, -46.600006, 11.199997, -45.600006, 11.199997, -13.600006, 7.199997, -13.600006, 3.199997, -19.600006, 2.199997, 61.399994, -1.800003, 61.399994, -3.800003, -10.600006, -8.800003, -13.600006, -8.800003, -31.600006, -18.800003, -31.600006, -18.800003, -40.600006, -8.800003, -40.600006, -16.800003, -44.600006, -20.800003, -54.600006, -12.800003, -61.600006, -9.800003, -70.600006, -11.800003, -82.600006, 1.199997, -83.600006)
+
+[node name="Handle" type="Polygon2D" parent="." unique_id=1090904036]
+position = Vector2(-0.19999695, 45.600006)
+color = Color(0.8784314, 0.8784314, 0.8627451, 1)
+polygon = PackedVector2Array(0.19999695, -47.600006, 5.199997, -41.600006, 7.199997, -46.600006, 11.199997, -45.600006, 11.199997, -13.600006, 7.199997, -13.600006, 3.199997, -19.600006, 2.199997, 61.399994, -1.800003, 61.399994, -3.800003, -10.600006, -8.800003, -13.600006, -8.800003, -31.600006, -18.800003, -31.600006, -18.800003, -40.600006, -8.800003, -40.600006, -16.800003, -44.600006, -20.800003, -54.600006, -12.800003, -61.600006, -9.800003, -70.600006, -11.800003, -82.600006, 1.199997, -83.600006)
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1533346440]
+position = Vector2(0, 127)
+rotation = 1.5707964

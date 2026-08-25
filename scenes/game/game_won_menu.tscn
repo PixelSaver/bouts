@@ -1,0 +1,250 @@
+[gd_scene format=3 uid="uid://6j8roxcgl5v1"]
+
+[ext_resource type="Script" uid="uid://dpok4cnxfofm5" path="res://scenes/game/game_won_menu.gd" id="1_iyie8"]
+[ext_resource type="Script" uid="uid://di384elvmfody" path="res://scenes/menus/player_display.gd" id="2_b62kf"]
+[ext_resource type="PackedScene" uid="uid://t4eelh8k41jw" path="res://scenes/active_ragdoll/player.tscn" id="3_gxtco"]
+[ext_resource type="Script" uid="uid://b4pdlxyjxim6i" path="res://utilities/ui/tweenable.gd" id="4_gxtco"]
+[ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="4_itt1y"]
+[ext_resource type="Script" uid="uid://bbevr0r82fs0i" path="res://utilities/ui/menus/shadowed_button.gd" id="5_finrq"]
+[ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="6_c1wee"]
+[ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="7_uivxh"]
+
+[sub_resource type="Curve" id="Curve_itt1y"]
+_data = [Vector2(0, 0), 0.0, 0.22632886, 0, 1, Vector2(0.4097664, 0.092741966), 0.22632886, 1.537117, 1, 1, Vector2(1, 1), 1.537117, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_gkedh"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="StyleBox" id="StyleBox_afy4y"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("7_uivxh")
+color = Color(0.92156863, 0.7647059, 0.654902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_ledga"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("7_uivxh")
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[node name="GameWonMenu" type="Control" unique_id=794266950 node_paths=PackedStringArray("buttons", "winner_label", "score_label", "player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iyie8")
+buttons = [NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/BackToLobby"), NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/NextGame")]
+winner_label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/WinnerLabel")
+score_label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/ScoreLabel")
+player = NodePath("CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player")
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160387984]
+layer = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1763651957]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=1714348549]
+layout_mode = 2
+
+[node name="PlayerDisplay" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=480887888 node_paths=PackedStringArray("player")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("2_b62kf")
+player = NodePath("Control/Control/Player")
+
+[node name="Control" type="CenterContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay" unique_id=52534634]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control" unique_id=805773717]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Player" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control" unique_id=1098918678 instance=ExtResource("3_gxtco")]
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player" unique_id=231312583]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -322.0
+offset_right = 40.0
+offset_bottom = -282.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0, 0)
+
+[node name="Tweenable" type="Node" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player/Control" unique_id=1054972038]
+script = ExtResource("4_gxtco")
+scale_curve = SubResource("Curve_itt1y")
+direction = Vector2(0, 1)
+distance = 200.0
+use_custom_transform_pivot_ratio = true
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Control/Control/Player/Control" unique_id=1046968515]
+position = Vector2(1.9999999, 0)
+scale = Vector2(0.7, 0.7)
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+polygon = PackedVector2Array(-40, -23, -45, 19, 38, 17, 35, -24, 12, -12, -2, -27, -19, -8)
+
+[node name="Text" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay" unique_id=893102468]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="WinnerLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text" unique_id=1122293591]
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+bbcode_enabled = true
+text = "Player %s wins!"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tweenable" type="Node" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/WinnerLabel" unique_id=762659041]
+script = ExtResource("4_gxtco")
+scale_curve = SubResource("Curve_gkedh")
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="ScoreLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text" unique_id=43517410]
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+bbcode_enabled = true
+text = "Final Scores:
+P1: 10
+P2: -10129389017"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tweenable" type="Node" parent="CanvasLayer/MarginContainer/VBoxContainer/PlayerDisplay/Text/ScoreLabel" unique_id=64715058]
+script = ExtResource("4_gxtco")
+tween_value = 1.0
+scale_curve = SubResource("Curve_gkedh")
+metadata/_custom_type_script = "uid://b4pdlxyjxim6i"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1416223776]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="BackToLobby" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=88347529]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+theme = ExtResource("4_itt1y")
+script = ExtResource("5_finrq")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/BackToLobby" unique_id=1877342822]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_afy4y")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/BackToLobby" unique_id=57311032]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+bbcode_enabled = true
+text = "Back T oLobby"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1110614348]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="NextGame" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=234327569]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+theme = ExtResource("4_itt1y")
+script = ExtResource("5_finrq")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/NextGame" unique_id=1491575742]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_ledga")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/NextGame" unique_id=514542175]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+bbcode_enabled = true
+text = "Next Game"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1

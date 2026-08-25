@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://o5f61k5qeepf"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://w2lebln4ho1x" path="res://assets/ragdoll_physics_material.tres" id="1_mgo42"]
+[ext_resource type="Script" uid="uid://bew7356lpm7yp" path="res://scenes/weapons/gun.gd" id="2_mgo42"]
+
+[node name="Gun" type="RigidBody2D" unique_id=1886491803 node_paths=PackedStringArray("marker")]
+collision_layer = 3
+collision_mask = 2
+mass = 0.1
+physics_material_override = ExtResource("1_mgo42")
+inertia = 100.0
+can_sleep = false
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("2_mgo42")
+marker = NodePath("Marker2D")
+weapon_name = "Gun"
+weapon_skill_cooldown = 2.0
+weapon_description = "A gun."
+metadata/_custom_type_script = "uid://bew7356lpm7yp"
+
+[node name="Line2D" type="Line2D" parent="." unique_id=633370630]
+visible = false
+points = PackedVector2Array(0, -27, 0, 27)
+width = 20.0
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2049141650]
+position = Vector2(-0.19999695, 45.600006)
+polygon = PackedVector2Array(0, -46, 11.199997, -37.600006, 6.199997, -33.600006, 7, 6, -8.800003, 22.399994, -10.800003, -28.600006, -34.800003, -33.600006, -39.800003, -45.600006)
+
+[node name="Handle" type="Polygon2D" parent="." unique_id=1090904036]
+position = Vector2(-0.19999695, 45.600006)
+color = Color(0.8784314, 0.8784314, 0.8627451, 1)
+polygon = PackedVector2Array(0, -46, 11.199997, -37.600006, 6.199997, -33.600006, 7, 6, -8.800003, 22.399994, -10.800003, -28.600006, -34.800003, -33.600006, -39.800003, -45.600006)
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1533346440]
+position = Vector2(0, 68)
+rotation = 1.5707964

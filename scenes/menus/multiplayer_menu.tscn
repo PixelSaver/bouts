@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://bq17fmc2pxh2f"]
 
 [ext_resource type="Script" uid="uid://w2cpd8f12uht" path="res://scenes/menus/multiplayer_menu.gd" id="1_elvy3"]
-[ext_resource type="Script" uid="uid://wf0q72q57mmh" path="res://scenes/menus/loading_screen.gd" id="2_ftwoh"]
-[ext_resource type="Script" path="res://scenes/menus/auth/shadowed_button.gd" id="3_livv6"]
+[ext_resource type="Script" uid="uid://bbevr0r82fs0i" path="res://utilities/ui/menus/shadowed_button.gd" id="3_igtkl"]
 [ext_resource type="Script" uid="uid://c8ou87eucc2sn" path="res://scenes/menus/waiting_screen.gd" id="4_ftwoh"]
 [ext_resource type="Script" uid="uid://cjmmhbp1b5312" path="res://addons/StyleboxFancy/StyleBorder.gd" id="4_sb6po"]
 [ext_resource type="Script" uid="uid://bkl6g25jwb47h" path="res://addons/StyleboxFancy/StyleBoxFancy.gd" id="5_4kuv5"]
@@ -10,8 +9,146 @@
 [ext_resource type="Script" uid="uid://di384elvmfody" path="res://scenes/menus/player_display.gd" id="8_0jrml"]
 [ext_resource type="Theme" uid="uid://djxds56cenfds" path="res://assets/default_theme.tres" id="8_jxd0g"]
 [ext_resource type="PackedScene" uid="uid://t4eelh8k41jw" path="res://scenes/active_ragdoll/player.tscn" id="9_0haww"]
+[ext_resource type="Script" uid="uid://doncweywmgs0e" path="res://scenes/menus/password_popup.gd" id="9_xcpy6"]
+[ext_resource type="Script" uid="uid://bdldifg4qplqx" path="res://scenes/menus/secret_toggle.gd" id="10_igtkl"]
+[ext_resource type="Script" uid="uid://dqlbdyibxomuh" path="res://scenes/menus/lobbies_screen.gd" id="11_5jciy"]
+[ext_resource type="Script" uid="uid://cg7undgju3pjo" path="res://scenes/menus/lobbies_cont.gd" id="12_0lu5u"]
+[ext_resource type="Script" uid="uid://blmm825dbb2nn" path="res://scenes/menus/new_lobby_cont.gd" id="13_ykd5h"]
+[ext_resource type="Script" uid="uid://c06kpy7o06xo7" path="res://scenes/menus/lobby_game_settings.gd" id="14_igtkl"]
+[ext_resource type="Script" uid="uid://sv03afbfe5mi" path="res://scenes/menus/publicCont.gd" id="14_xcpy6"]
 
-[sub_resource type="StyleBox" id="StyleBox_sb6po"]
+[sub_resource type="StyleBox" id="StyleBox_xcpy6"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_4kuv5")
+color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="Resource" id="Resource_5jciy"]
+script = ExtResource("4_sb6po")
+color = Color(0.26932546, 0.25951993, 0.38099545, 1)
+width_right = 1
+width_bottom = 2
+
+[sub_resource type="StyleBox" id="StyleBox_ykd5h"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_4kuv5")
+color = Color(0.5647059, 0.7058824, 0.87058824, 0.19607843)
+borders = Array[ExtResource("4_sb6po")]([SubResource("Resource_5jciy")])
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBox" id="StyleBox_0lu5u"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_4kuv5")
+color = Color(0.6392157, 0.81960785, 0.6862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_nw0vu"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = -1.0
+content_margin_top = -1.0
+content_margin_right = -1.0
+content_margin_bottom = -1.0
+script = ExtResource("5_4kuv5")
+color = Color(0.5647059, 0.7058824, 0.87058824, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_enabled = true
+shadow_color = Color(0.26645792, 0.25672144, 0.377248, 0.78431374)
+shadow_blur = 0
+shadow_offset = Vector2(5, 5)
+metadata/_custom_type_script = "uid://bkl6g25jwb47h"
+
+[sub_resource type="StyleBox" id="StyleBox_igtkl"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_4kuv5")
+color = Color(0.44313726, 0.49803922, 0.6901961, 0.3372549)
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBox" id="StyleBox_1t6t3"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_4kuv5")
+color = Color(0.44313726, 0.49803922, 0.6901961, 0.5803922)
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Resource" id="Resource_qlib5"]
+script = ExtResource("4_sb6po")
+color = Color(0.26932546, 0.25951993, 0.38099545, 1)
+width_bottom = 2
+
+[sub_resource type="StyleBox" id="StyleBox_gcn8l"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+script = ExtResource("5_4kuv5")
+color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+borders = Array[ExtResource("4_sb6po")]([SubResource("Resource_qlib5")])
+corner_detail = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_right = 40.0
+
+[sub_resource type="StyleBox" id="StyleBox_0haww"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = -1.0
@@ -30,7 +167,7 @@ shadow_blur = 0
 shadow_offset = Vector2(5, 5)
 metadata/_custom_type_script = "uid://bkl6g25jwb47h"
 
-[sub_resource type="StyleBox" id="StyleBox_4kuv5"]
+[sub_resource type="StyleBox" id="StyleBox_0jrml"]
 resource_local_to_scene = false
 resource_name = ""
 content_margin_left = -1.0
@@ -76,45 +213,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBox" id="StyleBox_0haww"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = -1.0
-content_margin_top = -1.0
-content_margin_right = -1.0
-content_margin_bottom = -1.0
-script = ExtResource("5_4kuv5")
-color = Color(0.92156863, 0.7647059, 0.654902, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_enabled = true
-shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
-shadow_blur = 0
-shadow_offset = Vector2(5, 5)
-metadata/_custom_type_script = "uid://bkl6g25jwb47h"
-
-[sub_resource type="StyleBox" id="StyleBox_0jrml"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = -1.0
-content_margin_top = -1.0
-content_margin_right = -1.0
-content_margin_bottom = -1.0
-script = ExtResource("5_4kuv5")
-color = Color(0.6392157, 0.81960785, 0.6862745, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_enabled = true
-shadow_color = Color(0.38039216, 0.36862746, 0.52156866, 0.78431374)
-shadow_blur = 0
-shadow_offset = Vector2(5, 5)
-metadata/_custom_type_script = "uid://bkl6g25jwb47h"
-
-[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("loading_screen", "name_ip", "color_ip", "loading_ip", "loading_host_button", "loading_join_button", "waiting_screen", "waiting_color", "waiting_start_game_button", "waiting_leave_button")]
+[node name="MultiplayerMenu" type="Control" unique_id=726010604 node_paths=PackedStringArray("waiting_screen", "lobbies_screen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,19 +222,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_elvy3")
-loading_screen = NodePath("LoadingScreen")
-name_ip = NodePath("LoadingScreen/VBoxContainer/HBoxContainer/Name")
-color_ip = NodePath("LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer/MarginContainer/ColorPicker")
-loading_ip = NodePath("LoadingScreen/VBoxContainer/IPInput")
-loading_host_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton")
-loading_join_button = NodePath("LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton")
 waiting_screen = NodePath("WaitingScreen")
-waiting_color = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/ColorPickerButton")
-waiting_start_game_button = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame")
-waiting_leave_button = NodePath("WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/Leave")
+lobbies_screen = NodePath("LobbiesScreen")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
-[node name="LoadingScreen" type="Control" parent="." unique_id=1846798797]
+[node name="LobbiesScreen" type="Control" parent="." unique_id=356956171 node_paths=PackedStringArray("scan_cont", "lobby_popup", "join_lobby_but")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -143,92 +234,145 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
-script = ExtResource("2_ftwoh")
+script = ExtResource("11_5jciy")
+scan_cont = NodePath("MarginContainer/VBoxContainer/LobbiesCont")
+lobby_popup = NodePath("PasswordPopup")
+join_lobby_but = NodePath("MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Join")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LoadingScreen" unique_id=861428574]
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen" unique_id=55909135]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.2
-anchor_right = 0.8
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
-alignment = 1
 
-[node name="Title" type="RichTextLabel" parent="LoadingScreen/VBoxContainer" unique_id=1286963850]
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/MarginContainer" unique_id=948950626]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LobbiesCont" type="HBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer" unique_id=99811213 node_paths=PackedStringArray("_lobby_cont")]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("12_0lu5u")
+_lobby_cont = NodePath("VBoxContainer/LobbyCont")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/LobbiesCont" unique_id=788529091]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/LobbiesCont/VBoxContainer" unique_id=716023254]
 layout_mode = 2
 mouse_filter = 1
-bbcode_enabled = true
-text = "[font_size=100]Bouts"
+theme_override_font_sizes/normal_font_size = 40
+text = "Bouts Lobbies"
 fit_content = true
 scroll_active = false
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=1784142041]
-custom_minimum_size = Vector2(0, 50)
+[node name="LobbyCont" type="VBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/LobbiesCont/VBoxContainer" unique_id=908088610]
 layout_mode = 2
-theme_override_constants/separation = 15
+size_flags_vertical = 3
 
-[node name="Name" type="LineEdit" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1547209254]
+[node name="NewLobbyCont" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer" unique_id=537959460 node_paths=PackedStringArray("_name_edit", "_player_count_edit", "_password_edit", "_public_edit", "_create_lobby_button")]
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "player name"
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_xcpy6")
+script = ExtResource("13_ykd5h")
+_name_edit = NodePath("MarginContainer/HBoxContainer/Name")
+_player_count_edit = NodePath("MarginContainer/HBoxContainer/PlayerCount")
+_password_edit = NodePath("MarginContainer/HBoxContainer/Password")
+_public_edit = NodePath("MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer/PublicCheckBox")
+_create_lobby_button = NodePath("MarginContainer/HBoxContainer/ShadowedButton")
 
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/HBoxContainer" unique_id=1367602326]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel" unique_id=1464235866]
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont" unique_id=1522733924]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Label" type="Label" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=915812846]
-layout_mode = 2
-text = " Color"
-
-[node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer" unique_id=1641163226]
-layout_mode = 2
-size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 5
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_bottom = 10
 
-[node name="ColorPicker" type="ColorPickerButton" parent="LoadingScreen/VBoxContainer/HBoxContainer/Panel/HBoxContainer/MarginContainer" unique_id=619973256]
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer" unique_id=607883053]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Name" type="LineEdit" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1597744805]
 layout_mode = 2
 size_flags_horizontal = 3
-color = Color(1, 1, 1, 1)
-edit_alpha = false
-edit_intensity = false
+tooltip_text = "Name of the lobby, used to identify the lobby too."
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBox_ykd5h")
+placeholder_text = "Lobby Name"
 
-[node name="IPInput" type="LineEdit" parent="LoadingScreen/VBoxContainer" unique_id=227558515]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-placeholder_text = "ip address"
-
-[node name="ButtonContainer" type="HBoxContainer" parent="LoadingScreen/VBoxContainer" unique_id=558283635]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="MarginContainer" type="MarginContainer" parent="LoadingScreen/VBoxContainer/ButtonContainer" unique_id=1680235105]
+[node name="PlayerCount" type="LineEdit" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=2019154626]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Max players. Only a max of 2 for now, but 4 is planned :3"
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBox_ykd5h")
+placeholder_text = "Max Players (2-4)"
 
-[node name="HostButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer" unique_id=1363817932]
-custom_minimum_size = Vector2(150, 80)
+[node name="Password" type="LineEdit" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1842027629]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("3_livv6")
+tooltip_text = "If left blank, no password is needed. Otherwise, this password will be needed to enter the lobby."
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBox_ykd5h")
+placeholder_text = "Password (blank if public)"
 
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=168535097]
+[node name="Public" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1782404400 node_paths=PackedStringArray("check_box")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+tooltip_text = "Being public means it is searchable by anyone. If not public, someone has to know the name (and password) to join."
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_ykd5h")
+script = ExtResource("14_xcpy6")
+check_box = NodePath("MarginContainer/HBoxContainer/PublicCheckBox")
+
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public" unique_id=463555792]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer" unique_id=1440115778]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer" unique_id=1177984429]
+layout_mode = 2
+mouse_filter = 1
+text = "Public?"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+vertical_alignment = 1
+
+[node name="PublicCheckBox" type="CheckBox" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Public/MarginContainer/HBoxContainer" unique_id=855075553]
+layout_mode = 2
+mouse_filter = 2
+button_pressed = true
+
+[node name="ShadowedButton" type="Button" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=1417296485]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("3_igtkl")
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/ShadowedButton" unique_id=700213941]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -236,9 +380,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBox_sb6po")
+theme_override_styles/panel = SubResource("StyleBox_0lu5u")
 
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer/HostButton" unique_id=1807359543]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/ShadowedButton" unique_id=746110578]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -248,26 +392,24 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
-text = "Host"
+text = "Create
+"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="LoadingScreen/VBoxContainer/ButtonContainer" unique_id=1852426843]
+[node name="Join" type="Button" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer" unique_id=631285354]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
-size_flags_horizontal = 3
+mouse_filter = 1
+script = ExtResource("3_igtkl")
 
-[node name="JoinButton" type="Button" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2" unique_id=1768478903]
-custom_minimum_size = Vector2(150, 60)
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("3_livv6")
-
-[node name="Panel" type="Panel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1267245097]
+[node name="Panel" type="Panel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Join" unique_id=1661760214]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -275,9 +417,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBox_4kuv5")
+theme_override_styles/panel = SubResource("StyleBox_nw0vu")
 
-[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LoadingScreen/VBoxContainer/ButtonContainer/MarginContainer2/JoinButton" unique_id=1141828527]
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/MarginContainer/VBoxContainer/NewLobbyCont/MarginContainer/HBoxContainer/Join" unique_id=1492432007]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -287,7 +429,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
-theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "Join"
 fit_content = true
@@ -296,7 +438,230 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game")]
+[node name="PasswordPopup" type="Control" parent="LobbiesScreen" unique_id=619148929 node_paths=PackedStringArray("bg", "popup_cont", "input_name", "input_password", "buttons")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("9_xcpy6")
+bg = NodePath("BG")
+popup_cont = NodePath("Panel")
+input_name = NodePath("Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/LobbyInput")
+input_password = NodePath("Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2/Password")
+buttons = [NodePath("Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Cancel"), NodePath("Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Submit")]
+metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
+
+[node name="BG" type="Panel" parent="LobbiesScreen/PasswordPopup" unique_id=408099206]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_igtkl")
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/PasswordPopup" unique_id=2142141587]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/PasswordPopup/Panel" unique_id=692295246]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer" unique_id=1871680889]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer" unique_id=1248645448]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "Lobby Password Needed"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Panel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer" unique_id=1904978517]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_1t6t3")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control" unique_id=878648715]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer" unique_id=312167659]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer" unique_id=1634768611]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer" unique_id=238509151]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "Lobby Name"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="LobbyInput" type="LineEdit" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1555580109]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Lobby Name"
+
+[node name="HSeparator" type="HSeparator" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1479660293]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1259728411]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "Password"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer" unique_id=345632245]
+layout_mode = 2
+alignment = 1
+
+[node name="Password" type="LineEdit" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=37189460]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBox_gcn8l")
+placeholder_text = "Password"
+max_length = 80
+expand_to_text_length = true
+secret = true
+
+[node name="CheckButton" type="CheckButton" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=447734301]
+layout_mode = 2
+mouse_filter = 1
+button_pressed = true
+script = ExtResource("10_igtkl")
+
+[node name="Control" type="Control" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/Control/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=288367921]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer" unique_id=674399206]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer" unique_id=1244737937]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Cancel" type="Button" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=631251914]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme = ExtResource("8_jxd0g")
+script = ExtResource("3_igtkl")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Cancel" unique_id=706290956]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_0haww")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Cancel" unique_id=1660122911]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+bbcode_enabled = true
+text = "Cancel"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Submit" type="Button" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=271414441]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme = ExtResource("8_jxd0g")
+script = ExtResource("3_igtkl")
+metadata/_custom_type_script = "uid://crut4r5gwigu0"
+
+[node name="Panel" type="Panel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Submit" unique_id=475946398]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBox_0jrml")
+
+[node name="_RichTextLabel_90685" type="RichTextLabel" parent="LobbiesScreen/PasswordPopup/Panel/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Submit" unique_id=380209796]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.38039216, 0.36862746, 0.52156866, 1)
+bbcode_enabled = true
+text = "Submit"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WaitingScreen" type="Control" parent="." unique_id=1969702841 node_paths=PackedStringArray("player_lobby_cont", "start_game", "leave_but")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -305,8 +670,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("4_ftwoh")
-player_lobby_cont = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/PlayerLobbyCont")
+player_lobby_cont = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ScrollContainer/PlayerLobbyCont")
 start_game = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StartGame")
+leave_but = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Leave")
 metadata/_custom_type_script = "uid://e0s6oeo4pcwr"
 
 [node name="MarginContainer" type="MarginContainer" parent="WaitingScreen" unique_id=346364770]
@@ -337,15 +703,113 @@ text = "Bouts Lobby"
 fit_content = true
 scroll_active = false
 
-[node name="PlayerLobbyCont" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=546159757]
+[node name="ScrollContainer" type="ScrollContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1421840010]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PlayerLobbyRow" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/PlayerLobbyCont" unique_id=1710346516 instance=ExtResource("7_4kuv5")]
+[node name="PlayerLobbyCont" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ScrollContainer" unique_id=546159757]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PlayerLobbyRow" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ScrollContainer/PlayerLobbyCont" unique_id=1710346516 instance=ExtResource("7_4kuv5")]
 layout_mode = 2
 mouse_filter = 1
 
-[node name="PlayerDisplay" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=131712649 node_paths=PackedStringArray("player")]
+[node name="LobbyGameSettings" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1954190469 node_paths=PackedStringArray("round_type_button", "max_rounds_slider", "slider_label")]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("14_igtkl")
+round_type_button = NodePath("ScrollContainer/MarginContainer/GameSettings/RoundType/OptionButton")
+max_rounds_slider = NodePath("ScrollContainer/MarginContainer/GameSettings/MaxRounds/HSlider")
+slider_label = NodePath("ScrollContainer/MarginContainer/GameSettings/MaxRounds/SliderLabel")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings" unique_id=2121375424]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer" unique_id=590111919]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GameSettings" type="VBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer" unique_id=1106660466]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=1224624186]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "Game Settings"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="HSeparator" type="HSeparator" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=82858627]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="RoundType" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=425730629]
+layout_mode = 2
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=833319331]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=20]Round Type: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Control" type="Control" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=1843546642]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="OptionButton" type="OptionButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/RoundType" unique_id=704340158]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="MaxRounds" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings" unique_id=745885862]
+layout_mode = 2
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=1304281281]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=20]Best out of #: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="HSlider" type="HSlider" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=499807739]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.1)
+offset_transform_visual_only = false
+mouse_filter = 1
+min_value = 1.0
+max_value = 25.0
+value = 5.0
+
+[node name="SliderLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/LobbyGameSettings/ScrollContainer/MarginContainer/GameSettings/MaxRounds" unique_id=18256955]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="PlayerDisplay" type="MarginContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=131712649 node_paths=PackedStringArray("player", "color_picker_button", "weapon_button")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -354,6 +818,8 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 script = ExtResource("8_0jrml")
 player = NodePath("Control/Control/Player")
+color_picker_button = NodePath("Panel/MarginContainer/Control/PlayerCustomization/ColorPickerButton")
+weapon_button = NodePath("Panel/MarginContainer/Control/PlayerCustomization/WeaponButton")
 
 [node name="Control" type="CenterContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay" unique_id=1267115641]
 layout_mode = 2
@@ -381,15 +847,35 @@ grow_vertical = 2
 layout_mode = 2
 mouse_filter = 1
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control" unique_id=529634187]
+[node name="PlayerCustomization" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control" unique_id=1651877519]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.7
 anchor_top = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=2039548735]
+layout_mode = 2
+bbcode_enabled = true
+text = "Weapon:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WeaponButton" type="OptionButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=1932704682]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=1150842495]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer2/PlayerDisplay/Panel/MarginContainer/Control/PlayerCustomization" unique_id=529634187]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
 mouse_filter = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="WaitingScreen/MarginContainer/VBoxContainer" unique_id=1810043665]
@@ -402,7 +888,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
 theme = ExtResource("8_jxd0g")
-script = ExtResource("3_livv6")
+script = ExtResource("3_igtkl")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
 [node name="Panel" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/Leave" unique_id=39226499]
@@ -444,7 +930,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
 theme = ExtResource("8_jxd0g")
-script = ExtResource("3_livv6")
+script = ExtResource("3_igtkl")
 metadata/_custom_type_script = "uid://crut4r5gwigu0"
 
 [node name="Panel" type="Panel" parent="WaitingScreen/MarginContainer/VBoxContainer/HBoxContainer/StartGame" unique_id=862787937]

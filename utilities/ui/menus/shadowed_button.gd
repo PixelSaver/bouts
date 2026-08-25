@@ -41,3 +41,8 @@ func _unhover() -> void:
 	t.tween_property(self, "scale", Vector2.ONE, 0.7)
 	if panel and box.get("shadow_offset") != null:
 		t.tween_property(box, "shadow_offset", shadow_direction * shadow_range.x, 0.7)
+
+
+func set_button_color(col: Color) -> void:
+	if box.has_method("set_color"):
+		box.set_color(col)
